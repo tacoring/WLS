@@ -185,7 +185,7 @@ System.out.println("User name: " + jTextField1.getText());
         { 
             //Wrong username or password 
             //Need change it to check database
-            // add seocnd comment   12 13123
+            //Hey huys, I am so hansome
             errorName = new JDialog();
             errorName.setBounds(132, 132, 300, 200);
             errorName.setTitle("Wrong Name or Passowrd");
