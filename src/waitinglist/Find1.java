@@ -44,12 +44,14 @@ import java.sql.SQLException;
 
 //import java.sql.Statement;
 import java.util.Date;
+import javax.swing.JDialog;
 
 public class Find1 extends javax.swing.JFrame {
     
     /** Creates new form Find */
     
     Students s = new Students();
+    JDialog errorName;
     
     public Find1() {
         initComponents();
@@ -166,12 +168,31 @@ public class Find1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Find().setVisible(true);
-                
-            }
-        });
+System.out.println("User name: " + jTextField1.getText());
+        System.out.println("Password: " + jTextField2.getText());
+        //Check username and password
+        //Need compare with Database
+        if (jTextField1.getText().matches("cpsc462")&&jTextField2.getText().matches("cpsc462"))
+        {
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    dispose();
+                    new Find().setVisible(true);
+                }
+            });
+        }else
+        { 
+            //Wrong username or password 
+            //Need change it to check database
+            //Hey huys, I am so hansome
+            // add seocnd comment   12 13123
+            errorName = new JDialog();
+            errorName.setBounds(132, 132, 300, 200);
+            errorName.setTitle("Wrong Name or Passowrd");
+            errorName.setVisible(true);
+        }
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
