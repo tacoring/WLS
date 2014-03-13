@@ -172,6 +172,7 @@ System.out.println("User name: " + jTextField1.getText());
         System.out.println("Password: " + jTextField2.getText());
         //Check username and password
         //Need compare with Database
+        //Add tacoaoscda
         if (jTextField1.getText().matches("cpsc462")&&jTextField2.getText().matches("cpsc462"))
         {
             java.awt.EventQueue.invokeLater(new Runnable() {
