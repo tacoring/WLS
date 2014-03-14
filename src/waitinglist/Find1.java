@@ -50,7 +50,7 @@ public class Find1 extends javax.swing.JFrame {
     
     /** Creates new form Find */
     
-    Students s = new Students();
+//    Students s = new Students();
     JDialog errorName;
     
     public Find1() {
@@ -173,7 +173,9 @@ System.out.println("User name: " + jTextField1.getText());
         //Check username and password
         //Need compare with Database
         //Add tacoaoscda
+        //werfwefer
         //tacoaocaoc
+        
         if (jTextField1.getText().matches("cpsc462")&&jTextField2.getText().matches("cpsc462"))
         {
             java.awt.EventQueue.invokeLater(new Runnable() {

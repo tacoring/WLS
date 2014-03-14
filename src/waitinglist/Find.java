@@ -30,32 +30,26 @@
 
 package waitinglist;
 
-import java.awt.Color;
-import java.beans.Statement;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Comparator;
 
 
 
 //import java.sql.Statement;
-import java.util.Date;
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class Find extends javax.swing.JFrame {
     
     /** Creates new form Find */
     
-    Students s = new Students();
+//    Students s123 = new Students();
     
     public Find() {
         initComponents();
@@ -329,33 +323,26 @@ public class Find extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-     int c = 0 ;
-     DefaultListModel Model = new DefaultListModel();
-
-
-    
+    int c = 0 ;
+    DefaultListModel Model = new DefaultListModel();
+    /*
+        This one is Add button
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {         
             jList3.setModel(Model);
             String sid = null ;
             sid = jTextField3.getText();
-            
             String [] data = getData(sid);
-   
             String [] info = new String[30];
             info[c]= data[0]+" , "+data[1]+" - "+data[2];
-            
-            
             /*for ( int i = 0 ; i < Model.getSize() ; i++){
             if(Model.getElementAt(i)== info[c]){
             System.out.println("Student Exsixt");
             }
             }*/
-            
-     
             Model.insertElementAt(info[c], c);
             c++;
-
         } catch (SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -374,23 +361,24 @@ public class Find extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jComboBox1ActionPerformed
  
+    /*
+        This is perioritize button
+    */
     int w = 0 ;
-     DefaultListModel eModel = new DefaultListModel();
+    DefaultListModel eModel = new DefaultListModel();
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String [] IDList = getIDList();
         try {
-            String [] data = perioritize(IDList);
+            //String [] data = perioritize(IDList);
+            String [] data = perioritizeNew(IDList);
             jList2.setModel(eModel);
- 
             String [] eligiable = new String[30];
             eligiable[w]= data[1]+" , "+data[2]+" - "+data[0];
-            
             /*for ( int i = 0 ; i < Model.getSize() ; i++){
             if(Model.getElementAt(i)== info[c]){
             System.out.println("Student Exsixt");
             }
             }*/
-
             eModel.insertElementAt(eligiable[w], w);
             w++;
             // TODO add your handling code here:
@@ -400,13 +388,7 @@ public class Find extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-    
-       
-              
-        
-                
-            
-       
+      
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
@@ -416,37 +398,22 @@ public class Find extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1MouseClicked
 
     private void jComboBox1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusGained
-                try {
-            
-           jComboBox1.removeAllItems();
-           String [] data = getCourses();
-           String [] courses = new String[30];
-           int z = 0 ;
-           
-           
+        try {
+            jComboBox1.removeAllItems();
+            String [] data = getCourses();
+            String [] courses = new String[30];
+            int z = 0 ;
             System.out.println(data.length);
-            
-         for ( int i = 0 ; i < 3 ; i++){
-             
-                
-           courses[i] = data[z]+" -  "+data[z+1]+" -  "+data[z+2];
-           
-           jComboBox1.addItem(courses[i]);
-           
-            z = z+3;
-           
-          
+            for ( int i = 0 ; i < 3 ; i++){    
+                courses[i] = data[z]+" -  "+data[z+1]+" -  "+data[z+2];
+                jComboBox1.addItem(courses[i]);
+                z = z+3;
             }  
-           
-            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-        
-   
     }//GEN-LAST:event_jComboBox1FocusGained
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -510,9 +477,7 @@ public class Find extends javax.swing.JFrame {
     public String [] getData(String sid) throws SQLException, ClassNotFoundException{
     
         String sid1 =  sid ;
-        // Class.forName("com.mysql.jdbc.Driver");
         Class.forName("com.mysql.jdbc.Driver");
-
         // Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/waiting_list", "root", "cpsc462");
         Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
 
@@ -544,26 +509,24 @@ public class Find extends javax.swing.JFrame {
         
         
         
-        
-    public String [] getIDList() {   
+    /*
+        This method is for get waiting list
+    */
+    public String [] getIDList() { 
         String info = null ;
         //String [] sList = new String[Model.getSize()];
         String [] Sids = new String[Model.getSize()]; 
         for ( int i = 0 ; i < Model.getSize() ; i++){
-                
             info  =  (String)Model.getElementAt(i) ;
             int dash  = info.indexOf("-");
             String temp = info.substring(dash+1);
-              
             Sids[i]= temp ;
-            System.out.println("getIDList - " + Model.getElementAt(i));
-            System.out.println("getIDList - " + Sids[i]);
+//            System.out.println("getIDList - " + Model.getElementAt(i));
+//            System.out.println("getIDList - " + Sids[i]);
         }
         return Sids;
     }
-     
-        
-        
+    
     public  String [] perioritize (String [] IDList) throws SQLException{
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -579,6 +542,7 @@ public class Find extends javax.swing.JFrame {
         int [] visa  = new int[IDList.length];
         int [] currentunit  = new int[IDList.length];
    
+        //Query detail from waiting list
         for ( int i = 0 ; i < IDList.length ; i ++ ){
             java.sql.Statement st4 = con.createStatement();
     
@@ -705,22 +669,56 @@ public class Find extends javax.swing.JFrame {
         //////////////comparing will be her ..////////////////
         
         
-   /* DefaultListModel Model2 = new DefaultListModel();
-        
-     jList2.setModel(Model2);
-         
-        for (int i = 0 ; i<Model.getSize(); i++){
-            
-  Model2.addElement(eList[i]);
-       
-        }
-       */
         con.close();
     
         return eList ;
     
     }
+ 
+    /*
+        This one will replaceperioritize
+        Step 1: get list from waiting list
+        Step 2: query detail data from list
+        Step 3: calculate weight
+        Step 4: return list
+    */
+    public  String [] perioritizeNew (String [] IDList) throws SQLException{
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
+        String eList[] = new String[IDList.length];
+//        List<Students> chairs = new ArrayList<Students>();
+        Students[] studentArray = new Students[IDList.length];
+        
+        // String sql2 = ("SELECT * FROM student ;");
+        int [] id = new int[IDList.length];
+        int [] unitcompleted  = new int[IDList.length];
+        int [] visa  = new int[IDList.length];
+        int [] currentunit  = new int[IDList.length];
+        int [] weight = new int[IDList.length];
+        for ( int i = 0 ; i < IDList.length ; i ++ ){
+            java.sql.Statement st4 = con.createStatement();
     
+            String sql4 = ("SELECT * FROM student where cwid ="+IDList[i]+";");
+            ResultSet rs4 = st4.executeQuery(sql4);
+            rs4.next();
+            id[i] = rs4.getInt("cwid");
+            unitcompleted[i] = rs4.getInt("units_completed");
+            visa[i] = rs4.getInt("visa");
+            currentunit[i] = rs4.getInt("current_units");
+            System.out.println("perioritizeNew ID : "+IDList[i]+"  Unitscompleted : "+unitcompleted[i]+"  Visa : "+visa[i]+"  Currentunits : "+currentunit[i]);
+            studentArray[i] = new Students(id[i], unitcompleted[i], visa[i], currentunit[i], weight[i] );
+        }
+        
+        Arrays.sort(studentArray, Students.UnitsCompletedComparator);
+        System.out.println("Employees list sorted by Salary:\n"+Arrays.toString(studentArray));
+        
+        return eList ;
+    }
     
     public  String [] getCourses() throws ClassNotFoundException, SQLException{
         
@@ -825,8 +823,7 @@ con.close();
         
         
     }
-    
-    
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
