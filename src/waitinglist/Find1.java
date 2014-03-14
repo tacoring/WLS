@@ -34,17 +34,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-
-
-//import java.sql.Statement;
 import javax.swing.JDialog;
 
 public class Find1 extends javax.swing.JFrame {
     
     /** Creates new form Find */
     
-//    Students s = new Students();
     JDialog errorName;
     
     public Find1() {
@@ -235,46 +230,29 @@ public class Find1 extends javax.swing.JFrame {
         
     }
     
-        public String getData(String sid) throws SQLException, ClassNotFoundException{
+    public String getData(String sid) throws SQLException, ClassNotFoundException{
     
         String sid1 =  sid ;
-       // Class.forName("com.mysql.jdbc.Driver");
+        // Class.forName("com.mysql.jdbc.Driver");
         Class.forName("com.mysql.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/waiting_list", "root", "cpsc462");
+        java.sql.Statement st = con.createStatement();
+        java.sql.Statement st2 = con.createStatement();
+        String sql = ("SELECT * FROM student WHERE cwid = "+sid1+";");
 
-    Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/waiting_list", "root", "cpsc462");
-
- java.sql.Statement st = con.createStatement();
-  java.sql.Statement st2 = con.createStatement();
-String sql = ("SELECT * FROM student WHERE cwid = "+sid1+";");
-
-//String sql2 = "SELECT * FROM Tennis1294966077108.container_tbl WHERE parent_id =+"'par_id'"+ORDER BY creation_time asc";
-
-ResultSet rs = st.executeQuery(sql);
-
-
-rs.next();
-
+        ResultSet rs = st.executeQuery(sql);
+        rs.next();
 
         String  a = rs.getNString("fname");
         String  b = rs.getNString("lname");
         int n = rs.getInt("cwid");
-        
-        
-System.out.println(rs.getRow());       
-System.out.println(b);
-System.out.println(a);
-System.out.println(n);
-con.close();
 
-
-
-       // return rs.getString("lname");
-    
-      //  con.close();
+        System.out.println(rs.getRow());       
+        System.out.println(b);
+        System.out.println(a);
+        System.out.println(n);
+        con.close();
         return a;
-       
-        
-        
     }
     
    
