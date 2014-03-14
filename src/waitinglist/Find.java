@@ -381,7 +381,7 @@ public class Find extends javax.swing.JFrame {
                 Students abc = perioritizeList[i];
                 jList2.setModel(eModel);
                 String [] eligiable = new String[30];
-                eligiable[w]= abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
+                eligiable[w]= "Weight: " + abc.getWeight() + ", INFO: " + abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
                 eModel.insertElementAt(eligiable[w], w);
                 w++;
             }
