@@ -38,18 +38,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
-
-
-
-//import java.sql.Statement;
 import javax.swing.DefaultListModel;
 
 public class Find extends javax.swing.JFrame {
     
     /** Creates new form Find */
-    
-//    Students s123 = new Students();
-    
     public Find() {
         initComponents();
     }
@@ -699,6 +692,9 @@ public class Find extends javax.swing.JFrame {
         return studentArray ;
     }
     
+    /*
+        Calculate student's weight and store weight in student object
+    */
     public Students[] calculateWeight (Students[] aStudentArray, int[] aList, int[] bList, int[] cList){
         Students[] studentArray = aStudentArray;
         int [] minMaxA = getMaxMin(aList);
@@ -717,6 +713,9 @@ public class Find extends javax.swing.JFrame {
         return studentArray;
     }
     
+    /*
+        Tool for get min and Max value in integer array
+    */
     public int [] getMaxMin (int[] aList) {
         int [] minMaxList = new int[3];
         int min = 0;
@@ -733,12 +732,6 @@ public class Find extends javax.swing.JFrame {
         return minMaxList;
     }
     
-    public int calculateStandardization(int aNumber){
-        int result = 0;
-        
-        
-        return result;
-    }
     public  String [] getCourses() throws ClassNotFoundException, SQLException{
         
         Class.forName("com.mysql.jdbc.Driver");
