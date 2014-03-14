@@ -39,6 +39,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
 
 public class Find extends javax.swing.JFrame {
     
@@ -323,18 +324,32 @@ public class Find extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {         
             jList3.setModel(Model);
-            String sid = null ;
-            sid = jTextField3.getText();
-            String [] data = getData(sid);
-            String [] info = new String[30];
-            info[c]= data[0]+" , "+data[1]+" - "+data[2];
-            /*for ( int i = 0 ; i < Model.getSize() ; i++){
-            if(Model.getElementAt(i)== info[c]){
-            System.out.println("Student Exsixt");
+            String sid = jTextField3.getText();
+            Boolean findSid = false;
+            for (int i = 0; i < Model.getSize(); i++ ){
+                String info  =  (String)Model.getElementAt(i) ;
+                int dash  = info.indexOf("-");
+                String temp = info.substring(dash+2);
+                System.out.println("ADD - the sid: " + temp.toString() + ", input sid: " + sid.toString());
+                if ( temp.toString().equals(sid.toString()) ){
+                    findSid = true;
+                    System.out.println("Find something same");
+                }
             }
-            }*/
-            Model.insertElementAt(info[c], c);
-            c++;
+            if (findSid == false){
+                String [] data = getData(sid);
+                String [] info = new String[30];
+                info[c]= data[0] + " , " + data[1] + " - " + data[2];
+                Model.insertElementAt(info[c], c);
+                c++;
+            }
+            else{
+                JDialog errorName;
+                errorName = new JDialog();
+                errorName.setBounds(132, 132, 300, 200);
+                errorName.setTitle("Student already in list");
+                errorName.setVisible(true);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -473,31 +488,22 @@ public class Find extends javax.swing.JFrame {
     
         String sid1 =  sid ;
         Class.forName("com.mysql.jdbc.Driver");
-        // Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/waiting_list", "root", "cpsc462");
-        Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
-
-        java.sql.Statement st = con.createStatement();
-        //java.sql.Statement st2 = con.createStatement();
-        String sql = ("SELECT * FROM student WHERE cwid = "+sid1+";");
-
-        //String sql2 = "SELECT * FROM Tennis1294966077108.container_tbl WHERE parent_id =+"'par_id'"+ORDER BY creation_time asc";
-        ResultSet rs = st.executeQuery(sql);
-        rs.next();
-
-        String  a = rs.getNString("fname");
-        String  b = rs.getNString("lname");
-        int n = rs.getInt("cwid");
-        
-        String convid = Integer.toString(n);
-         
-        String[] data = new String[10];
-       
-        data[0]= a ;
-        data[1]= b ;
-        data[2] = convid ;
-    
-        System.out.println(rs.getRow());
-        con.close();
+        String[] data;
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425")) {
+            java.sql.Statement st = con.createStatement();
+            String sql = ("SELECT * FROM student WHERE cwid = "+sid1+";");
+            ResultSet rs = st.executeQuery(sql);
+            rs.next();
+            String  a = rs.getNString("fname");
+            String  b = rs.getNString("lname");
+            int n = rs.getInt("cwid");
+            String convid = Integer.toString(n);
+            data = new String[10];
+            data[0]= a ;
+            data[1]= b ;
+            data[2] = convid ;
+            System.out.println("getData: " + rs.getRow());
+        }
         return data;
    
     }

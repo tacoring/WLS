@@ -30,20 +30,14 @@
 
 package waitinglist;
 
-import java.beans.Statement;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
 
 //import java.sql.Statement;
-import java.util.Date;
 import javax.swing.JDialog;
 
 public class Find1 extends javax.swing.JFrame {
@@ -168,13 +162,10 @@ public class Find1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-System.out.println("User name: " + jTextField1.getText());
+        System.out.println("User name: " + jTextField1.getText());
         System.out.println("Password: " + jTextField2.getText());
         //Check username and password
         //Need compare with Database
-        //Add tacoaoscda
-        //werfwefer
-        //tacoaocaoc
         
         if (jTextField1.getText().matches("cpsc462")&&jTextField2.getText().matches("cpsc462"))
         {
@@ -185,8 +176,7 @@ System.out.println("User name: " + jTextField1.getText());
                     new Find().setVisible(true);
                 }
             });
-        }else
-        { 
+        }else{ 
             //Error dialog
             errorName = new JDialog();
             errorName.setBounds(132, 132, 300, 200);
