@@ -335,49 +335,43 @@ public class Find extends javax.swing.JFrame {
 
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try {        
-            
-            
+        try {         
             jList3.setModel(Model);
             String sid = null ;
             sid = jTextField3.getText();
             
             String [] data = getData(sid);
-            
-            
+   
             String [] info = new String[30];
             info[c]= data[0]+" , "+data[1]+" - "+data[2];
             
             
-      /*       for ( int i = 0 ; i < Model.getSize() ; i++){
+            /*for ( int i = 0 ; i < Model.getSize() ; i++){
             if(Model.getElementAt(i)== info[c]){
             System.out.println("Student Exsixt");
             }
             }*/
             
      
- Model.insertElementAt(info[c], c);
-c++;
+            Model.insertElementAt(info[c], c);
+            c++;
 
         } catch (SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
-         String counter = Integer.toString(c) ;
+        String counter = Integer.toString(c) ;
         jLabel1.setText(counter);
          // getList();  
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        
-              
+                 
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-    
-      
-    
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
  
     int w = 0 ;
@@ -391,7 +385,7 @@ c++;
             String [] eligiable = new String[30];
             eligiable[w]= data[1]+" , "+data[2]+" - "+data[0];
             
-      /*       for ( int i = 0 ; i < Model.getSize() ; i++){
+            /*for ( int i = 0 ; i < Model.getSize() ; i++){
             if(Model.getElementAt(i)== info[c]){
             System.out.println("Student Exsixt");
             }
@@ -456,11 +450,11 @@ c++;
     }//GEN-LAST:event_jComboBox1FocusGained
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-int index = jList3.getSelectedIndex();
-Model.removeElementAt(index);
-c--;
-String counter = Integer.toString(c) ;
-jLabel1.setText(counter);
+        int index = jList3.getSelectedIndex();
+        Model.removeElementAt(index);
+        c--;
+        String counter = Integer.toString(c) ;
+        jLabel1.setText(counter);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jList2ComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jList2ComponentHidden
@@ -508,77 +502,53 @@ jLabel1.setText(counter);
     
     
     public boolean Login (String user , String pass){
-       
-        
-        
-        
+
           return false;
     
     }
     
-        public String [] getData(String sid) throws SQLException, ClassNotFoundException{
+    public String [] getData(String sid) throws SQLException, ClassNotFoundException{
     
         String sid1 =  sid ;
-       // Class.forName("com.mysql.jdbc.Driver");
+        // Class.forName("com.mysql.jdbc.Driver");
         Class.forName("com.mysql.jdbc.Driver");
 
-   // Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/waiting_list", "root", "cpsc462");
-      Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
+        // Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/waiting_list", "root", "cpsc462");
+        Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
 
- java.sql.Statement st = con.createStatement();
-  //java.sql.Statement st2 = con.createStatement();
-String sql = ("SELECT * FROM student WHERE cwid = "+sid1+";");
+        java.sql.Statement st = con.createStatement();
+        //java.sql.Statement st2 = con.createStatement();
+        String sql = ("SELECT * FROM student WHERE cwid = "+sid1+";");
 
-//String sql2 = "SELECT * FROM Tennis1294966077108.container_tbl WHERE parent_id =+"'par_id'"+ORDER BY creation_time asc";
-
-ResultSet rs = st.executeQuery(sql);
-
-
-rs.next();
-
+        //String sql2 = "SELECT * FROM Tennis1294966077108.container_tbl WHERE parent_id =+"'par_id'"+ORDER BY creation_time asc";
+        ResultSet rs = st.executeQuery(sql);
+        rs.next();
 
         String  a = rs.getNString("fname");
         String  b = rs.getNString("lname");
         int n = rs.getInt("cwid");
         
         String convid = Integer.toString(n);
-        
-      
-               
-               
-       String[] data = new String[10];
+         
+        String[] data = new String[10];
        
-       data[0]= a ;
-       data[1]= b ;
-       data[2] = convid ;
-       
-        
-System.out.println(rs.getRow());       
-//System.out.println(b);
-///System.out.println(a);
-//System.out.println(n);
-con.close();
-
-
-
-       // return rs.getString("lname");
+        data[0]= a ;
+        data[1]= b ;
+        data[2] = convid ;
     
-      //  con.close();
+        System.out.println(rs.getRow());
+        con.close();
         return data;
-       
-        
-        
+   
     }
         
         
         
         
-    public String [] getIDList() {
-            
+    public String [] getIDList() {   
         String info = null ;
         //String [] sList = new String[Model.getSize()];
-        String [] Sids = new String[Model.getSize()];
-            
+        String [] Sids = new String[Model.getSize()]; 
         for ( int i = 0 ; i < Model.getSize() ; i++){
                 
             info  =  (String)Model.getElementAt(i) ;
@@ -586,8 +556,8 @@ con.close();
             String temp = info.substring(dash+1);
               
             Sids[i]= temp ;
-            System.out.println(Model.getElementAt(i));
-            System.out.println(Sids[i]);
+            System.out.println("getIDList - " + Model.getElementAt(i));
+            System.out.println("getIDList - " + Sids[i]);
         }
         return Sids;
     }
@@ -754,79 +724,28 @@ con.close();
     
     public  String [] getCourses() throws ClassNotFoundException, SQLException{
         
-       // String sid1 =  sid ;
-    
-        
-// Class.forName("com.mysql.jdbc.Driver");
-        
         Class.forName("com.mysql.jdbc.Driver");
-
-  //  Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/waiting_list", "root", "cpsc462");
-       Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
-     // Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/localhost/waiting_list", "root", "qq101425");
-
- //java.sql.Statement st = con.createStatement();
- 
-
-
-//String sql2 = "SELECT * FROM Tennis1294966077108.container_tbl WHERE parent_id =+"'par_id'"+ORDER BY creation_time asc";
-
-
-
-java.sql.Statement st2 = con.createStatement();
-    String sql2 = ("SELECT * FROM course;");
-    ResultSet rs2 = st2.executeQuery(sql2);
-   
-      
-//rs2.next();
-
-//int rsCount = 0;
-String   cd [] = new String[30];
-//int i = 0 ;
-
-
-/*                while(rs2.next())
-{
-   
-    cd[rsCount]  =  rs2.getNString("course_number");
-             cd[rsCount+1]  =  rs2.getNString("course_name");
-             cd[rsCount+2]  =  rs2.getNString("section");
-             System.out.println(cd[rsCount]+" - "+cd[rsCount+1]+"-"+cd[rsCount+2]); 
-    rsCount++;
-    
-}
-    
-  
-        System.out.println(rsCount);*/
-    
-     
-    for (int i = 0 ; i < 3 ; i++){
-        
-             rs2.next(); 
+        //  Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/waiting_list", "root", "cpsc462");
+        Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
+        // Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/localhost/waiting_list", "root", "qq101425");
+        //java.sql.Statement st = con.createStatement();
+        //String sql2 = "SELECT * FROM Tennis1294966077108.container_tbl WHERE parent_id =+"'par_id'"+ORDER BY creation_time asc";
+        java.sql.Statement st2 = con.createStatement();
+        String sql2 = ("SELECT * FROM course;");
+        ResultSet rs2 = st2.executeQuery(sql2);
+        String   cd [] = new String[30];
+        for (int i = 0 ; i < 3 ; i++){
+            rs2.next(); 
             
-             cd[i]  =  rs2.getNString("course_number");
-             cd[i+1]  =  rs2.getNString("course_name");
-             cd[i+2]  =  rs2.getNString("section");
-             System.out.println(cd[i]+" - "+cd[i+1]+"-"+cd[i+2]); 
-             i++ ;
-             i++;
-             
-             
-            
-    }
-    
-
-con.close();
-
-
-        
-        
-        
+            cd[i]  =  rs2.getNString("course_number");
+            cd[i+1]  =  rs2.getNString("course_name");
+            cd[i+2]  =  rs2.getNString("section");
+            System.out.println(cd[i]+" - "+cd[i+1]+"-"+cd[i+2]); 
+            i++ ;
+            i++;
+        }
+        con.close();
         return cd;
-    
-    
-    
-    
     }
     
     
