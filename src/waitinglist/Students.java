@@ -6,10 +6,6 @@
 
 package waitinglist;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Comparator;
 
 /**
@@ -18,29 +14,54 @@ import java.util.Comparator;
  */
 public class Students {
     private int cwid;
+    private String fName;
+    private String lName;
     private int unitsCompleted;
     private int visa;
     private int currentUnits;
     private int weight;
     
-    public Students(int cwid, int unitsCompleted, int visa, int currentUnits, int weight) {
+    public Students(int cwid, String fName, String lName, int unitsCompleted, int visa, int currentUnits, int weight) {
         this.cwid = cwid;
+        this.fName = fName;
+        this.lName = lName;
         this.unitsCompleted = unitsCompleted;
         this.visa = visa;
         this.currentUnits = currentUnits;
         this.weight = weight;
     }
 
-//    Students() {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
- 
-    public int getWeight() {
-        return weight;
+    public int getCwid(){
+        return cwid;
+    }
+    
+    public String getFName(){
+        return fName;
+    }
+    
+    public String getLName(){
+        return lName;
     }
     public int getUnitsCompleted() {
         return unitsCompleted;
+    }  
+    
+    public int getVisa(){
+        return visa;
     }
+    
+    public int getCurrentUnits(){
+        return currentUnits;
+    }
+    
+    public void setWeight(int weight){
+        this.weight = weight;
+        
+    }
+    public int getWeight() {
+        return weight;
+    }
+
     
     public String toString() {
         return "[id=" + this.cwid + ", unitsCompleted=" + this.unitsCompleted + ", visa=" + this.visa + ", currentUnits=" +
@@ -58,7 +79,8 @@ public class Students {
  
         @Override
         public int compare(Students e1, Students e2) {
-            return e1.getWeight() - e2.getWeight();
+//            return e1.getWeight() - e2.getWeight();
+            return e2.getWeight() - e1.getWeight();
         }
     };
     
@@ -70,19 +92,3 @@ public class Students {
         }
     };
 }
-
-//class StudentsWeightComparator implements Comparator<Students> {
-//    @Override
-//    public int compare(Students student1, Students student2) {
-//        
-//        return student1.getWeight() - student2.getWeight();
-//    }
-//}
-//
-//class StudentsunitsCompletedComparator implements Comparator<Students> {
-//    @Override
-//    public int compare(Students student1, Students student2) {
-//        
-//        return student1.getUnitsCompleted() - student2.getUnitsCompleted();
-//    }
-//}

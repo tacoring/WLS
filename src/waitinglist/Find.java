@@ -38,7 +38,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Comparator;
 
 
 
@@ -370,18 +369,23 @@ public class Find extends javax.swing.JFrame {
         String [] IDList = getIDList();
         try {
             //String [] data = perioritize(IDList);
-            String [] data = perioritizeNew(IDList);
-            jList2.setModel(eModel);
-            String [] eligiable = new String[30];
-            eligiable[w]= data[1]+" , "+data[2]+" - "+data[0];
-            /*for ( int i = 0 ; i < Model.getSize() ; i++){
-            if(Model.getElementAt(i)== info[c]){
-            System.out.println("Student Exsixt");
+//            String [] data = perioritizeNew(IDList);
+//            jList2.setModel(eModel);
+//            String [] eligiable = new String[30];
+//            eligiable[w]= data[1]+" , "+data[2]+" - "+data[0];
+//            eModel.insertElementAt(eligiable[w], w);
+//            w++;
+            Students [] perioritizeList = perioritizeNew(IDList);
+            for (int i = 0; i < perioritizeList.length; i ++)
+            {
+                Students abc = perioritizeList[i];
+                jList2.setModel(eModel);
+                String [] eligiable = new String[30];
+                eligiable[w]= abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
+                eModel.insertElementAt(eligiable[w], w);
+                w++;
             }
-            }*/
-            eModel.insertElementAt(eligiable[w], w);
-            w++;
-            // TODO add your handling code here:
+            
         } catch (SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -465,9 +469,7 @@ public class Find extends javax.swing.JFrame {
         
         
     }
-    
-    
-    
+
     public boolean Login (String user , String pass){
 
           return false;
@@ -506,9 +508,7 @@ public class Find extends javax.swing.JFrame {
         return data;
    
     }
-        
-        
-        
+ 
     /*
         This method is for get waiting list
     */
@@ -554,9 +554,6 @@ public class Find extends javax.swing.JFrame {
             // currentunit[i] = rs4.getInt("current_units");
             System.out.println("ID : "+IDList[i]+"  Unitscompleted : "+unitcompleted[i]+"  Visa : "+visa[i]+"  Currentunits : "+currentunit[i]);
         }  
-
-        //System.out.println(IDList[i]+unitcompleted[i]+visa[i]+currentunit[i]);
-        //System.out.println("hi");
         java.sql.Statement stz = con.createStatement();
        
         int q = 0 ;
@@ -627,19 +624,12 @@ public class Find extends javax.swing.JFrame {
                 eList[q+2] =  rs5.getNString("lname");
                 q = q+3;
             }
-     
-        
-        }
-                
+        }        
         /*    int v = 0 ;    
-                  for (int i =0 ; i < IDList.length  ; i++){
-            
-     java.sql.Statement st5 = con.createStatement();
-    
+                  for (int i =0 ; i < IDList.length  ; i++){  
+        java.sql.Statement st5 = con.createStatement();
         String sql5 = ("SELECT * FROM student where units_completed ="+unitsperiority+" and visa ="+visaperiority+" and units_completed ="+currentperiority+" ;");
- 
         ResultSet rs5 = st5.executeQuery(sql5);
-        
         //rs5.next();
         int cwid = rs5.getInt("cwid");
           eList[v] =  Integer.toString(cwid);
@@ -647,32 +637,20 @@ public class Find extends javax.swing.JFrame {
               eList[v+2] =  rs5.getNString("lname");
              v = v+3;
         }
-        /*
-        
+        /*   
         1 - units completed ( grad or fresh ) 
         2 - visa
         3 - current unit 
-        
-        
-        
-        
-        -------------------------------------------------------
-        
+        -------------------------------------------------------    
         1- about to Graduate 
         2 - Senior
         3 - graduate ; juior ; 2nd yr
         4- sophomore ; frsh ment ; post 
         5 - all Csuf
-        
-        
         */ 
         //////////////comparing will be her ..////////////////
-        
-        
         con.close();
-    
         return eList ;
-    
     }
  
     /*
@@ -682,7 +660,7 @@ public class Find extends javax.swing.JFrame {
         Step 3: calculate weight
         Step 4: return list
     */
-    public  String [] perioritizeNew (String [] IDList) throws SQLException{
+    public  Students [] perioritizeNew (String [] IDList) throws SQLException{
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -691,7 +669,6 @@ public class Find extends javax.swing.JFrame {
         }
         Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
         String eList[] = new String[IDList.length];
-//        List<Students> chairs = new ArrayList<Students>();
         Students[] studentArray = new Students[IDList.length];
         
         // String sql2 = ("SELECT * FROM student ;");
@@ -700,9 +677,9 @@ public class Find extends javax.swing.JFrame {
         int [] visa  = new int[IDList.length];
         int [] currentunit  = new int[IDList.length];
         int [] weight = new int[IDList.length];
+        int [] minMax = new int[6];
         for ( int i = 0 ; i < IDList.length ; i ++ ){
             java.sql.Statement st4 = con.createStatement();
-    
             String sql4 = ("SELECT * FROM student where cwid ="+IDList[i]+";");
             ResultSet rs4 = st4.executeQuery(sql4);
             rs4.next();
@@ -710,16 +687,58 @@ public class Find extends javax.swing.JFrame {
             unitcompleted[i] = rs4.getInt("units_completed");
             visa[i] = rs4.getInt("visa");
             currentunit[i] = rs4.getInt("current_units");
-            System.out.println("perioritizeNew ID : "+IDList[i]+"  Unitscompleted : "+unitcompleted[i]+"  Visa : "+visa[i]+"  Currentunits : "+currentunit[i]);
-            studentArray[i] = new Students(id[i], unitcompleted[i], visa[i], currentunit[i], weight[i] );
+            studentArray[i] = new Students(id[i], rs4.getString("fname"), rs4.getString("lname"),
+                    unitcompleted[i], visa[i], currentunit[i], weight[i] );
         }
+        studentArray = calculateWeight(studentArray, unitcompleted, visa, currentunit);
         
-        Arrays.sort(studentArray, Students.UnitsCompletedComparator);
-        System.out.println("Employees list sorted by Salary:\n"+Arrays.toString(studentArray));
+//        Arrays.sort(studentArray, Students.UnitsCompletedComparator);
+        Arrays.sort(studentArray, Students.WeightComparator);
+        System.out.println("Students list sorted by unitsCompleted:\n" + Arrays.toString(studentArray));
         
-        return eList ;
+        return studentArray ;
     }
     
+    public Students[] calculateWeight (Students[] aStudentArray, int[] aList, int[] bList, int[] cList){
+        Students[] studentArray = aStudentArray;
+        int [] minMaxA = getMaxMin(aList);
+        int [] minMaxB = getMaxMin(bList);
+        int [] minMaxC = getMaxMin(cList);
+        
+        for (int i = 0; i < studentArray.length ; i++){
+            Students abc = studentArray[i];
+            int weightResult = 
+                    ( abc.getUnitsCompleted() - minMaxA[0] ) / ( minMaxA[2] ) * 100+
+                    ( ( abc.getVisa() - minMaxB[0] ) / minMaxB[2] ) * 50 +
+                    ( ( abc.getCurrentUnits() - minMaxC[0] ) / minMaxC[2] * 20);
+            abc.setWeight(weightResult);
+        }
+        
+        return studentArray;
+    }
+    
+    public int [] getMaxMin (int[] aList) {
+        int [] minMaxList = new int[3];
+        int min = 0;
+        int max = 0;
+        for (int i = 0; i < aList.length; i++) {
+            if (min > aList[i]){ min = aList[i]; }
+            if (max < aList[i]){ max = aList[i]; }
+        }
+        minMaxList[0] = min;
+        minMaxList[1] = max;
+        minMaxList[2] = max - min;
+        System.out.println("min: " + minMaxList[0] + ", max: " + minMaxList[1]);
+        
+        return minMaxList;
+    }
+    
+    public int calculateStandardization(int aNumber){
+        int result = 0;
+        
+        
+        return result;
+    }
     public  String [] getCourses() throws ClassNotFoundException, SQLException{
         
         Class.forName("com.mysql.jdbc.Driver");
@@ -756,72 +775,33 @@ public class Find extends javax.swing.JFrame {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-  //  Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/waiting_list", "root", "cpsc462");
-       Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
-     // Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/localhost/waiting_list", "root", "qq101425");
+        Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
 
- //java.sql.Statement st = con.createStatement();
- 
-
-
-//String sql2 = "SELECT * FROM Tennis1294966077108.container_tbl WHERE parent_id =+"'par_id'"+ORDER BY creation_time asc";
-
-
-
-java.sql.Statement st3 = con.createStatement();
-    String sql3 = ("SELECT section FROM course WHERE course_number ="+siss+";");
-    ResultSet rs3 = st3.executeQuery(sql3);
-   
-     String [] sections  =  new String[3];
-     
-     
-      
-
-
-for (int i = 0 ; i <= 1 ; i++){
-
-    rs3.next();
-            
-           sections [i] = rs3.getString("section");
-           
-           System.out.println(sections[i]);
-          // c++;
-          // sections[1] = rs3.getNString("section"); 
-  // rs2.getr
-    
-}
-       
-        
-//System.out.println(rs.getRow());       
-//System.out.println(b);
-///System.out.println(a);
-//System.out.println(n);
-con.close();
-
-
-        
-
-    
-    return sections;
-    
-    
+        java.sql.Statement st3 = con.createStatement();
+        String sql3 = ("SELECT section FROM course WHERE course_number ="+siss+";");
+        ResultSet rs3 = st3.executeQuery(sql3);
+        String [] sections  =  new String[3];
+        for (int i = 0 ; i <= 1 ; i++){
+            rs3.next();
+            sections [i] = rs3.getString("section");
+            System.out.println(sections[i]);
+            // c++;
+            // sections[1] = rs3.getNString("section"); 
+            // rs2.getr
+        }
+        con.close();
+        return sections;
     }
     
     public String [] Enroll (String [] eList){
       
-        
-        
-        
         return null;
     }
     
     
     
     public void Logout (){
-        
-        
-        
-        
+   
     }
 
    
