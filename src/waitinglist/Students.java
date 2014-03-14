@@ -19,9 +19,9 @@ public class Students {
     private int unitsCompleted;
     private int visa;
     private int currentUnits;
-    private int weight;
+    private float weight;
     
-    public Students(int cwid, String fName, String lName, int unitsCompleted, int visa, int currentUnits, int weight) {
+    public Students(int cwid, String fName, String lName, int unitsCompleted, int visa, int currentUnits, float weight) {
         this.cwid = cwid;
         this.fName = fName;
         this.lName = lName;
@@ -54,11 +54,11 @@ public class Students {
         return currentUnits;
     }
     
-    public void setWeight(int weight){
+    public void setWeight(float weight){
         this.weight = weight;
         
     }
-    public int getWeight() {
+    public float getWeight() {
         return weight;
     }
 
@@ -76,11 +76,12 @@ public class Students {
     }
     
     public static Comparator<Students> WeightComparator = new Comparator<Students>() {
- 
-        @Override
         public int compare(Students e1, Students e2) {
 //            return e1.getWeight() - e2.getWeight();
-            return e2.getWeight() - e1.getWeight();
+            return (int) (e2.getWeight() - e1.getWeight()); //largger to smaller
+//            return e1.getWeight() < e2.getWeight() ? -1 
+//                    : e1.getWeight() > e2.getWeight() ? 1
+//                    :0;
         }
     };
     

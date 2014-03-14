@@ -43,6 +43,14 @@ import javax.swing.JDialog;
 
 public class Find extends javax.swing.JFrame {
     
+    /*
+        Static variable
+    */
+    //For determine weight
+    final int unitCompletedWeight = 1000;
+    final int visaWeight = 200;
+    final int currentUnitsWeight = 100;
+    
     /** Creates new form Find */
     public Find() {
         initComponents();
@@ -471,7 +479,12 @@ public class Find extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Find1().setVisible(true);
-                
+//                //test code
+//                
+//                int a1 = 3;
+//                int a2 = 6;
+//                float f3 = (float)a1/a2;
+//                System.out.println("===================" + f3);
             }
         });
         
@@ -675,7 +688,7 @@ public class Find extends javax.swing.JFrame {
         int [] unitcompleted  = new int[IDList.length];
         int [] visa  = new int[IDList.length];
         int [] currentunit  = new int[IDList.length];
-        int [] weight = new int[IDList.length];
+        float [] weight = new float[IDList.length];
         int [] minMax = new int[6];
         for ( int i = 0 ; i < IDList.length ; i ++ ){
             java.sql.Statement st4 = con.createStatement();
@@ -709,10 +722,10 @@ public class Find extends javax.swing.JFrame {
         
         for (int i = 0; i < studentArray.length ; i++){
             Students abc = studentArray[i];
-            int weightResult = 
-                    ( abc.getUnitsCompleted() - minMaxA[0] ) / ( minMaxA[2] ) * 100+
-                    ( ( abc.getVisa() - minMaxB[0] ) / minMaxB[2] ) * 50 +
-                    ( ( abc.getCurrentUnits() - minMaxC[0] ) / minMaxC[2] * 20);
+            float weightResult = 
+                    ( (float)( abc.getUnitsCompleted() - minMaxA[0] ) / minMaxA[2] ) * unitCompletedWeight+
+                    ( (float)( abc.getVisa() - minMaxB[0] ) / minMaxB[2] ) * visaWeight +
+                    ( (float)( abc.getCurrentUnits() - minMaxC[0] ) / minMaxC[2] * currentUnitsWeight);
             abc.setWeight(weightResult);
         }
         
