@@ -383,29 +383,23 @@ c++;
     int w = 0 ;
      DefaultListModel eModel = new DefaultListModel();
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
- String [] IDList = getIDList();
+        String [] IDList = getIDList();
         try {
             String [] data = perioritize(IDList);
-
-
-         jList2.setModel(eModel);
-            
-          
-            
+            jList2.setModel(eModel);
+ 
             String [] eligiable = new String[30];
             eligiable[w]= data[1]+" , "+data[2]+" - "+data[0];
-            
             
       /*       for ( int i = 0 ; i < Model.getSize() ; i++){
             if(Model.getElementAt(i)== info[c]){
             System.out.println("Student Exsixt");
             }
             }*/
-            
-     
- eModel.insertElementAt(eligiable[w], w);
-w++;
-// TODO add your handling code here:
+
+            eModel.insertElementAt(eligiable[w], w);
+            w++;
+            // TODO add your handling code here:
         } catch (SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
