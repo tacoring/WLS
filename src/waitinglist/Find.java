@@ -579,30 +579,24 @@ con.close();
         
         
         
-        public String [] getIDList() {
+    public String [] getIDList() {
             
-            String info = null ;
-            //String [] sList = new String[Model.getSize()];
-            String [] Sids = new String[Model.getSize()];
+        String info = null ;
+        //String [] sList = new String[Model.getSize()];
+        String [] Sids = new String[Model.getSize()];
             
-            for ( int i = 0 ; i < Model.getSize() ; i++){
+        for ( int i = 0 ; i < Model.getSize() ; i++){
                 
-              info  =  (String)Model.getElementAt(i) ;
+            info  =  (String)Model.getElementAt(i) ;
+            int dash  = info.indexOf("-");
+            String temp = info.substring(dash+1);
               
-          int dash  = info.indexOf("-");
-          String temp = info.substring(dash+1);
-              
-              Sids[i]= temp ;
-              
+            Sids[i]= temp ;
             System.out.println(Model.getElementAt(i));
-            
             System.out.println(Sids[i]);
-            
-            }
-      return Sids;
-            
-        
         }
+        return Sids;
+    }
      
         
         
@@ -612,165 +606,102 @@ con.close();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
+        String eList[] = new String[IDList.length];
 
- 
-       Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
-String eList[] = new String[IDList.length];
-
-   // String sql2 = ("SELECT * FROM student ;");
-int [] unitcompleted  = new int[IDList.length];
-int [] visa  = new int[IDList.length];
-int [] currentunit  = new int[IDList.length];
+        // String sql2 = ("SELECT * FROM student ;");
+        int [] unitcompleted  = new int[IDList.length];
+        int [] visa  = new int[IDList.length];
+        int [] currentunit  = new int[IDList.length];
    
-for ( int i = 0 ; i < IDList.length ; i ++ ){
-        java.sql.Statement st4 = con.createStatement();
+        for ( int i = 0 ; i < IDList.length ; i ++ ){
+            java.sql.Statement st4 = con.createStatement();
     
-        String sql4 = ("SELECT * FROM student where cwid ="+IDList[i]+";");
- 
-        ResultSet rs4 = st4.executeQuery(sql4);
-        
-        rs4.next();
-        
-        unitcompleted[i] = rs4.getInt("units_completed");
-   //   visa[i] = rs4.getInt("visa");
-     // currentunit[i] = rs4.getInt("current_units");
-        
-        System.out.println("ID : "+IDList[i]+"  Unitscompleted : "+unitcompleted[i]+"  Visa : "+visa[i]+"  Currentunits : "+currentunit[i]);
-    }  
+            String sql4 = ("SELECT * FROM student where cwid ="+IDList[i]+";");
+            ResultSet rs4 = st4.executeQuery(sql4);
+            rs4.next();
+            unitcompleted[i] = rs4.getInt("units_completed");
+            //   visa[i] = rs4.getInt("visa");
+            // currentunit[i] = rs4.getInt("current_units");
+            System.out.println("ID : "+IDList[i]+"  Unitscompleted : "+unitcompleted[i]+"  Visa : "+visa[i]+"  Currentunits : "+currentunit[i]);
+        }  
 
- //System.out.println(IDList[i]+unitcompleted[i]+visa[i]+currentunit[i]);
-//System.out.println("hi");
-java.sql.Statement stz = con.createStatement();
-    
-        
-        
-
+        //System.out.println(IDList[i]+unitcompleted[i]+visa[i]+currentunit[i]);
+        //System.out.println("hi");
+        java.sql.Statement stz = con.createStatement();
        
-        
-        
-         
-         
- int q = 0 ;
-   
-for ( int x = 0 ; x < IDList.length ; x ++ ){
-    
-   int unitsperiority = 0 ; 
-
-        for (int i =0 ; i < unitcompleted.length  ; i++){
-            
-   // unitcompleted[i] = rs4.getInt("units_completed");
-            
-            if (unitcompleted[i]>unitsperiority){
-            
-                
-               
-            unitsperiority = unitcompleted[i] ;
-             
-             System.out.println("Completed winner : "+unitsperiority);
-             
-             
+        int q = 0 ;
+        for ( int x = 0 ; x < IDList.length ; x ++ ){
+            int unitsperiority = 0 ; 
+            for (int i =0 ; i < unitcompleted.length  ; i++){
+            // unitcompleted[i] = rs4.getInt("units_completed");
+                if (unitcompleted[i]>unitsperiority){  
+                    unitsperiority = unitcompleted[i] ;      
+                    System.out.println("Completed winner : "+unitsperiority);
+                }
             }
-            
-       
+            java.sql.Statement st5 = con.createStatement();
+            String sql5 = ("SELECT * FROM student where units_completed ="+unitsperiority+";");
+            ResultSet rs5 = st5.executeQuery(sql5);
+            if (rs5.next() == true){
+                int visaperiority = 0 ; 
+                String [] visaname = new String[IDList.length];
+        
+                for (int i =0 ; i < visa.length  ; i++){
+                    rs5.previous();
+                    visa[i] = rs5.getInt("visa");
+                    visaname[i] = rs5.getNString("fname");
+                    if (visa[i]>visaperiority){
+                        visaperiority = visa[i] ;
+                        System.out.println("Visa winner : "+visaperiority+" - "+visaname[i]);
+                        //rs5.next();
+                    }
+                }
+                java.sql.Statement st6 = con.createStatement();
+                String sql6 = ("SELECT * FROM student where visa ="+visaperiority+";");
+                ResultSet rs6 = st6.executeQuery(sql6);
+                if (rs6.next() == true){
+                    int currentperiority = 12 ; 
+                    for (int i =0 ; i < currentunit.length  ; i++){
+                        currentunit[i] = rs6.getInt("current_units");
+                        if (currentunit[i]<currentperiority){
+                            currentperiority = currentunit[i] ;
+                            System.out.println("Current winner : "+currentperiority);
+                            // rs6.next();
+                        }
     
-        }
-        
-        
-        
-       java.sql.Statement st5 = con.createStatement();
-    
-        String sql5 = ("SELECT * FROM student where units_completed ="+unitsperiority+";");
- 
-        ResultSet rs5 = st5.executeQuery(sql5);
-        
-        if (rs5.next() == true){
-            
-      int visaperiority = 0 ;
-      
-        String [] visaname = new String[IDList.length];
-        
-            for (int i =0 ; i < visa.length  ; i++){
-            
-            
-             rs5.previous();
-             visa[i] = rs5.getInt("visa");
-             visaname[i] = rs5.getNString("fname");
-            if (visa[i]>visaperiority){
-            
-               
-            visaperiority = visa[i] ;
-             
-             System.out.println("Visa winner : "+visaperiority+" - "+visaname[i]);
-              //rs5.next();
+                    }
+                    java.sql.Statement st7 = con.createStatement();
+                    String sql7 = ("SELECT * FROM student where current_units ="+currentperiority+";");
+                    ResultSet rs7 = st7.executeQuery(sql7);
+                    rs7.next();
+                    int cwid = rs7.getInt("cwid");
+                    eList[q] =  Integer.toString(cwid);
+                    eList[q+1] =  rs7.getNString("fname"); 
+                    eList[q+2] =  rs7.getNString("lname");
+                    q = q+3;       
+                }else{ 
+                    rs6.next();
+                    int cwid = rs6.getInt("cwid");
+                    eList[q] =  Integer.toString(cwid);
+                    eList[q+1] =  rs6.getNString("fname"); 
+                    eList[q+2] =  rs6.getNString("lname");
+                    q = q+3;
+                }
             }
-    
-        }
-            
-            java.sql.Statement st6 = con.createStatement();
-    
-        String sql6 = ("SELECT * FROM student where visa ="+visaperiority+";");
- 
-        ResultSet rs6 = st6.executeQuery(sql6);
-        
-       if (rs6.next() == true){
-            
-       
-          int currentperiority = 12 ; 
-            
-                for (int i =0 ; i < currentunit.length  ; i++){
-            
-     currentunit[i] = rs6.getInt("current_units");
-            
-            if (currentunit[i]<currentperiority){
-            
-               
-            currentperiority = currentunit[i] ;
-             
-             System.out.println("Current winner : "+currentperiority);
-             // rs6.next();
-            }
-    
-        }
-                
-       java.sql.Statement st7 = con.createStatement();
-    
-        String sql7 = ("SELECT * FROM student where current_units ="+currentperiority+";");
- 
-        ResultSet rs7 = st7.executeQuery(sql7);
-        
-        rs7.next();
-            
-        int cwid = rs7.getInt("cwid");
-          eList[q] =  Integer.toString(cwid);
-            eList[q+1] =  rs7.getNString("fname"); 
-              eList[q+2] =  rs7.getNString("lname");
-             q = q+3;
-             
-             
-    }
-        else{ 
-           
-           rs6.next();
-           int cwid = rs6.getInt("cwid");
-          eList[q] =  Integer.toString(cwid);
-            eList[q+1] =  rs6.getNString("fname"); 
-              eList[q+2] =  rs6.getNString("lname");
-             q = q+3;
-    }
-        
-        
-          }else{
-            rs5.next();
-         int cwid = rs5.getInt("cwid");
+            else{
+                rs5.next();
+                int cwid = rs5.getInt("cwid");
                     
-          eList[q] =  Integer.toString(cwid);
-            eList[q+1] =  rs5.getNString("fname"); 
-              eList[q+2] =  rs5.getNString("lname");
-             q = q+3;
-    }
+                eList[q] =  Integer.toString(cwid);
+                eList[q+1] =  rs5.getNString("fname"); 
+                eList[q+2] =  rs5.getNString("lname");
+                q = q+3;
+            }
      
         
-}
+        }
                 
         /*    int v = 0 ;    
                   for (int i =0 ; i < IDList.length  ; i++){
@@ -820,9 +751,9 @@ for ( int x = 0 ; x < IDList.length ; x ++ ){
        
         }
        */
-    con.close();
+        con.close();
     
-    return eList ;
+        return eList ;
     
     }
     
