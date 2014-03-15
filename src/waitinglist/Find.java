@@ -435,13 +435,25 @@ public class Find extends javax.swing.JFrame {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jComboBox1FocusGained
-
+    
+    /*
+        This is delete button
+    */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int index = jList3.getSelectedIndex();
-        Model.removeElementAt(index);
-        c--;
-        String counter = Integer.toString(c) ;
-        jLabel1.setText(counter);
+        if (index < 0){
+            JDialog errorName;
+            errorName = new JDialog();
+            errorName.setBounds(132, 132, 300, 200);
+            errorName.setTitle("YOu should choose one item");
+            errorName.setVisible(true);
+        }
+        else{
+            Model.removeElementAt(index);
+            c--;
+            String counter = Integer.toString(c) ;
+            jLabel1.setText(counter);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jList2ComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jList2ComponentHidden
