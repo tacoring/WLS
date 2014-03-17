@@ -34,6 +34,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -192,9 +194,21 @@ public class Find1 extends javax.swing.JFrame {
         System.out.println("User name: " + jTextField1.getText());
         System.out.println("Password: " + jTextField2.getText());
         //Check username and password
+         String user = jTextField1.getText();
+        String pass = jTextField2.getText();
         //Need compare with Database
-        
-        if (jTextField1.getText().matches("cpsc462")&&jTextField2.getText().matches("cpsc462"))
+       // approved = false;
+       
+            boolean approved = false;
+        try {
+            approved = Login(user,pass);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Find1.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Find1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+        if (approved == true)
         {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
@@ -204,7 +218,7 @@ public class Find1 extends javax.swing.JFrame {
                 }
             });
         }else{ 
-            JOptionPane.showMessageDialog(rootPane, "Wrong Name or Passowrd", 
+            JOptionPane.showMessageDialog(rootPane, "Wrong Username or Passowrd", 
                     "Inane error", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -262,30 +276,38 @@ public class Find1 extends javax.swing.JFrame {
         
     }
     
-    public String getData(String sid) throws SQLException, ClassNotFoundException{
-    
-        String sid1 =  sid ;
-        // Class.forName("com.mysql.jdbc.Driver");
+    public boolean Login (String user , String pass) throws ClassNotFoundException, SQLException{
+
+        boolean approved = false ;
+        
+         
         Class.forName("com.mysql.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/waiting_list", "root", "cpsc462");
-        java.sql.Statement st = con.createStatement();
-        java.sql.Statement st2 = con.createStatement();
-        String sql = ("SELECT * FROM student WHERE cwid = "+sid1+";");
-
-        ResultSet rs = st.executeQuery(sql);
-        rs.next();
-
-        String  a = rs.getNString("fname");
-        String  b = rs.getNString("lname");
-        int n = rs.getInt("cwid");
-
-        System.out.println(rs.getRow());       
-        System.out.println(b);
-        System.out.println(a);
-        System.out.println(n);
-        con.close();
-        return a;
+        
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425")) {
+            java.sql.Statement st = con.createStatement();
+            String sql = ("SELECT * FROM user WHERE username = "+user+";");
+            ResultSet rs = st.executeQuery(sql);
+            
+        String userpass = rs.getNString("password");
+        
+        if ( rs.equals(null) ) {
+        System.out.print("User is not exist");
+            approved = false ;
+       
+        }else{
+        if (userpass == pass){
+            
+            approved = true ;
+            
+        }else {
+            System.out.print("Wrong password");
+            approved = false ;
+        }} }
+      
+          return approved;
+    
     }
+    
     
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
