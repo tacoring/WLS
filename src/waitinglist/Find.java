@@ -39,7 +39,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import javax.swing.DefaultListModel;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 public class Find extends javax.swing.JFrame {
@@ -47,10 +46,7 @@ public class Find extends javax.swing.JFrame {
     /*
         Static variable
     */
-    //For determine weight
-    final int unitCompletedWeight = 1000;
-    final int visaWeight = 200;
-    final int currentUnitsWeight = 100;
+    
     
     /** Creates new form Find */
     public Find() {
@@ -739,9 +735,9 @@ public class Find extends javax.swing.JFrame {
         for (int i = 0; i < studentArray.length ; i++){
             Students abc = studentArray[i];
             float weightResult = 
-                    ( (float)( abc.getUnitsCompleted() - minMaxA[0] ) / minMaxA[2] ) * unitCompletedWeight+
-                    ( (float)( abc.getVisa() - minMaxB[0] ) / minMaxB[2] ) * visaWeight +
-                    ( (float)( abc.getCurrentUnits() - minMaxC[0] ) / minMaxC[2] * currentUnitsWeight);
+                    ( (float)( abc.getUnitsCompleted() - minMaxA[0] ) / minMaxA[2] ) * WLConfig.unitCompletedWeight+
+                    ( (float)( abc.getVisa() - minMaxB[0] ) / minMaxB[2] ) * WLConfig.visaWeight +
+                    ( (float)( abc.getCurrentUnits() - minMaxC[0] ) / minMaxC[2] * WLConfig.currentUnitsWeight);
             abc.setWeight(weightResult);
         }
         
