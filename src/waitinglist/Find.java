@@ -141,7 +141,7 @@ public class Find extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Find");
+        setTitle("Waiting List Prioritizing Software");
         setAutoRequestFocus(false);
 
         jLabel1.setForeground(new java.awt.Color(0, 0, 102));

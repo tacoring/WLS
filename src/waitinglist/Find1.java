@@ -72,7 +72,7 @@ public class Find1 extends javax.swing.JFrame {
         jTextField6.setText("jTextField6");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Waiting List Prioritizing Software");
+        setTitle("Login");
         setAutoRequestFocus(false);
         setBackground(new java.awt.Color(51, 102, 255));
 
@@ -149,7 +149,7 @@ public class Find1 extends javax.swing.JFrame {
                 .add(LoginPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jButton5)
                     .add(jToggleButton1))
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
