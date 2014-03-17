@@ -261,7 +261,6 @@ public class Find1 extends javax.swing.JFrame {
     
     public boolean Login (String username , String password) throws ClassNotFoundException, SQLException{
 
-//        String usernameFromInput = username;
         System.out.println("Login Username: " + username);
         System.out.println("Login Password: " + password);
         
@@ -271,13 +270,13 @@ public class Find1 extends javax.swing.JFrame {
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
                 WLConfig.databaseUser, WLConfig.databasePassword)) {
             java.sql.Statement st = con.createStatement();
-            String sql = ("SELECT * FROM user WHERE user_id = '"+username+"';");
+            String sql = ("SELECT * FROM user WHERE user_id = '" + username + "';");
             ResultSet rs = st.executeQuery(sql);
             
             if (rs.next())
             {
                 if (rs.getNString("password").matches(password)){
-                    System.out.println("got something: ");
+//                    System.out.println("got something: ");
                     approved = true ;
                 }else{
                     System.out.println("No match : password wrong");
