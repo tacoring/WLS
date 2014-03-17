@@ -281,7 +281,9 @@ public class Find1 extends javax.swing.JFrame {
         
         boolean approved = false ;
         Class.forName("com.mysql.jdbc.Driver");
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425")) {
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
+                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword)) {
             java.sql.Statement st = con.createStatement();
             String sql = ("SELECT * FROM user WHERE user_id = '"+username+"';");
             ResultSet rs = st.executeQuery(sql);

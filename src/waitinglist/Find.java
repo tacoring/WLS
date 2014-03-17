@@ -392,6 +392,10 @@ public class Find extends javax.swing.JFrame {
 //            eModel.insertElementAt(eligiable[w], w);
 //            w++;
             Students [] perioritizeList = perioritizeNew(IDList);
+            //Clear list first
+            jList2.setModel(eModel);
+            eModel.removeAllElements();
+            w = 0;
             for (int i = 0; i < perioritizeList.length; i ++)
             {
                 Students abc = perioritizeList[i];
@@ -511,7 +515,9 @@ public class Find extends javax.swing.JFrame {
         String sid1 =  sid ;
         Class.forName("com.mysql.jdbc.Driver");
         String[] data = new String[10];
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425")) {
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
+                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword)) {
             java.sql.Statement st = con.createStatement();
             String sql = ("SELECT * FROM student WHERE cwid = "+sid1+";");
             ResultSet rs = st.executeQuery(sql);
@@ -558,7 +564,9 @@ public class Find extends javax.swing.JFrame {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
+        Connection con = DriverManager.getConnection("jdbc:mysql://" 
+                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword);
         String eList[] = new String[IDList.length];
 
         // String sql2 = ("SELECT * FROM student ;");
@@ -691,7 +699,9 @@ public class Find extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
+        Connection con = DriverManager.getConnection("jdbc:mysql://" 
+                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword);
         String eList[] = new String[IDList.length];
         Students[] studentArray = new Students[IDList.length];
         
@@ -767,7 +777,9 @@ public class Find extends javax.swing.JFrame {
         
         Class.forName("com.mysql.jdbc.Driver");
         //  Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/waiting_list", "root", "cpsc462");
-        Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
+        Connection con = DriverManager.getConnection("jdbc:mysql://" 
+                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword);
         // Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/localhost/waiting_list", "root", "qq101425");
         //java.sql.Statement st = con.createStatement();
         //String sql2 = "SELECT * FROM Tennis1294966077108.container_tbl WHERE parent_id =+"'par_id'"+ORDER BY creation_time asc";
@@ -799,7 +811,9 @@ public class Find extends javax.swing.JFrame {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425");
+        Connection con = DriverManager.getConnection("jdbc:mysql://" 
+                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword);
 
         java.sql.Statement st3 = con.createStatement();
         String sql3 = ("SELECT section FROM course WHERE course_number ="+siss+";");
