@@ -334,6 +334,8 @@ public class Find extends javax.swing.JFrame {
             jList3.setModel(Model);
             String sid = jTextField3.getText();
             Boolean findSid = false;
+            
+            //Check if insert sid exist in waiting list
             for (int i = 0; i < Model.getSize(); i++ ){
                 String info  =  (String)Model.getElementAt(i) ;
                 int dash  = info.indexOf("-");
@@ -347,11 +349,19 @@ public class Find extends javax.swing.JFrame {
             if (findSid == false){
                 String [] data = getData(sid);
                 String [] info = new String[30];
-                info[c]= data[0] + " , " + data[1] + " - " + data[2];
-                Model.insertElementAt(info[c], c);
-                c++;
-            }
-            else{
+                if (data[2] != null){
+                    info[c]= data[0] + " , " + data[1] + " - " + data[2];
+                    Model.insertElementAt(info[c], c);
+                    c++;
+                }else{
+                    JDialog errorName;
+                    errorName = new JDialog();
+                    errorName.setBounds(132, 132, 300, 200);
+                    errorName.setTitle("This cwid does not exist");
+                    errorName.setVisible(true);
+                }
+                    
+            }else{
                 JDialog errorName;
                 errorName = new JDialog();
                 errorName.setBounds(132, 132, 300, 200);
@@ -513,21 +523,24 @@ public class Find extends javax.swing.JFrame {
     
         String sid1 =  sid ;
         Class.forName("com.mysql.jdbc.Driver");
-        String[] data;
+        String[] data = new String[10];
         try (Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425")) {
             java.sql.Statement st = con.createStatement();
             String sql = ("SELECT * FROM student WHERE cwid = "+sid1+";");
             ResultSet rs = st.executeQuery(sql);
-            rs.next();
-            String  a = rs.getNString("fname");
-            String  b = rs.getNString("lname");
-            int n = rs.getInt("cwid");
-            String convid = Integer.toString(n);
-            data = new String[10];
-            data[0]= a ;
-            data[1]= b ;
-            data[2] = convid ;
-            System.out.println("getData: " + rs.getRow());
+            
+            while(rs.next()){
+                String  a = rs.getNString("fname");
+                String  b = rs.getNString("lname");
+                int n = rs.getInt("cwid");
+                String convid = Integer.toString(n);
+//                data = ;
+                data[0]= a ;
+                data[1]= b ;
+                data[2] = convid ;
+                System.out.println("getData: " + rs.getRow());
+            }
+            
         }
         return data;
    
