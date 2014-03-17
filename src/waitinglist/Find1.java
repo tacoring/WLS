@@ -35,6 +35,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 public class Find1 extends javax.swing.JFrame {
     
@@ -203,11 +204,8 @@ public class Find1 extends javax.swing.JFrame {
                 }
             });
         }else{ 
-            //Error dialog
-            errorName = new JDialog();
-            errorName.setBounds(132, 132, 300, 200);
-            errorName.setTitle("Wrong Name or Passowrd");
-            errorName.setVisible(true);
+            JOptionPane.showMessageDialog(rootPane, "Wrong Name or Passowrd", 
+                    "Inane error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton5ActionPerformed

@@ -40,6 +40,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 public class Find extends javax.swing.JFrame {
     
@@ -354,19 +355,12 @@ public class Find extends javax.swing.JFrame {
                     Model.insertElementAt(info[c], c);
                     c++;
                 }else{
-                    JDialog errorName;
-                    errorName = new JDialog();
-                    errorName.setBounds(132, 132, 300, 200);
-                    errorName.setTitle("This cwid does not exist");
-                    errorName.setVisible(true);
+                    JOptionPane.showMessageDialog(rootPane, "This cwid does not exist");
                 }
                     
             }else{
-                JDialog errorName;
-                errorName = new JDialog();
-                errorName.setBounds(132, 132, 300, 200);
-                errorName.setTitle("Student already in list");
-                errorName.setVisible(true);
+                JOptionPane.showMessageDialog(rootPane, "Student already in list", 
+                    "Inane error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
@@ -452,11 +446,8 @@ public class Find extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int index = jList3.getSelectedIndex();
         if (index < 0){
-            JDialog errorName;
-            errorName = new JDialog();
-            errorName.setBounds(132, 132, 300, 200);
-            errorName.setTitle("YOu should choose one item");
-            errorName.setVisible(true);
+            JOptionPane.showMessageDialog(rootPane, "YOu should choose one item", 
+                    "Inane error", JOptionPane.WARNING_MESSAGE);
         }
         else{
             Model.removeElementAt(index);
