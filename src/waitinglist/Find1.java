@@ -191,15 +191,15 @@ public class Find1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        System.out.println("User name: " + jTextField1.getText());
+        System.out.println("Username: " + jTextField1.getText());
         System.out.println("Password: " + jTextField2.getText());
         //Check username and password
-         String user = jTextField1.getText();
+        String user = jTextField1.getText();
         String pass = jTextField2.getText();
         //Need compare with Database
        // approved = false;
        
-            boolean approved = false;
+        boolean approved = false;
         try {
             approved = Login(user,pass);
         } catch (ClassNotFoundException ex) {
@@ -265,10 +265,7 @@ public class Find1 extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                
-                
-                       
+            public void run() {           
                 new Find1().setVisible(true);
             }
         });
@@ -276,33 +273,49 @@ public class Find1 extends javax.swing.JFrame {
         
     }
     
-    public boolean Login (String user , String pass) throws ClassNotFoundException, SQLException{
+    public boolean Login (String username , String password) throws ClassNotFoundException, SQLException{
 
+//        String usernameFromInput = username;
+        System.out.println("Login Username: " + username);
+        System.out.println("Login Password: " + password);
+        
         boolean approved = false ;
-        
-         
         Class.forName("com.mysql.jdbc.Driver");
-        
         try (Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/waiting_list", "cpsc462", "qq101425")) {
             java.sql.Statement st = con.createStatement();
-            String sql = ("SELECT * FROM user WHERE username = "+user+";");
+            String sql = ("SELECT * FROM user WHERE user_id = '"+username+"';");
             ResultSet rs = st.executeQuery(sql);
             
-        String userpass = rs.getNString("password");
-        
-        if ( rs.equals(null) ) {
-        System.out.print("User is not exist");
-            approved = false ;
-       
-        }else{
-        if (userpass == pass){
-            
-            approved = true ;
-            
-        }else {
-            System.out.print("Wrong password");
-            approved = false ;
-        }} }
+            if (rs.next())
+            {
+                if (rs.getNString("password").matches(password)){
+                    System.out.println("got something: ");
+                    approved = true ;
+                }else{
+                    System.out.println("No match : password wrong");
+                    approved = false ;
+                }
+                
+            }else{
+                System.out.println("No match");
+                approved = false ;
+            }
+//        String userpass = rs.getNString("password");
+//        
+//        if ( rs.equals(null) ) {
+//            System.out.print("User is not exist");
+//            approved = false ;
+//       
+//        }else{
+//        if (userpass == password){
+//            
+//            approved = true ;
+//            
+//        }else {
+//            System.out.print("Wrong password");
+//            approved = false ;
+//        }} 
+        }
       
           return approved;
     
