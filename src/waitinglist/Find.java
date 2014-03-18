@@ -348,7 +348,14 @@ public class Find extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+String [] EIDList = getEIDList();  
+        try {
+            Enroll(EIDList);// TODO add your handling code here:
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     int c = 0 ;
@@ -589,6 +596,20 @@ public class Find extends javax.swing.JFrame {
         String [] Sids = new String[Model.getSize()]; 
         for ( int i = 0 ; i < Model.getSize() ; i++){
             info  =  (String)Model.getElementAt(i) ;
+            int dash  = info.indexOf("-");
+            String temp = info.substring(dash+1);
+            Sids[i]= temp ;
+//            System.out.println("getIDList - " + Model.getElementAt(i));
+//            System.out.println("getIDList - " + Sids[i]);
+        }
+        return Sids;
+    }
+    public String [] getEIDList() { 
+        String info = null ;
+        //String [] sList = new String[Model.getSize()];
+        String [] Sids = new String[eModel.getSize()]; 
+        for ( int i = 0 ; i < eModel.getSize() ; i++){
+            info  =  (String)eModel.getElementAt(i) ;
             int dash  = info.indexOf("-");
             String temp = info.substring(dash+1);
             Sids[i]= temp ;
@@ -869,20 +890,29 @@ public class Find extends javax.swing.JFrame {
     public String [] Enroll (String [] eList) throws ClassNotFoundException, SQLException{
         Object scourse = jComboBox1.getSelectedItem();
        String selectedcourse = scourse.toString();
-        String [] IDList = eList ;
+        String [] EIDList = eList ;
       Class.forName("com.mysql.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
                 WLConfig.databaseUser, WLConfig.databasePassword);
         java.sql.Statement st2 = con.createStatement();
-             for ( int i = 0 ; i < IDList.length ; i ++ ){
+             for ( int i = 0 ; i < EIDList.length ; i ++ ){
             java.sql.Statement st4 = con.createStatement();
-            String sql4 = ("SELECT * FROM student where cwid ="+IDList[i]+";");
+            String sql4 = ("SELECT * FROM student where cwid ="+EIDList[i]+";");
             ResultSet rs4 = st4.executeQuery(sql4);
             rs4.next();
+            int cwid = rs4.getInt("cwid");
+            String fname = rs4.getString("fname");
+            String lname = rs4.getString("lname");
+            String visa = rs4.getString("visa");
+            String uc = rs4.getString("units_completed");
+            String cu = rs4.getString("current_units");
+            String gs = rs4.getString("gradute_status");
             
-           // String sql4 = ("INSERT INTO class ");
-        
+            java.sql.Statement st8 = con.createStatement();
+           String sql8 = ("INSERT INTO `waiting_list`.`cpsc46201` (`cwid`, `fname`, `lname`, `visa`, `units_completed`, `current_units`, `gradute_status`, `course_id`, `weight`) VALUES ("+cwid+", "+fname+", "+lname+", "+visa+", "+uc+", "+cu+", "+gs+", NULL, NULL);");
+           st8.executeQuery(sql8);
+           con.close();
         }  
         
         
