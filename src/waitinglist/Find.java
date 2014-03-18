@@ -223,7 +223,7 @@ public class Find extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("sign out");
+        jButton5.setText("Sign out");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -381,11 +381,12 @@ public class Find extends javax.swing.JFrame {
                     Model.insertElementAt(info[c], c);
                     c++;
                 }else{
-                    JOptionPane.showMessageDialog(rootPane, "This cwid does not exist");
+                    JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " does not exist, "
+                            + "please enter the correct value");
                 }
                     
             }else{
-                JOptionPane.showMessageDialog(rootPane, "Student already in list", 
+                JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " already in list", 
                     "Inane error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException ex) {
