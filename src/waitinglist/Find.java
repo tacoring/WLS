@@ -463,13 +463,15 @@ String [] EIDList = getEIDList();
     private void jComboBox1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusGained
         try {
             jComboBox1.removeAllItems();
-            ArrayList<String> data = getCourses();
-            int z = 0 ;
+            //ArrayList<String> data = getCourses();
+            Classes[] classArray = getCoursesNew();
+//            int z = 0 ;
 //            System.out.println(data.size());
-            for ( int i = 0 ; i < data.size() / 4 ; i++){
-                jComboBox1.addItem(data.get(z+0) + " - "+ data.get(z+3) + " : "+ data.get(z+1) + " _ " + data.get(z+2));
+            for ( int i = 0 ; i < classArray.length ; i++){
+//                jComboBox1.addItem(data.get(z+0) + " - "+ data.get(z+3) + " : "+ data.get(z+1) + " _ " + data.get(z+2));
+                jComboBox1.addItem(classArray[i].getClassNumber() + " - " + classArray[i].getCourseName());
 //                System.out.println("ComboBox - course : " + data.get(z+0) + " - " + data.get(z+1) + " - " + data.get(z+2));
-                z = z+4;
+//                z = z+4;
             }  
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
@@ -619,7 +621,7 @@ String [] EIDList = getEIDList();
         return Sids;
     }
     
-    public  String [] perioritize (String [] IDList) throws SQLException{
+    public  String [] perioritizeNoUse (String [] IDList) throws SQLException{
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
@@ -857,7 +859,39 @@ String [] EIDList = getEIDList();
         return courses;
     }
     
-    
+ 
+        public  Classes[] getCoursesNew() throws ClassNotFoundException, SQLException{
+        
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://" 
+                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword);
+        java.sql.Statement st2 = con.createStatement();
+        String sql2 = ("SELECT * FROM Courses;");
+        ResultSet rs2 = st2.executeQuery(sql2);
+        int i = 0;
+        int rowcount = 0;
+        if (rs2.last()) {
+          rowcount = rs2.getRow();
+          rs2.beforeFirst(); // not rs.first() because the rs.next() below will move on, missing the first element
+        }
+        Classes[] classArray = new Classes[rowcount];
+        while (rs2.next()){
+            classArray[i] = new Classes(rs2.getString("CourseName"), 
+                                        rs2.getInt("Section"),
+                                        rs2.getString("SectionDetail"),
+                                        rs2.getInt("ClassNumber"),
+                                        rs2.getString("DayTime"),
+                                        rs2.getString("Room"),
+                                        rs2.getString("Instructor"),
+                                        rs2.getString("MeetingDate"));
+            
+            i++;
+        }
+        con.close();
+        return classArray;
+    }
+        
     public String [] getSections (String sis) throws SQLException{
         
         String siss = sis;
@@ -879,9 +913,6 @@ String [] EIDList = getEIDList();
             rs3.next();
             sections [i] = rs3.getString("section");
             System.out.println(sections[i]);
-            // c++;
-            // sections[1] = rs3.getNString("section"); 
-            // rs2.getr
         }
         con.close();
         return sections;
@@ -889,25 +920,25 @@ String [] EIDList = getEIDList();
     
     public String [] Enroll (String [] eList) throws ClassNotFoundException, SQLException{
         Object scourse = jComboBox1.getSelectedItem();
-       String selectedcourse = scourse.toString();
+        String selectedcourse = scourse.toString();
         
-            int cci  = selectedcourse.indexOf("-");
-             String cc = selectedcourse.substring(cci+1,cci+6);
-             int sni  = selectedcourse.indexOf("_");
-              String sn = selectedcourse.substring(sni+2);
-             String cn = selectedcourse.substring(0,3);
+        int cci  = selectedcourse.indexOf("-");
+        String cc = selectedcourse.substring(cci+1,cci+6);
+        int sni  = selectedcourse.indexOf("_");
+        String sn = selectedcourse.substring(sni+2);
+        String cn = selectedcourse.substring(0,3);
              
-             String sclass = cc+cn+sn;
-             System.out.println(sclass);
-          
+        String sclass = cc+cn+sn;
+        System.out.println(sclass);
+        
           //  Sids[i]= temp ;
         String [] EIDList = eList ;
-      Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
                 WLConfig.databaseUser, WLConfig.databasePassword);
         java.sql.Statement st2 = con.createStatement();
-             for ( int i = 0 ; i < EIDList.length ; i ++ ){
+        for ( int i = 0 ; i < EIDList.length ; i ++ ){
             java.sql.Statement st4 = con.createStatement();
             String sql4 = ("SELECT * FROM student where cwid ="+EIDList[i]+";");
             ResultSet rs4 = st4.executeQuery(sql4);
@@ -919,16 +950,13 @@ String [] EIDList = getEIDList();
             String uc = rs4.getString("units_completed");
             String cu = rs4.getString("current_units");
             String gs = rs4.getString("gradute_status");
-           // ('cwid', 'fname', 'lname', 'visa', 'units_completed', 'current_units', 'gradute_status', 'course_id', 'weight') 
+            // ('cwid', 'fname', 'lname', 'visa', 'units_completed', 'current_units', 'gradute_status', 'course_id', 'weight') 
             java.sql.Statement st8 = con.createStatement();
-           String sql8 = ("INSERT INTO "+sclass+" VALUES ("+cwid+", "+fname+", "+lname+", "+visa+", "+uc+", "+cu+", "+gs+", NULL, NULL);");
-           st8.executeUpdate(sql8);
+            String sql8 = ("INSERT INTO "+sclass+" VALUES ("+cwid+", "+fname+", "+lname+", "+visa+", "+uc+", "+cu+", "+gs+", NULL, NULL);");
+            st8.executeUpdate(sql8);
            
            con.close();
-        }  
-        
-        
-        
+        }
         return null;
     }
     
