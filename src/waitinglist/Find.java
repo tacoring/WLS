@@ -390,31 +390,32 @@ public class Find extends javax.swing.JFrame {
     DefaultListModel eModel = new DefaultListModel();
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String [] IDList = getIDList();
-        try {
-            //String [] data = perioritize(IDList);
-//            String [] data = perioritizeNew(IDList);
-//            jList2.setModel(eModel);
-//            String [] eligiable = new String[30];
-//            eligiable[w]= data[1]+" , "+data[2]+" - "+data[0];
-//            eModel.insertElementAt(eligiable[w], w);
-//            w++;
-            Students [] perioritizeList = perioritizeNew(IDList);
-            //Clear list first
-            jList2.setModel(eModel);
-            eModel.removeAllElements();
-            w = 0;
-            for (int i = 0; i < perioritizeList.length; i ++)
-            {
-                Students abc = perioritizeList[i];
+        
+        String abcTest = (String)jComboBox1.getSelectedItem();
+        System.out.println("Perioritize - combobox : " + abcTest);
+        if (jComboBox1.getSelectedItem() != null){
+            try {
+                Students [] perioritizeList = perioritizeNew(IDList);
+                //Clear list first
                 jList2.setModel(eModel);
-                String [] eligiable = new String[30];
-                eligiable[w]= "Weight: " + abc.getWeight() + ", INFO: " + abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
-                eModel.insertElementAt(eligiable[w], w);
-                w++;
+                eModel.removeAllElements();
+                w = 0;
+                for (int i = 0; i < perioritizeList.length; i ++)
+                {
+                    Students abc = perioritizeList[i];
+                    jList2.setModel(eModel);
+                    String [] eligiable = new String[30];
+                    eligiable[w]= "Weight: " + abc.getWeight() + ", INFO: " + abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
+                    eModel.insertElementAt(eligiable[w], w);
+                    w++;
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Choose one course", 
+                    "Inane error", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -433,7 +434,7 @@ public class Find extends javax.swing.JFrame {
             jComboBox1.removeAllItems();
             ArrayList<String> data = getCourses();
             int z = 0 ;
-            System.out.println(data.size());
+//            System.out.println(data.size());
             for ( int i = 0 ; i < data.size() / 3 ; i++){
                 jComboBox1.addItem(data.get(z+0) + " - " + data.get(z+1) + " - " + data.get(z+2));
 //                System.out.println("ComboBox - course : " + data.get(z+0) + " - " + data.get(z+1) + " - " + data.get(z+2));
@@ -534,7 +535,6 @@ public class Find extends javax.swing.JFrame {
                 data[0]= rs.getNString("fname") ;
                 data[1]= rs.getNString("lname") ;
                 data[2] = Integer.toString(rs.getInt("cwid")) ;
-//                System.out.println("getData: " + rs.getRow());
             }
             
         }
@@ -705,7 +705,7 @@ public class Find extends javax.swing.JFrame {
         Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
                 WLConfig.databaseUser, WLConfig.databasePassword);
-        String eList[] = new String[IDList.length];
+//        String eList[] = new String[IDList.length];
         Students[] studentArray = new Students[IDList.length];
         
         // String sql2 = ("SELECT * FROM student ;");
@@ -714,7 +714,7 @@ public class Find extends javax.swing.JFrame {
         int [] visa  = new int[IDList.length];
         int [] currentunit  = new int[IDList.length];
         float [] weight = new float[IDList.length];
-        int [] minMax = new int[6];
+//        int [] minMax = new int[6];
         for ( int i = 0 ; i < IDList.length ; i ++ ){
             java.sql.Statement st4 = con.createStatement();
             String sql4 = ("SELECT * FROM student where cwid ="+IDList[i]+";");
@@ -770,7 +770,7 @@ public class Find extends javax.swing.JFrame {
         minMaxList[0] = min;
         minMaxList[1] = max;
         minMaxList[2] = max - min;
-        System.out.println("min: " + minMaxList[0] + ", max: " + minMaxList[1]);
+//        System.out.println("min: " + minMaxList[0] + ", max: " + minMaxList[1]);
         
         return minMaxList;
     }
