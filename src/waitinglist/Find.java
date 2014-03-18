@@ -348,7 +348,7 @@ public class Find extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-String [] EIDList = getEIDList();  
+        String [] EIDList = getEIDList();  
         try {
             Enroll(EIDList);// TODO add your handling code here:
         } catch (ClassNotFoundException ex) {
@@ -436,7 +436,8 @@ String [] EIDList = getEIDList();
                     Students abc = perioritizeList[i];
                     jList2.setModel(eModel);
                     String [] eligiable = new String[30];
-                    eligiable[w]= "Weight: " + abc.getWeight() + ", INFO: " + abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
+//                    eligiable[w]= "Weight: " + abc.getWeight() + ", INFO: " + abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
+                    eligiable[w]= abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
                     eModel.insertElementAt(eligiable[w], w);
                     w++;
                 }
@@ -469,7 +470,7 @@ String [] EIDList = getEIDList();
 //            System.out.println(data.size());
             for ( int i = 0 ; i < classArray.length ; i++){
 //                jComboBox1.addItem(data.get(z+0) + " - "+ data.get(z+3) + " : "+ data.get(z+1) + " _ " + data.get(z+2));
-                jComboBox1.addItem(classArray[i].getClassNumber() + " - " + classArray[i].getCourseName());
+                jComboBox1.addItem(classArray[i].getClassNumber() + ", " + classArray[i].getCourseName());
 //                System.out.println("ComboBox - course : " + data.get(z+0) + " - " + data.get(z+1) + " - " + data.get(z+2));
 //                z = z+4;
             }  
@@ -801,7 +802,8 @@ String [] EIDList = getEIDList();
         String cn = selectedcourse.substring(0,3);
              
         String sclass = cc+cn+sn;
-        System.out.println(sclass);
+//        System.out.println(sclass);
+        System.out.println(selectedcourse);
         
           //  Sids[i]= temp ;
         String [] EIDList = eList ;
