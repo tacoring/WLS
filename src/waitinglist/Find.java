@@ -664,9 +664,9 @@ public class Find extends javax.swing.JFrame {
     */
     public Students[] calculateWeight (Students[] aStudentArray, int[] aList, int[] bList, int[] cList){
         Students[] studentArray = aStudentArray;
-        int [] minMaxA = getMaxMin(aList);
-        int [] minMaxB = getMaxMin(bList);
-        int [] minMaxC = getMaxMin(cList);
+        int [] minMaxA = WLToolBox.getMaxMin(aList);
+        int [] minMaxB = WLToolBox.getMaxMin(bList);
+        int [] minMaxC = WLToolBox.getMaxMin(cList);
         
         for (int i = 0; i < studentArray.length ; i++){
             Students abc = studentArray[i];
@@ -679,25 +679,7 @@ public class Find extends javax.swing.JFrame {
         
         return studentArray;
     }
-    
-    /*
-        Tool for get min and Max value in integer array
-    */
-    public int [] getMaxMin (int[] aList) {
-        int [] minMaxList = new int[3];
-        int min = 0;
-        int max = 0;
-        for (int i = 0; i < aList.length; i++) {
-            if (min > aList[i]){ min = aList[i]; }
-            if (max < aList[i]){ max = aList[i]; }
-        }
-        minMaxList[0] = min;
-        minMaxList[1] = max;
-        minMaxList[2] = max - min;
-        
-        return minMaxList;
-    }
-    
+     
     public  ArrayList<String> getCourses() throws ClassNotFoundException, SQLException{
         
         Class.forName("com.mysql.jdbc.Driver");
@@ -732,7 +714,7 @@ public class Find extends javax.swing.JFrame {
         java.sql.Statement st2 = con.createStatement();
         String sql2 = ("SELECT * FROM Courses;");
         ResultSet rs2 = st2.executeQuery(sql2);
-        Classes[] classArray = new Classes[getDatabaseRowCount(rs2)];
+        Classes[] classArray = new Classes[WLToolBox.getDatabaseRowCount(rs2)];
         while (rs2.next()){
             classArray[queryCount] = new Classes(rs2.getString("CourseName"), 
                                         rs2.getInt("Section"),
@@ -747,15 +729,6 @@ public class Find extends javax.swing.JFrame {
         }
         con.close();
         return classArray;
-    }
-    
-    public int getDatabaseRowCount(ResultSet aSet) throws SQLException{
-        int rowCount = 0;
-        if (aSet.last()) {
-          rowCount = aSet.getRow();
-          aSet.beforeFirst(); // not rs.first() because the rs.next() below will move on, missing the first element
-        }
-        return rowCount;
     }
     
     public String [] getSections (String sis) throws SQLException{
