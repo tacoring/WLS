@@ -37,6 +37,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -424,18 +425,15 @@ public class Find extends javax.swing.JFrame {
     private void jComboBox1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusGained
         try {
             jComboBox1.removeAllItems();
-            String [] data = getCourses();
-            String [] courses = new String[30];
+            ArrayList<String> data = getCourses();
             int z = 0 ;
-            System.out.println(data.length);
-            for ( int i = 0 ; i < 3 ; i++){    
-                courses[i] = data[z]+" -  "+data[z+1]+" -  "+data[z+2];
-                jComboBox1.addItem(courses[i]);
+            System.out.println(data.size());
+            for ( int i = 0 ; i < data.size() / 3 ; i++){
+                jComboBox1.addItem(data.get(z+0) + " - " + data.get(z+1) + " - " + data.get(z+2));
+//                System.out.println("ComboBox - course : " + data.get(z+0) + " - " + data.get(z+1) + " - " + data.get(z+2));
                 z = z+3;
             }  
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jComboBox1FocusGained
@@ -492,12 +490,6 @@ public class Find extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LoginScreen().setVisible(true);
-//                //test code
-//                
-//                int a1 = 3;
-//                int a2 = 6;
-//                float f3 = (float)a1/a2;
-//                System.out.println("===================" + f3);
             }
         });
         
@@ -726,7 +718,6 @@ public class Find extends javax.swing.JFrame {
         }
         studentArray = calculateWeight(studentArray, unitcompleted, visa, currentunit);
         
-//        Arrays.sort(studentArray, Students.UnitsCompletedComparator);
         Arrays.sort(studentArray, Students.WeightComparator);
         System.out.println("Students list sorted by unitsCompleted:\n" + Arrays.toString(studentArray));
         
@@ -773,32 +764,26 @@ public class Find extends javax.swing.JFrame {
         return minMaxList;
     }
     
-    public  String [] getCourses() throws ClassNotFoundException, SQLException{
+    public  ArrayList<String> getCourses() throws ClassNotFoundException, SQLException{
         
         Class.forName("com.mysql.jdbc.Driver");
-        //  Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/waiting_list", "root", "cpsc462");
         Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
                 WLConfig.databaseUser, WLConfig.databasePassword);
-        // Connection con = DriverManager.getConnection("jdbc:mysql://54.186.24.136:3306/localhost/waiting_list", "root", "qq101425");
-        //java.sql.Statement st = con.createStatement();
-        //String sql2 = "SELECT * FROM Tennis1294966077108.container_tbl WHERE parent_id =+"'par_id'"+ORDER BY creation_time asc";
         java.sql.Statement st2 = con.createStatement();
         String sql2 = ("SELECT * FROM course;");
         ResultSet rs2 = st2.executeQuery(sql2);
-        String   cd [] = new String[30];
-        for (int i = 0 ; i < 3 ; i++){
-            rs2.next(); 
-            
-            cd[i]  =  rs2.getNString("course_number");
-            cd[i+1]  =  rs2.getNString("course_name");
-            cd[i+2]  =  rs2.getNString("section");
-            System.out.println(cd[i]+" - "+cd[i+1]+"-"+cd[i+2]); 
-            i++ ;
-            i++;
+        int i = 0;
+        
+        ArrayList<String> courses = new ArrayList<>();
+        while (rs2.next()){
+            courses.add(i, rs2.getNString("course_number"));
+            courses.add(i+1, rs2.getNString("course_name"));
+            courses.add(i+2, rs2.getNString("section"));
+            i = i + 3;
         }
         con.close();
-        return cd;
+        return courses;
     }
     
     
