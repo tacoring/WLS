@@ -722,8 +722,9 @@ public class Find extends javax.swing.JFrame {
     }
     
  
-        public  Classes[] getCoursesNew() throws ClassNotFoundException, SQLException{
+    public  Classes[] getCoursesNew() throws ClassNotFoundException, SQLException{
         
+        int queryCount = 0;
         Class.forName("com.mysql.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
@@ -731,15 +732,9 @@ public class Find extends javax.swing.JFrame {
         java.sql.Statement st2 = con.createStatement();
         String sql2 = ("SELECT * FROM Courses;");
         ResultSet rs2 = st2.executeQuery(sql2);
-        int i = 0;
-        int rowcount = 0;
-        if (rs2.last()) {
-          rowcount = rs2.getRow();
-          rs2.beforeFirst(); // not rs.first() because the rs.next() below will move on, missing the first element
-        }
-        Classes[] classArray = new Classes[rowcount];
+        Classes[] classArray = new Classes[getDatabaseRowCount(rs2)];
         while (rs2.next()){
-            classArray[i] = new Classes(rs2.getString("CourseName"), 
+            classArray[queryCount] = new Classes(rs2.getString("CourseName"), 
                                         rs2.getInt("Section"),
                                         rs2.getString("SectionDetail"),
                                         rs2.getInt("ClassNumber"),
@@ -748,12 +743,21 @@ public class Find extends javax.swing.JFrame {
                                         rs2.getString("Instructor"),
                                         rs2.getString("MeetingDate"));
             
-            i++;
+            queryCount++;
         }
         con.close();
         return classArray;
     }
-        
+    
+    public int getDatabaseRowCount(ResultSet aSet) throws SQLException{
+        int rowCount = 0;
+        if (aSet.last()) {
+          rowCount = aSet.getRow();
+          aSet.beforeFirst(); // not rs.first() because the rs.next() below will move on, missing the first element
+        }
+        return rowCount;
+    }
+    
     public String [] getSections (String sis) throws SQLException{
         
         String siss = sis;
