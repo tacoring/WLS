@@ -94,7 +94,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
         jLabel1.setText("Username ");
 
-        jButton5.setText("sign in");
+        jButton5.setText("Sign in");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -179,7 +179,7 @@ public class LoginScreen extends javax.swing.JFrame {
         
         String user = jTextField1.getText();
         String pass = new String(jPasswordField1.getPassword());
-        boolean approved = false;
+        int approved = WLConfig.LOGIN_START;
         
         try {
             approved = Login(user,pass);
@@ -187,7 +187,7 @@ public class LoginScreen extends javax.swing.JFrame {
             Logger.getLogger(LoginScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
       
-        if (approved == true)
+        if (approved == WLConfig.LOGIN_SUCCESS)
         {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
@@ -196,10 +196,17 @@ public class LoginScreen extends javax.swing.JFrame {
                     new Find().setVisible(true);
                 }
             });
-        }else{ 
-            JOptionPane.showMessageDialog(rootPane, "Wrong Username or Passowrd", 
+        }else if (approved == WLConfig.LOGIN_PASSWORD_NOTMATCH){ 
+            JOptionPane.showMessageDialog(rootPane, "Username-Password mismatch", 
+                    "Inane error", JOptionPane.ERROR_MESSAGE);
+        }else if (approved == WLConfig.LOGIN_NOMATCH_USER){
+            JOptionPane.showMessageDialog(rootPane, "Username does not exist", 
+                    "Inane error", JOptionPane.ERROR_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Something wrong!!!!!", 
                     "Inane error", JOptionPane.ERROR_MESSAGE);
         }
+            
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -208,12 +215,12 @@ public class LoginScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     
-    public boolean Login (String username , String password) throws ClassNotFoundException, SQLException{
+    public int Login (String username , String password) throws ClassNotFoundException, SQLException{
 
         System.out.println("Login Username: " + username);
         System.out.println("Login Password: " + password);
         
-        boolean approved = false ;
+        int approved = WLConfig.LOGIN_START ;
         Class.forName("com.mysql.jdbc.Driver");
         try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
@@ -226,15 +233,15 @@ public class LoginScreen extends javax.swing.JFrame {
             {
                 if (rs.getNString("password").matches(password)){
 //                    System.out.println("got something: ");
-                    approved = true ;
+                    approved = WLConfig.LOGIN_SUCCESS ;
                 }else{
                     System.out.println("No match : password wrong");
-                    approved = false ;
+                    approved = WLConfig.LOGIN_PASSWORD_NOTMATCH ;
                 }
                 
             }else{
                 System.out.println("No match");
-                approved = false ;
+                approved = WLConfig.LOGIN_NOMATCH_USER ;
             }
         }
       

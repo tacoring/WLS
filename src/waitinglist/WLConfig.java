@@ -22,4 +22,8 @@ public interface WLConfig {
     final String databaseUser = "cpsc462";
     final String databasePassword = "qq101425";
     
+    final static int LOGIN_START                =   1;
+    final static int LOGIN_SUCCESS              =   2;
+    final static int LOGIN_PASSWORD_NOTMATCH    =   3;
+    final static int LOGIN_NOMATCH_USER         =   4;
 }
