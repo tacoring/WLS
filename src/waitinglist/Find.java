@@ -48,8 +48,10 @@ public class Find extends javax.swing.JFrame {
     /*
         Static variable
     */
-    
-    
+    int waitingListCount = 0 ;
+    int eligableListCount = 0 ;
+    DefaultListModel waitingListModel = new DefaultListModel();
+    DefaultListModel eligableListModel = new DefaultListModel();
     /** Creates new form Find */
     public Find() {
         initComponents();
@@ -351,27 +353,23 @@ public class Find extends javax.swing.JFrame {
         String [] EIDList = getEIDList();  
         try {
             Enroll(EIDList);// TODO add your handling code here:
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    int c = 0 ;
-    DefaultListModel Model = new DefaultListModel();
     /*
         This one is Add button
      */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {         
-            jList3.setModel(Model);
+            jList3.setModel(waitingListModel);
             String sid = jTextField3.getText();
             Boolean findSid = false;
             
             //Check if insert sid exist in waiting list
-            for (int i = 0; i < Model.getSize(); i++ ){
-                String info  =  (String)Model.getElementAt(i) ;
+            for (int i = 0; i < waitingListModel.getSize(); i++ ){
+                String info  =  (String)waitingListModel.getElementAt(i) ;
                 int dash  = info.indexOf("-");
                 String temp = info.substring(dash+2);
                 System.out.println("ADD - the sid: " + temp.toString() + ", input sid: " + sid.toString());
@@ -384,9 +382,9 @@ public class Find extends javax.swing.JFrame {
                 String [] data = getData(sid);
                 String [] info = new String[30];
                 if (data[2] != null){
-                    info[c]= data[0] + " , " + data[1] + " - " + data[2];
-                    Model.insertElementAt(info[c], c);
-                    c++;
+                    info[waitingListCount]= data[0] + " , " + data[1] + " - " + data[2];
+                    waitingListModel.insertElementAt(info[waitingListCount], waitingListCount);
+                    waitingListCount++;
                 }else{
                     JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " does not exist, "
                             + "please enter the correct value");
@@ -396,12 +394,10 @@ public class Find extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " already in list", 
                     "Inane error", JOptionPane.WARNING_MESSAGE);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String counter = Integer.toString(c) ;
+        String counter = Integer.toString(waitingListCount) ;
         jLabel1.setText(counter);
          // getList();  
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -417,8 +413,7 @@ public class Find extends javax.swing.JFrame {
     /*
         This is perioritize button
     */
-    int w = 0 ;
-    DefaultListModel eModel = new DefaultListModel();
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String [] IDList = getIDList();
         
@@ -428,17 +423,17 @@ public class Find extends javax.swing.JFrame {
             try {
                 Students [] perioritizeList = perioritizeNew(IDList);
                 //Clear list first
-                jList2.setModel(eModel);
-                eModel.removeAllElements();
-                w = 0;
+                jList2.setModel(eligableListModel);
+                eligableListModel.removeAllElements();
+                eligableListCount = 0;
                 for (int i = 0; i < perioritizeList.length; i ++)
                 {
                     Students abc = perioritizeList[i];
-                    jList2.setModel(eModel);
+                    jList2.setModel(eligableListModel);
                     String [] eligiable = new String[30];
-                    eligiable[w]= abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
-                    eModel.insertElementAt(eligiable[w], w);
-                    w++;
+                    eligiable[eligableListCount]= abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
+                    eligableListModel.insertElementAt(eligiable[eligableListCount], eligableListCount);
+                    eligableListCount++;
                 }
 
             } catch (SQLException ex) {
@@ -482,9 +477,9 @@ public class Find extends javax.swing.JFrame {
                     "Inane error", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            Model.removeElementAt(index);
-            c--;
-            String counter = Integer.toString(c) ;
+            waitingListModel.removeElementAt(index);
+            waitingListCount--;
+            String counter = Integer.toString(waitingListCount) ;
             jLabel1.setText(counter);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -589,9 +584,9 @@ public class Find extends javax.swing.JFrame {
     public String [] getIDList() { 
         String info = null ;
         //String [] sList = new String[Model.getSize()];
-        String [] Sids = new String[Model.getSize()]; 
-        for ( int i = 0 ; i < Model.getSize() ; i++){
-            info  =  (String)Model.getElementAt(i) ;
+        String [] Sids = new String[waitingListModel.getSize()]; 
+        for ( int i = 0 ; i < waitingListModel.getSize() ; i++){
+            info  =  (String)waitingListModel.getElementAt(i) ;
             int dash  = info.indexOf("-");
             String temp = info.substring(dash+1);
             Sids[i]= temp ;
@@ -601,9 +596,9 @@ public class Find extends javax.swing.JFrame {
     public String [] getEIDList() { 
         String info = null ;
         //String [] sList = new String[Model.getSize()];
-        String [] Sids = new String[eModel.getSize()]; 
-        for ( int i = 0 ; i < eModel.getSize() ; i++){
-            info  =  (String)eModel.getElementAt(i) ;
+        String [] Sids = new String[eligableListModel.getSize()]; 
+        for ( int i = 0 ; i < eligableListModel.getSize() ; i++){
+            info  =  (String)eligableListModel.getElementAt(i) ;
             int dash  = info.indexOf("-");
             String temp = info.substring(dash+1);
             Sids[i]= temp ;
@@ -680,7 +675,7 @@ public class Find extends javax.swing.JFrame {
         return studentArray;
     }
      
-    public  ArrayList<String> getCourses() throws ClassNotFoundException, SQLException{
+    public  ArrayList<String> getCoursesNoUse() throws ClassNotFoundException, SQLException{
         
         Class.forName("com.mysql.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://" 
