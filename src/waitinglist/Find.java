@@ -31,6 +31,7 @@
 package waitinglist;
 
 
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Connection;
@@ -142,7 +143,7 @@ public class Find extends javax.swing.JFrame {
         setAutoRequestFocus(false);
 
         jLabel1.setForeground(new java.awt.Color(0, 0, 102));
-        jLabel1.setText("update waiting seats");
+        jLabel1.setText("0");
 
         jButton1.setActionCommand("Enroll");
         jButton1.setLabel("Enroll");
@@ -188,6 +189,11 @@ public class Find extends javax.swing.JFrame {
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
+            }
+        });
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField3KeyTyped(evt);
             }
         });
 
@@ -458,6 +464,16 @@ public class Find extends javax.swing.JFrame {
     private void jList2ComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jList2ComponentHidden
         // TODO add your handling code here:
     }//GEN-LAST:event_jList2ComponentHidden
+
+    private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))){
+            System.out.println("Just number !!!!!");
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextField3KeyTyped
     
     /**
      * @param args the command line arguments
