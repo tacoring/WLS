@@ -459,10 +459,10 @@ public class Find extends javax.swing.JFrame {
             ArrayList<String> data = getCourses();
             int z = 0 ;
 //            System.out.println(data.size());
-            for ( int i = 0 ; i < data.size() / 3 ; i++){
-                jComboBox1.addItem(data.get(z+0) + " - " + data.get(z+1) + " - " + data.get(z+2));
+            for ( int i = 0 ; i < data.size() / 4 ; i++){
+                jComboBox1.addItem(data.get(z+0) + " - "+ data.get(z+3) + " : "+ data.get(z+1) + " - " + data.get(z+2));
 //                System.out.println("ComboBox - course : " + data.get(z+0) + " - " + data.get(z+1) + " - " + data.get(z+2));
-                z = z+3;
+                z = z+4;
             }  
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
@@ -829,7 +829,8 @@ public class Find extends javax.swing.JFrame {
             courses.add(i, rs2.getNString("course_number"));
             courses.add(i+1, rs2.getNString("course_name"));
             courses.add(i+2, rs2.getNString("section"));
-            i = i + 3;
+            courses.add(i+3, rs2.getNString("course_code"));
+            i = i + 4;
         }
         con.close();
         return courses;
@@ -865,8 +866,27 @@ public class Find extends javax.swing.JFrame {
         return sections;
     }
     
-    public String [] Enroll (String [] eList){
-      
+    public String [] Enroll (String [] eList) throws ClassNotFoundException, SQLException{
+        Object scourse = jComboBox1.getSelectedItem();
+       String selectedcourse = scourse.toString();
+        String [] IDList = eList ;
+      Class.forName("com.mysql.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://" 
+                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword);
+        java.sql.Statement st2 = con.createStatement();
+             for ( int i = 0 ; i < IDList.length ; i ++ ){
+            java.sql.Statement st4 = con.createStatement();
+            String sql4 = ("SELECT * FROM student where cwid ="+IDList[i]+";");
+            ResultSet rs4 = st4.executeQuery(sql4);
+            rs4.next();
+            
+           // String sql4 = ("INSERT INTO class ");
+        
+        }  
+        
+        
+        
         return null;
     }
     
