@@ -504,6 +504,7 @@ public class Find extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new LoginScreen().setVisible(true);
             }
@@ -520,26 +521,20 @@ public class Find extends javax.swing.JFrame {
     
     public String [] getData(String sid) throws SQLException, ClassNotFoundException{
     
-        String sid1 =  sid ;
         Class.forName("com.mysql.jdbc.Driver");
-        String[] data = new String[10];
+        String[] data = new String[3];
         try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
                 WLConfig.databaseUser, WLConfig.databasePassword)) {
             java.sql.Statement st = con.createStatement();
-            String sql = ("SELECT * FROM student WHERE cwid = "+sid1+";");
+            String sql = ("SELECT * FROM student WHERE cwid = "+sid+";");
             ResultSet rs = st.executeQuery(sql);
             
             while(rs.next()){
-                String  a = rs.getNString("fname");
-                String  b = rs.getNString("lname");
-                int n = rs.getInt("cwid");
-                String convid = Integer.toString(n);
-//                data = ;
-                data[0]= a ;
-                data[1]= b ;
-                data[2] = convid ;
-                System.out.println("getData: " + rs.getRow());
+                data[0]= rs.getNString("fname") ;
+                data[1]= rs.getNString("lname") ;
+                data[2] = Integer.toString(rs.getInt("cwid")) ;
+//                System.out.println("getData: " + rs.getRow());
             }
             
         }
