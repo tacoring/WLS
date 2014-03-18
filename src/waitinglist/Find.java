@@ -436,7 +436,6 @@ public class Find extends javax.swing.JFrame {
                     Students abc = perioritizeList[i];
                     jList2.setModel(eModel);
                     String [] eligiable = new String[30];
-//                    eligiable[w]= "Weight: " + abc.getWeight() + ", INFO: " + abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
                     eligiable[w]= abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
                     eModel.insertElementAt(eligiable[w], w);
                     w++;
@@ -456,23 +455,17 @@ public class Find extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
-     
-     
-      
-    }//GEN-LAST:event_jComboBox1MouseClicked
 
+    }//GEN-LAST:event_jComboBox1MouseClicked
+    /*
+        This is courses comboBox
+    */
     private void jComboBox1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusGained
         try {
             jComboBox1.removeAllItems();
-            //ArrayList<String> data = getCourses();
             Classes[] classArray = getCoursesNew();
-//            int z = 0 ;
-//            System.out.println(data.size());
             for ( int i = 0 ; i < classArray.length ; i++){
-//                jComboBox1.addItem(data.get(z+0) + " - "+ data.get(z+3) + " : "+ data.get(z+1) + " _ " + data.get(z+2));
                 jComboBox1.addItem(classArray[i].getClassNumber() + ", " + classArray[i].getCourseName());
-//                System.out.println("ComboBox - course : " + data.get(z+0) + " - " + data.get(z+1) + " - " + data.get(z+2));
-//                z = z+4;
             }  
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
@@ -602,8 +595,6 @@ public class Find extends javax.swing.JFrame {
             int dash  = info.indexOf("-");
             String temp = info.substring(dash+1);
             Sids[i]= temp ;
-//            System.out.println("getIDList - " + Model.getElementAt(i));
-//            System.out.println("getIDList - " + Sids[i]);
         }
         return Sids;
     }
@@ -648,7 +639,6 @@ public class Find extends javax.swing.JFrame {
         int [] visa  = new int[IDList.length];
         int [] currentunit  = new int[IDList.length];
         float [] weight = new float[IDList.length];
-//        int [] minMax = new int[6];
         for ( int i = 0 ; i < IDList.length ; i ++ ){
             java.sql.Statement st4 = con.createStatement();
             String sql4 = ("SELECT * FROM student where cwid ="+IDList[i]+";");
@@ -704,7 +694,6 @@ public class Find extends javax.swing.JFrame {
         minMaxList[0] = min;
         minMaxList[1] = max;
         minMaxList[2] = max - min;
-//        System.out.println("min: " + minMaxList[0] + ", max: " + minMaxList[1]);
         
         return minMaxList;
     }
@@ -802,8 +791,8 @@ public class Find extends javax.swing.JFrame {
         String cn = selectedcourse.substring(0,3);
              
         String sclass = cc+cn+sn;
-//        System.out.println(sclass);
-        System.out.println(selectedcourse);
+        System.out.println(sclass);
+//        System.out.println(selectedcourse);
         
           //  Sids[i]= temp ;
         String [] EIDList = eList ;
