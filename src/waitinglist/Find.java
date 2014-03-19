@@ -370,27 +370,21 @@ public class Find extends javax.swing.JFrame {
             
             //Check if insert sid exist in waiting list
             for (int i = 0; i < waitingListModel.getSize(); i++ ){
-                String info  =  (String)waitingListModel.getElementAt(i) ;
-                int dash  = info.indexOf("-");
-                String temp = info.substring(dash+2);
-                System.out.println("ADD - the sid: " + temp.toString() + ", input sid: " + sid.toString());
-                if ( temp.toString().equals(sid.toString()) ){
+                Students aStudent = (Students)waitingListModel.getElementAt(i);
+                if (aStudent.getCwid() == Integer.parseInt(sid)){
                     findSid = true;
                     System.out.println("Find something same");
                 }
             }
             if (findSid == false){
-                String [] data = getData(sid);
-                String [] info = new String[30];
-                if (data[2] != null){
-                    info[waitingListCount]= data[0] + " , " + data[1] + " - " + data[2];
-                    waitingListModel.insertElementAt(info[waitingListCount], waitingListCount);
+                Students aStudents = querySidFromDatabase(sid);
+                if (aStudents != null){
+                    waitingListModel.insertElementAt(aStudents, waitingListCount);
                     waitingListCount++;
                 }else{
                     JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " does not exist, "
                             + "please enter the correct value");
                 }
-                    
             }else{
                 JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " already in list", 
                     "Inane error", JOptionPane.WARNING_MESSAGE);
@@ -400,7 +394,6 @@ public class Find extends javax.swing.JFrame {
         }
         String counter = Integer.toString(waitingListCount) ;
         jLabel1.setText(counter);
-         // getList();  
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -416,29 +409,23 @@ public class Find extends javax.swing.JFrame {
     */
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String [] IDList = getIDList();
+        Students [] waitingList = getWaitingList();
         
         String abcTest = (String)jComboBox1.getSelectedItem();
         System.out.println("Perioritize - combobox : " + abcTest);
         if (jComboBox1.getSelectedItem() != null){
-            try {
-                Students [] perioritizeList = perioritizeNew(IDList);
-                //Clear list first
+            Students [] perioritizeList = perioritize(waitingList);
+            jList2.setModel(eligableListModel);
+            eligableListModel.removeAllElements();
+            eligableListCount = 0;
+            for (int i = 0; i < perioritizeList.length; i ++)
+            {
+                Students abc = perioritizeList[i];
                 jList2.setModel(eligableListModel);
-                eligableListModel.removeAllElements();
-                eligableListCount = 0;
-                for (int i = 0; i < perioritizeList.length; i ++)
-                {
-                    Students abc = perioritizeList[i];
-                    jList2.setModel(eligableListModel);
-                    String [] eligiable = new String[30];
-                    eligiable[eligableListCount]= abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
-                    eligableListModel.insertElementAt(eligiable[eligableListCount], eligableListCount);
-                    eligableListCount++;
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
+                String [] eligiable = new String[30];
+                eligiable[eligableListCount]= abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
+                eligableListModel.insertElementAt(eligiable[eligableListCount], eligableListCount);
+                eligableListCount++;
             }
         }else{
             JOptionPane.showMessageDialog(rootPane, "Choose one course", 
@@ -557,7 +544,29 @@ public class Find extends javax.swing.JFrame {
     
     }
     
-    public String [] getData(String sid) throws SQLException, ClassNotFoundException{
+    public Students querySidFromDatabase(String aSid) throws SQLException, ClassNotFoundException{
+        Students aStudent = null;
+        Class.forName("com.mysql.jdbc.Driver");
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
+                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword)) {
+            java.sql.Statement st = con.createStatement();
+            String sql = ("SELECT * FROM student WHERE cwid = "+aSid+";");
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                 aStudent = new Students(
+                        rs.getInt("cwid"),
+                        rs.getNString("fname"),
+                        rs.getNString("lname"),
+                        rs.getInt("units_completed"),
+                        rs.getInt("visa"),
+                        rs.getInt("current_units"),
+                        rs.getFloat("weight"));
+            }
+        }
+        return aStudent;
+    }
+    public String [] getDataNoUse(String sid) throws SQLException, ClassNotFoundException{
     
         Class.forName("com.mysql.jdbc.Driver");
         String[] data = new String[3];
@@ -576,13 +585,26 @@ public class Find extends javax.swing.JFrame {
             
         }
         return data;
-   
     }
  
     /*
         This method is for get waiting list
     */
-    public String [] getIDList() { 
+    public Students [] getWaitingList() { 
+        String info = null ;
+        //String [] sList = new String[Model.getSize()];
+//        String [] Sids = new String[waitingListModel.getSize()]; 
+        Students [] studentsArray = new Students[waitingListModel.getSize()];
+        for ( int i = 0 ; i < waitingListModel.getSize() ; i++){
+            studentsArray[i]  =  (Students)waitingListModel.getElementAt(i) ;
+        }
+        return studentsArray;
+    }
+    
+    /*
+        This method is for get waiting list
+    */
+    public String [] getIDListOLD() { 
         String info = null ;
         //String [] sList = new String[Model.getSize()];
         String [] Sids = new String[waitingListModel.getSize()]; 
@@ -609,6 +631,28 @@ public class Find extends javax.swing.JFrame {
         return Sids;
     }
 
+    public Students [] perioritize (Students [] IDList) {
+        
+        Students[] studentArray = new Students[IDList.length];
+        int [] id = new int[IDList.length];
+        int [] unitcompleted  = new int[IDList.length];
+        int [] visa  = new int[IDList.length];
+        int [] currentunit  = new int[IDList.length];
+        float [] weight = new float[IDList.length];
+        
+        for ( int i = 0 ; i < IDList.length ; i ++ ){
+            id[i]            = IDList[i].getCwid();
+            unitcompleted[i] = IDList[i].getUnitsCompleted();
+            visa[i]          = IDList[i].getVisa();
+            currentunit[i]   = IDList[i].getCurrentUnits();
+        }
+        studentArray = calculateWeight(IDList, unitcompleted, visa, currentunit);
+        
+        Arrays.sort(studentArray, Students.WeightComparator);
+        System.out.println("Students list sorted by unitsCompleted:\n" + Arrays.toString(studentArray));
+        
+        return studentArray;
+    }
     /*
         This one will replaceperioritize
         Step 1: get list from waiting list
@@ -616,7 +660,7 @@ public class Find extends javax.swing.JFrame {
         Step 3: calculate weight
         Step 4: return list
     */
-    public  Students [] perioritizeNew (String [] IDList) throws SQLException{
+    public  Students [] perioritizeNoUse (String [] IDList) throws SQLException{
         
         try {
             Class.forName("com.mysql.jdbc.Driver");

@@ -31,6 +31,10 @@ public class Students {
         this.weight = weight;
     }
 
+    Students() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getCwid(){
         return cwid;
     }
@@ -63,7 +67,14 @@ public class Students {
     }
 
     
+    @Override
     public String toString() {
+        
+        return this.fName + ", " + this.lName + " - " + this.cwid;
+    }
+    
+    public String toStringOld() {
+        
         return "[id=" + this.cwid + ", unitsCompleted=" + this.unitsCompleted + ", visa=" + this.visa + ", currentUnits=" +
                 this.currentUnits + ", weight=" + this.weight + "]";
     }
