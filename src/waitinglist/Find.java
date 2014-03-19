@@ -94,6 +94,8 @@ public class Find extends javax.swing.JFrame {
         jOptionPane1 = new javax.swing.JOptionPane();
         seatsAvailLabel = new javax.swing.JLabel();
         seatsAvailTextField = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jTextField6.setText("jTextField6");
 
@@ -146,10 +148,16 @@ public class Find extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Waiting List Prioritizing Software");
         setAutoRequestFocus(false);
+        setMinimumSize(new java.awt.Dimension(700, 480));
+        getContentPane().setLayout(null);
 
-        jLabel1.setForeground(new java.awt.Color(0, 0, 102));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("0");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(230, 310, 7, 16);
 
+        jButton1.setBackground(new java.awt.Color(0, 51, 102));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setActionCommand("Enroll");
         jButton1.setLabel("Enroll");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -157,14 +165,21 @@ public class Find extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(560, 470, 110, 25);
 
+        jButton2.setBackground(new java.awt.Color(0, 51, 102));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setLabel("Periortize");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(230, 470, 110, 25);
 
+        jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
         jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jComboBox1MouseClicked(evt);
@@ -180,7 +195,10 @@ public class Find extends javax.swing.JFrame {
                 jComboBox1FocusGained(evt);
             }
         });
+        getContentPane().add(jComboBox1);
+        jComboBox1.setBounds(130, 190, 430, 22);
 
+        jList2.setBackground(new java.awt.Color(222, 223, 255));
         jList2.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
                 jList2ComponentHidden(evt);
@@ -188,9 +206,16 @@ public class Find extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jList2);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Waiting List Prioritizing Software");
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(370, 330, 300, 130);
 
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 21)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(238, 238, 255));
+        jLabel2.setText("Waiting List Prioritizing Software");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(190, 120, 320, 24);
+
+        jTextField3.setBackground(new java.awt.Color(222, 223, 255));
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -201,42 +226,80 @@ public class Find extends javax.swing.JFrame {
                 jTextField3KeyTyped(evt);
             }
         });
+        getContentPane().add(jTextField3);
+        jTextField3.setBounds(90, 270, 190, 22);
 
+        CWIDLabel.setForeground(new java.awt.Color(255, 255, 255));
         CWIDLabel.setText("CWID");
+        getContentPane().add(CWIDLabel);
+        CWIDLabel.setBounds(50, 270, 32, 16);
 
+        jButton3.setBackground(new java.awt.Color(0, 51, 102));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Add");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton3);
+        jButton3.setBounds(290, 270, 55, 25);
 
+        jList3.setBackground(new java.awt.Color(222, 223, 255));
         jScrollPane3.setViewportView(jList3);
 
+        getContentPane().add(jScrollPane3);
+        jScrollPane3.setBounds(40, 330, 300, 130);
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(655, 122, 0, 0);
+
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Waiting list");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(160, 310, 63, 16);
 
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Eligable students");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(460, 310, 96, 16);
 
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Course");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(130, 170, 60, 16);
 
+        jButton4.setBackground(new java.awt.Color(0, 51, 102));
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Delete");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton4);
+        jButton4.setBounds(150, 470, 69, 25);
 
+        jButton5.setBackground(new java.awt.Color(0, 51, 102));
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Sign out");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton5);
+        jButton5.setBounds(590, 10, 79, 25);
 
         jOptionPane1.setMessage("Are you sure you want to delete this students ? ");
+        getContentPane().add(jOptionPane1);
+        jOptionPane1.setBounds(0, 0, 0, 0);
 
+        seatsAvailLabel.setForeground(new java.awt.Color(255, 255, 255));
         seatsAvailLabel.setText("Seats available");
+        getContentPane().add(seatsAvailLabel);
+        seatsAvailLabel.setBounds(50, 240, 86, 16);
 
+        seatsAvailTextField.setBackground(new java.awt.Color(222, 223, 255));
         seatsAvailTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 seatsAvailTextFieldActionPerformed(evt);
@@ -247,105 +310,17 @@ public class Find extends javax.swing.JFrame {
                 seatsAvailTextFieldKeyTyped(evt);
             }
         });
+        getContentPane().add(seatsAvailTextField);
+        seatsAvailTextField.setBounds(220, 240, 60, 22);
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(layout.createSequentialGroup()
-                        .add(167, 167, 167)
-                        .add(jLabel5)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jLabel1)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jLabel6))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                        .add(172, 172, 172)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel7)
-                            .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 421, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-                .add(18, 18, Short.MAX_VALUE)
-                .add(jLabel4)
-                .add(60, 60, 60))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .add(0, 0, Short.MAX_VALUE)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jButton5)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                        .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 394, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(143, 143, 143)))
-                .addContainerGap())
-            .add(layout.createSequentialGroup()
-                .add(55, 55, 55)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(layout.createSequentialGroup()
-                        .add(seatsAvailLabel)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(seatsAvailTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(layout.createSequentialGroup()
-                        .add(CWIDLabel)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 217, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jButton3))
-                    .add(layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(layout.createSequentialGroup()
-                                .add(jButton4)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jButton2))
-                            .add(jScrollPane3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 316, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(layout.createSequentialGroup()
-                                .add(26, 26, 26)
-                                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 306, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 125, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jButton5)
-                .add(14, 14, 14)
-                .add(jLabel2)
-                .add(18, 18, 18)
-                .add(jLabel7)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel4))
-                .add(13, 13, 13)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(seatsAvailLabel)
-                    .add(seatsAvailTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jButton3)
-                    .add(CWIDLabel)
-                    .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(2, 2, 2)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel1)
-                    .add(jLabel6)
-                    .add(jLabel5))
-                .add(18, 18, 18)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jScrollPane3)
-                    .add(layout.createSequentialGroup()
-                        .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(0, 0, Short.MAX_VALUE)))
-                .add(18, 20, Short.MAX_VALUE)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jButton2)
-                    .add(jButton4)
-                    .add(jButton1))
-                .addContainerGap())
-        );
+        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\Majed\\Documents\\NetBeansProjects\\WLS-master\\WLS\\src\\waitinglist\\csuf-logo-header.png")); // NOI18N
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(190, 20, 350, 120);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Majed\\Documents\\NetBeansProjects\\WLS-master\\WLS\\src\\waitinglist\\WLS-main-background.jpg")); // NOI18N
+        jLabel3.setText("jLabel3");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(0, 0, 710, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -441,7 +416,13 @@ public class Find extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-      
+ java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    dispose();
+                    new LoginScreen().setVisible(true);
+                }
+            });      
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
@@ -779,10 +760,12 @@ public class Find extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JList jList2;
     private javax.swing.JList jList3;
