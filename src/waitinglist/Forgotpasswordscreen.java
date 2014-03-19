@@ -109,7 +109,7 @@ public class Forgotpasswordscreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton6);
-        jButton6.setBounds(620, 20, 50, 25);
+        jButton6.setBounds(620, 20, 50, 29);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -117,7 +117,7 @@ public class Forgotpasswordscreen extends javax.swing.JFrame {
         getContentPane().add(jLabel6);
         jLabel6.setBounds(130, 270, 440, 60);
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\Majed\\Documents\\NetBeansProjects\\WLS-master\\WLS\\src\\waitinglist\\WLS-main-background.jpg")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/WLS-main-background.jpg"))); // NOI18N
         jLabel7.setText("jLabel7");
         getContentPane().add(jLabel7);
         jLabel7.setBounds(0, 0, 690, 540);

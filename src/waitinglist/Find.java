@@ -149,6 +149,7 @@ public class Find extends javax.swing.JFrame {
         setTitle("Waiting List Prioritizing Software");
         setAutoRequestFocus(false);
         setMinimumSize(new java.awt.Dimension(700, 560));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
