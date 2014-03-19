@@ -207,7 +207,39 @@ public class LoginScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     
-   
+    public int Login (String username , String password) throws ClassNotFoundException, SQLException{
+
+        System.out.println("Login Username: " + username);
+        System.out.println("Login Password: " + password);
+        
+        int approved = WLConfig.LOGIN_START ;
+        Class.forName("com.mysql.jdbc.Driver");
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
+                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword)) {
+            java.sql.Statement st = con.createStatement();
+            String sql = ("SELECT * FROM user WHERE user_id = '" + username + "';");
+            ResultSet rs = st.executeQuery(sql);
+            
+            if (rs.next())
+            {
+                if (rs.getNString("password").matches(password)){
+//                    System.out.println("got something: ");
+                    approved = WLConfig.LOGIN_SUCCESS ;
+                }else{
+                    System.out.println("No match : password wrong");
+                    approved = WLConfig.LOGIN_PASSWORD_NOTMATCH ;
+                }
+                
+            }else{
+                System.out.println("No match");
+                approved = WLConfig.LOGIN_NOMATCH_USER ;
+            }
+        }
+      
+          return approved;
+    
+    }
     
     
    

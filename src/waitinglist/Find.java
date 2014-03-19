@@ -148,7 +148,7 @@ public class Find extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Waiting List Prioritizing Software");
         setAutoRequestFocus(false);
-        setMinimumSize(new java.awt.Dimension(700, 480));
+        setMinimumSize(new java.awt.Dimension(700, 560));
         getContentPane().setLayout(null);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -320,7 +320,7 @@ public class Find extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Majed\\Documents\\NetBeansProjects\\WLS-master\\WLS\\src\\waitinglist\\WLS-main-background.jpg")); // NOI18N
         jLabel3.setText("jLabel3");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, 0, 710, 530);
+        jLabel3.setBounds(0, 0, 710, 540);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
