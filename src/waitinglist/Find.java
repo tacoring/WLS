@@ -349,28 +349,32 @@ public class Find extends javax.swing.JFrame {
         try {         
             jList3.setModel(waitingListModel);
             String sid = jTextField3.getText();
+
             Boolean findSid = false;
-            
-            //Check if insert sid exist in waiting list
-            for (int i = 0; i < waitingListModel.getSize(); i++ ){
-                Students aStudent = (Students)waitingListModel.getElementAt(i);
-                if (aStudent.getCwid() == Integer.parseInt(sid)){
-                    findSid = true;
-                    System.out.println("Find something same");
-                }
-            }
-            if (findSid == false){
-                Students aStudents = querySidFromDatabase(sid);
-                if (aStudents != null){
-                    waitingListModel.insertElementAt(aStudents, waitingListCount);
-                    waitingListCount++;
-                }else{
-                    JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " does not exist, "
-                            + "please enter the correct value");
-                }
+            if (sid.length() <= 0){
+                JOptionPane.showMessageDialog(rootPane, "please enter the correct value");
             }else{
-                JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " already in list", 
-                    "Inane error", JOptionPane.WARNING_MESSAGE);
+                //Check if insert sid exist in waiting list
+                for (int i = 0; i < waitingListModel.getSize(); i++ ){
+                    Students aStudent = (Students)waitingListModel.getElementAt(i);
+                    if (aStudent.getCwid() == Integer.parseInt(sid)){
+                        findSid = true;
+                        System.out.println("Find something same");
+                    }
+                }
+                if (findSid == false){
+                    Students aStudents = querySidFromDatabase(sid);
+                    if (aStudents != null){
+                        waitingListModel.insertElementAt(aStudents, waitingListCount);
+                        waitingListCount++;
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " does not exist, "
+                                + "please enter the correct value");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " already in list", 
+                        "Inane error", JOptionPane.WARNING_MESSAGE);
+                }
             }
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
@@ -395,8 +399,8 @@ public class Find extends javax.swing.JFrame {
         Students [] waitingList = getWaitingList();
         
         Classes abcTest = (Classes)jComboBox1.getSelectedItem();
-        System.out.println("Perioritize - combobox : " + abcTest);
-        if (jComboBox1.getSelectedItem() != null){
+        System.out.println("Perioritize - combobox : " + abcTest + ", seatsAvailTextField:");
+        if (jComboBox1.getSelectedItem() != null ){
             Students [] perioritizeList = perioritize(waitingList);
             jList2.setModel(eligableListModel);
             eligableListModel.removeAllElements();
