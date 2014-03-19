@@ -52,6 +52,7 @@ public class Find extends javax.swing.JFrame {
     int eligableListCount = 0 ;
     DefaultListModel waitingListModel = new DefaultListModel();
     DefaultListModel eligableListModel = new DefaultListModel();
+    
     /** Creates new form Find */
     public Find() {
         initComponents();
@@ -752,6 +753,12 @@ public class Find extends javax.swing.JFrame {
         return sections;
     }
     
+    /*
+        Step1. get list from eliable list
+        Step2. retrieve information from db
+        Step3. get selected course
+        Step4. insert number of eliable students into selected course(table)
+    */
     public String [] Enroll (String [] eList) throws ClassNotFoundException, SQLException{
         Object scourse = jComboBox1.getSelectedItem();
         String selectedcourse = scourse.toString();
