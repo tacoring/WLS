@@ -59,4 +59,8 @@ public class Classes {
 //    public void setCourseID(int aCourseID){
 //        this.courseId = aCourseID;
 //    }
+    @Override
+    public String toString() {
+        return this.courseName + ", " + this.classNumber;
+    }
 }

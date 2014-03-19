@@ -38,9 +38,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 public class Find extends javax.swing.JFrame {
@@ -93,7 +93,7 @@ public class Find extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jOptionPane1 = new javax.swing.JOptionPane();
         seatsAvailLabel = new javax.swing.JLabel();
-        seatsAbailTextField = new javax.swing.JTextField();
+        seatsAvailTextField = new javax.swing.JTextField();
 
         jTextField6.setText("jTextField6");
 
@@ -237,14 +237,14 @@ public class Find extends javax.swing.JFrame {
 
         seatsAvailLabel.setText("Seats available");
 
-        seatsAbailTextField.addActionListener(new java.awt.event.ActionListener() {
+        seatsAvailTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                seatsAbailTextFieldActionPerformed(evt);
+                seatsAvailTextFieldActionPerformed(evt);
             }
         });
-        seatsAbailTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+        seatsAvailTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                seatsAbailTextFieldKeyTyped(evt);
+                seatsAvailTextFieldKeyTyped(evt);
             }
         });
 
@@ -283,7 +283,7 @@ public class Find extends javax.swing.JFrame {
                     .add(layout.createSequentialGroup()
                         .add(seatsAvailLabel)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(seatsAbailTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(seatsAvailTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(layout.createSequentialGroup()
                         .add(CWIDLabel)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -322,7 +322,7 @@ public class Find extends javax.swing.JFrame {
                 .add(13, 13, 13)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(seatsAvailLabel)
-                    .add(seatsAbailTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(seatsAvailTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jButton3)
@@ -349,14 +349,21 @@ public class Find extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /*
+        THis is Enroll button
+    */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String [] EIDList = getEIDList();  
-        try {
-            Enroll(EIDList);// TODO add your handling code here:
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
+        //String [] EIDList = getEIDList();
+        Students [] eligableList = getEligableWaitingList();
+        EnrollNew(eligableList);
+        for (int i = 0 ; i < Integer.parseInt(seatsAvailTextField.getText()) ; i++){
+            
         }
+//        JDialog errorName;
+//        errorName = new JDialog();
+//        errorName.setBounds(132, 132, 300, 200);
+//        errorName.setTitle("Student already in list");
+//        errorName.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /*
@@ -411,7 +418,7 @@ public class Find extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Students [] waitingList = getWaitingList();
         
-        String abcTest = (String)jComboBox1.getSelectedItem();
+        Classes abcTest = (Classes)jComboBox1.getSelectedItem();
         System.out.println("Perioritize - combobox : " + abcTest);
         if (jComboBox1.getSelectedItem() != null){
             Students [] perioritizeList = perioritize(waitingList);
@@ -448,7 +455,8 @@ public class Find extends javax.swing.JFrame {
             jComboBox1.removeAllItems();
             Classes[] classArray = getCoursesFromDatabase();
             for ( int i = 0 ; i < classArray.length ; i++){
-                jComboBox1.addItem(classArray[i].getClassNumber() + ", " + classArray[i].getCourseName());
+//                jComboBox1.addItem(classArray[i].getClassNumber() + ", " + classArray[i].getCourseName());
+                jComboBox1.addItem(classArray[i]);
             }  
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
@@ -486,11 +494,11 @@ public class Find extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField3KeyTyped
 
-    private void seatsAbailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seatsAbailTextFieldActionPerformed
+    private void seatsAvailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seatsAvailTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_seatsAbailTextFieldActionPerformed
+    }//GEN-LAST:event_seatsAvailTextFieldActionPerformed
 
-    private void seatsAbailTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_seatsAbailTextFieldKeyTyped
+    private void seatsAvailTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_seatsAvailTextFieldKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
         if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))){
@@ -498,7 +506,7 @@ public class Find extends javax.swing.JFrame {
             getToolkit().beep();
             evt.consume();
         }
-    }//GEN-LAST:event_seatsAbailTextFieldKeyTyped
+    }//GEN-LAST:event_seatsAvailTextFieldKeyTyped
     
     /**
      * @param args the command line arguments
@@ -579,9 +587,16 @@ public class Find extends javax.swing.JFrame {
     }
     
     /*
-        This method is for get waiting list
+        This method is for get eligable waiting list
     */
-
+    public Students [] getEligableWaitingList(){
+        Students[] studentsArray = new Students[eligableListModel.getSize()];
+        for ( int i = 0 ; i < eligableListModel.getSize() ; i++){
+            studentsArray[i] = (Students)eligableListModel.getElementAt(i);
+        }
+        return studentsArray;
+    }
+    
     public String [] getEIDList() { 
         String info = null ;
         //String [] sList = new String[Model.getSize()];
@@ -697,6 +712,13 @@ public class Find extends javax.swing.JFrame {
         Step3. get selected course
         Step4. insert number of eliable students into selected course(table)
     */
+    public Students [] EnrollNew (Students [] eligableList){
+        Classes aClass = (Classes)jComboBox1.getSelectedItem();
+        System.out.println("Enroll - selected course : " + aClass.toString());
+        
+        return null;
+    }
+    
     public String [] Enroll (String [] eList) throws ClassNotFoundException, SQLException{
         Object scourse = jComboBox1.getSelectedItem();
         String selectedcourse = scourse.toString();
@@ -774,8 +796,8 @@ public class Find extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField seatsAbailTextField;
     private javax.swing.JLabel seatsAvailLabel;
+    private javax.swing.JTextField seatsAvailTextField;
     // End of variables declaration//GEN-END:variables
     
 }
