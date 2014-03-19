@@ -154,7 +154,7 @@ public class Find extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("0");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(230, 310, 7, 16);
+        jLabel1.setBounds(230, 310, 8, 16);
 
         jButton1.setBackground(new java.awt.Color(0, 51, 102));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -166,7 +166,7 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(560, 470, 110, 25);
+        jButton1.setBounds(560, 470, 110, 29);
 
         jButton2.setBackground(new java.awt.Color(0, 51, 102));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -177,7 +177,7 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(230, 470, 110, 25);
+        jButton2.setBounds(230, 470, 110, 29);
 
         jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
         jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -196,7 +196,7 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(130, 190, 430, 22);
+        jComboBox1.setBounds(130, 190, 430, 27);
 
         jList2.setBackground(new java.awt.Color(222, 223, 255));
         jList2.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -227,12 +227,12 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField3);
-        jTextField3.setBounds(90, 270, 190, 22);
+        jTextField3.setBounds(90, 270, 190, 28);
 
         CWIDLabel.setForeground(new java.awt.Color(255, 255, 255));
         CWIDLabel.setText("CWID");
         getContentPane().add(CWIDLabel);
-        CWIDLabel.setBounds(50, 270, 32, 16);
+        CWIDLabel.setBounds(50, 270, 34, 16);
 
         jButton3.setBackground(new java.awt.Color(0, 51, 102));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
@@ -243,25 +243,25 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton3);
-        jButton3.setBounds(290, 270, 55, 25);
+        jButton3.setBounds(290, 270, 75, 29);
 
         jList3.setBackground(new java.awt.Color(222, 223, 255));
         jScrollPane3.setViewportView(jList3);
 
         getContentPane().add(jScrollPane3);
-        jScrollPane3.setBounds(40, 330, 300, 130);
+        jScrollPane3.setBounds(40, 330, 300, 132);
         getContentPane().add(jLabel4);
         jLabel4.setBounds(655, 122, 0, 0);
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Waiting list");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(160, 310, 63, 16);
+        jLabel5.setBounds(160, 310, 71, 16);
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Eligable students");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(460, 310, 96, 16);
+        jLabel6.setBounds(460, 310, 108, 16);
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Course");
@@ -277,7 +277,7 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton4);
-        jButton4.setBounds(150, 470, 69, 25);
+        jButton4.setBounds(150, 470, 84, 29);
 
         jButton5.setBackground(new java.awt.Color(0, 51, 102));
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
@@ -288,7 +288,7 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5);
-        jButton5.setBounds(590, 10, 79, 25);
+        jButton5.setBounds(590, 10, 96, 29);
 
         jOptionPane1.setMessage("Are you sure you want to delete this students ? ");
         getContentPane().add(jOptionPane1);
@@ -297,7 +297,7 @@ public class Find extends javax.swing.JFrame {
         seatsAvailLabel.setForeground(new java.awt.Color(255, 255, 255));
         seatsAvailLabel.setText("Seats available");
         getContentPane().add(seatsAvailLabel);
-        seatsAvailLabel.setBounds(50, 240, 86, 16);
+        seatsAvailLabel.setBounds(50, 240, 92, 16);
 
         seatsAvailTextField.setBackground(new java.awt.Color(222, 223, 255));
         seatsAvailTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -311,13 +311,13 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(seatsAvailTextField);
-        seatsAvailTextField.setBounds(220, 240, 60, 22);
+        seatsAvailTextField.setBounds(220, 240, 60, 28);
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\Majed\\Documents\\NetBeansProjects\\WLS-master\\WLS\\src\\waitinglist\\csuf-logo-header.png")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/csuf-logo-header.png"))); // NOI18N
         getContentPane().add(jLabel8);
         jLabel8.setBounds(190, 20, 350, 120);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Majed\\Documents\\NetBeansProjects\\WLS-master\\WLS\\src\\waitinglist\\WLS-main-background.jpg")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/WLS-main-background.jpg"))); // NOI18N
         jLabel3.setText("jLabel3");
         getContentPane().add(jLabel3);
         jLabel3.setBounds(0, 0, 710, 540);

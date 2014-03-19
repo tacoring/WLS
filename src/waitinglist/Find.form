@@ -420,7 +420,7 @@
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Majed\Documents\NetBeansProjects\WLS-master\WLS\src\waitinglist\csuf-logo-header.png"/>
+          <Image iconType="3" name="/waitinglist/csuf-logo-header.png"/>
         </Property>
       </Properties>
       <Constraints>
@@ -432,7 +432,7 @@
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Majed\Documents\NetBeansProjects\WLS-master\WLS\src\waitinglist\WLS-main-background.jpg"/>
+          <Image iconType="3" name="/waitinglist/WLS-main-background.jpg"/>
         </Property>
         <Property name="text" type="java.lang.String" value="jLabel3"/>
       </Properties>
