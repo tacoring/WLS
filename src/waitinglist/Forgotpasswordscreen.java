@@ -74,6 +74,7 @@ public class Forgotpasswordscreen extends javax.swing.JFrame {
         setBackground(new java.awt.Color(51, 102, 255));
         setMaximizedBounds(new java.awt.Rectangle(100, 100, 550, 550));
         setMinimumSize(new java.awt.Dimension(700, 540));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 21)); // NOI18N
