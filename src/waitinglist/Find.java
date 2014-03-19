@@ -446,7 +446,7 @@ public class Find extends javax.swing.JFrame {
     private void jComboBox1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusGained
         try {
             jComboBox1.removeAllItems();
-            Classes[] classArray = getCoursesNew();
+            Classes[] classArray = getCoursesFromDatabase();
             for ( int i = 0 ; i < classArray.length ; i++){
                 jComboBox1.addItem(classArray[i].getClassNumber() + ", " + classArray[i].getCourseName());
             }  
@@ -566,34 +566,11 @@ public class Find extends javax.swing.JFrame {
         }
         return aStudent;
     }
-    public String [] getDataNoUse(String sid) throws SQLException, ClassNotFoundException{
     
-        Class.forName("com.mysql.jdbc.Driver");
-        String[] data = new String[3];
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
-                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
-                WLConfig.databaseUser, WLConfig.databasePassword)) {
-            java.sql.Statement st = con.createStatement();
-            String sql = ("SELECT * FROM student WHERE cwid = "+sid+";");
-            ResultSet rs = st.executeQuery(sql);
-            
-            while(rs.next()){
-                data[0]= rs.getNString("fname") ;
-                data[1]= rs.getNString("lname") ;
-                data[2] = Integer.toString(rs.getInt("cwid")) ;
-            }
-            
-        }
-        return data;
-    }
- 
     /*
         This method is for get waiting list
     */
-    public Students [] getWaitingList() { 
-        String info = null ;
-        //String [] sList = new String[Model.getSize()];
-//        String [] Sids = new String[waitingListModel.getSize()]; 
+    public Students [] getWaitingList() {
         Students [] studentsArray = new Students[waitingListModel.getSize()];
         for ( int i = 0 ; i < waitingListModel.getSize() ; i++){
             studentsArray[i]  =  (Students)waitingListModel.getElementAt(i) ;
@@ -604,18 +581,7 @@ public class Find extends javax.swing.JFrame {
     /*
         This method is for get waiting list
     */
-    public String [] getIDListOLD() { 
-        String info = null ;
-        //String [] sList = new String[Model.getSize()];
-        String [] Sids = new String[waitingListModel.getSize()]; 
-        for ( int i = 0 ; i < waitingListModel.getSize() ; i++){
-            info  =  (String)waitingListModel.getElementAt(i) ;
-            int dash  = info.indexOf("-");
-            String temp = info.substring(dash+1);
-            Sids[i]= temp ;
-        }
-        return Sids;
-    }
+
     public String [] getEIDList() { 
         String info = null ;
         //String [] sList = new String[Model.getSize()];
@@ -634,14 +600,11 @@ public class Find extends javax.swing.JFrame {
     public Students [] perioritize (Students [] IDList) {
         
         Students[] studentArray = new Students[IDList.length];
-        int [] id = new int[IDList.length];
         int [] unitcompleted  = new int[IDList.length];
         int [] visa  = new int[IDList.length];
         int [] currentunit  = new int[IDList.length];
-        float [] weight = new float[IDList.length];
         
         for ( int i = 0 ; i < IDList.length ; i ++ ){
-            id[i]            = IDList[i].getCwid();
             unitcompleted[i] = IDList[i].getUnitsCompleted();
             visa[i]          = IDList[i].getVisa();
             currentunit[i]   = IDList[i].getCurrentUnits();
@@ -653,52 +616,7 @@ public class Find extends javax.swing.JFrame {
         
         return studentArray;
     }
-    /*
-        This one will replaceperioritize
-        Step 1: get list from waiting list
-        Step 2: query detail data from list
-        Step 3: calculate weight
-        Step 4: return list
-    */
-    public  Students [] perioritizeNoUse (String [] IDList) throws SQLException{
-        
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Connection con = DriverManager.getConnection("jdbc:mysql://" 
-                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
-                WLConfig.databaseUser, WLConfig.databasePassword);
-//        String eList[] = new String[IDList.length];
-        Students[] studentArray = new Students[IDList.length];
-        
-        // String sql2 = ("SELECT * FROM student ;");
-        int [] id = new int[IDList.length];
-        int [] unitcompleted  = new int[IDList.length];
-        int [] visa  = new int[IDList.length];
-        int [] currentunit  = new int[IDList.length];
-        float [] weight = new float[IDList.length];
-        for ( int i = 0 ; i < IDList.length ; i ++ ){
-            java.sql.Statement st4 = con.createStatement();
-            String sql4 = ("SELECT * FROM student where cwid ="+IDList[i]+";");
-            ResultSet rs4 = st4.executeQuery(sql4);
-            rs4.next();
-            id[i] = rs4.getInt("cwid");
-            unitcompleted[i] = rs4.getInt("units_completed");
-            visa[i] = rs4.getInt("visa");
-            currentunit[i] = rs4.getInt("current_units");
-            studentArray[i] = new Students(id[i], rs4.getString("fname"), rs4.getString("lname"),
-                    unitcompleted[i], visa[i], currentunit[i], weight[i] );
-        }
-        studentArray = calculateWeight(studentArray, unitcompleted, visa, currentunit);
-        
-        Arrays.sort(studentArray, Students.WeightComparator);
-        System.out.println("Students list sorted by unitsCompleted:\n" + Arrays.toString(studentArray));
-        
-        return studentArray ;
-    }
-    
+
     /*
         Calculate student's weight and store weight in student object
     */
@@ -719,32 +637,8 @@ public class Find extends javax.swing.JFrame {
         
         return studentArray;
     }
-     
-    public  ArrayList<String> getCoursesNoUse() throws ClassNotFoundException, SQLException{
-        
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://" 
-                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
-                WLConfig.databaseUser, WLConfig.databasePassword);
-        java.sql.Statement st2 = con.createStatement();
-        String sql2 = ("SELECT * FROM course;");
-        ResultSet rs2 = st2.executeQuery(sql2);
-        int i = 0;
-        
-        ArrayList<String> courses = new ArrayList<>();
-        while (rs2.next()){
-            courses.add(i, rs2.getNString("course_number"));
-            courses.add(i+1, rs2.getNString("course_name"));
-            courses.add(i+2, rs2.getNString("section"));
-            courses.add(i+3, rs2.getNString("course_code"));
-            i = i + 4;
-        }
-        con.close();
-        return courses;
-    }
-    
  
-    public  Classes[] getCoursesNew() throws ClassNotFoundException, SQLException{
+    public  Classes[] getCoursesFromDatabase() throws ClassNotFoundException, SQLException{
         
         int queryCount = 0;
         Class.forName("com.mysql.jdbc.Driver");
