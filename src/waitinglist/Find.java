@@ -171,7 +171,7 @@ public class Find extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(0, 51, 102));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setLabel("Periortize");
+        jButton2.setText("Prioritize");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -400,7 +400,11 @@ public class Find extends javax.swing.JFrame {
         
         Classes abcTest = (Classes)jComboBox1.getSelectedItem();
         System.out.println("Perioritize - combobox : " + abcTest + ", seatsAvailTextField:");
-        if (jComboBox1.getSelectedItem() != null ){
+        if (seatsAvailTextField.getText().length() == 0){
+            JOptionPane.showMessageDialog(rootPane, "Input available seats", 
+                    "Inane error", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (jComboBox1.getSelectedItem() != null ){
             Students [] perioritizeList = perioritize(waitingList);
             jList2.setModel(eligableListModel);
             eligableListModel.removeAllElements();
