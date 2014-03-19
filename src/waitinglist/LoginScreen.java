@@ -66,31 +66,34 @@ public class LoginScreen extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         jTextField6.setText("jTextField6");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Waiting List Priortizing Software");
+        setAlwaysOnTop(true);
         setAutoRequestFocus(false);
         setBackground(new java.awt.Color(51, 102, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
         setMaximizedBounds(new java.awt.Rectangle(100, 100, 550, 550));
         setMaximumSize(new java.awt.Dimension(550, 550));
-        setMinimumSize(new java.awt.Dimension(550, 550));
+        setMinimumSize(new java.awt.Dimension(700, 541));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 21)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(236, 236, 253));
         jLabel2.setText("Waiting List Prioritizing Software");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(130, 220, 485, 32);
+        jLabel2.setBounds(190, 220, 485, 32);
         getContentPane().add(jLabel4);
         jLabel4.setBounds(694, 399, 0, 0);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/csuf-logo-header.png"))); // NOI18N
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(130, 150, 299, 77);
+        jLabel5.setBounds(190, 150, 299, 77);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,13 +101,13 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(200, 290, 220, 22);
+        jTextField1.setBounds(270, 290, 220, 22);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Username ");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(120, 290, 70, 17);
+        jLabel1.setBounds(180, 290, 70, 17);
 
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,13 +115,13 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jPasswordField1);
-        jPasswordField1.setBounds(200, 330, 220, 22);
+        jPasswordField1.setBounds(270, 330, 220, 22);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Password");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(120, 330, 70, 17);
+        jLabel3.setBounds(180, 330, 70, 17);
 
         jButton5.setBackground(new java.awt.Color(0, 51, 102));
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,23 +132,23 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5);
-        jButton5.setBounds(210, 370, 90, 25);
+        jButton5.setBounds(400, 370, 90, 25);
 
-        jButton6.setBackground(new java.awt.Color(0, 51, 102));
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Sign in");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        jButton7.setBackground(new java.awt.Color(0, 51, 102));
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("?");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                jButton7ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6);
-        jButton6.setBounds(330, 370, 90, 25);
+        getContentPane().add(jButton7);
+        jButton7.setBounds(620, 20, 50, 25);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\Majed\\Documents\\NetBeansProjects\\WLS-master\\WLS\\src\\waitinglist\\WLS-login-background.jpg")); // NOI18N
-        jLabel6.setText("jLabel6");
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(0, 0, 550, 540);
+        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\Majed\\Documents\\NetBeansProjects\\WLS-master\\WLS\\src\\waitinglist\\WLS-main-background.jpg")); // NOI18N
+        jLabel7.setText("jLabel7");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(0, 0, 700, 540);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -193,56 +196,30 @@ public class LoginScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    
-    public int Login (String username , String password) throws ClassNotFoundException, SQLException{
-
-        System.out.println("Login Username: " + username);
-        System.out.println("Login Password: " + password);
-        
-        int approved = WLConfig.LOGIN_START ;
-        Class.forName("com.mysql.jdbc.Driver");
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
-                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
-                WLConfig.databaseUser, WLConfig.databasePassword)) {
-            java.sql.Statement st = con.createStatement();
-            String sql = ("SELECT * FROM user WHERE user_id = '" + username + "';");
-            ResultSet rs = st.executeQuery(sql);
-            
-            if (rs.next())
-            {
-                if (rs.getNString("password").matches(password)){
-//                    System.out.println("got something: ");
-                    approved = WLConfig.LOGIN_SUCCESS ;
-                }else{
-                    System.out.println("No match : password wrong");
-                    approved = WLConfig.LOGIN_PASSWORD_NOTMATCH ;
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+         java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    dispose();
+                    new Forgotpasswordscreen().setVisible(true);
                 }
-                
-            }else{
-                System.out.println("No match");
-                approved = WLConfig.LOGIN_NOMATCH_USER ;
-            }
-        }
-      
-          return approved;
+            });
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     
-    }
+   
     
     
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField6;
