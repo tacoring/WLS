@@ -31,6 +31,7 @@
 package waitinglist;
 
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,9 +53,9 @@ public class Find extends javax.swing.JFrame {
     int waitingListCount = 0 ;
     int eligableListCount = 0 ;
     DefaultListModel waitingListModel = new DefaultListModel();
-    DefaultListModel eligableListModel = new DefaultListModel();
+    DefaultListModel eligibleListModel = new DefaultListModel();
     
-    MyTableModel eligableListTableModel = new MyTableModel();
+    MyTableModel eligibleListTableModel = new MyTableModel();
     
     /** Creates new form Find */
     public Find() {
@@ -286,9 +287,9 @@ public class Find extends javax.swing.JFrame {
         jLabel5.setBounds(160, 310, 71, 16);
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Eligable students");
+        jLabel6.setText("Eligible students");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(470, 300, 108, 16);
+        jLabel6.setBounds(470, 300, 105, 16);
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Course");
@@ -356,7 +357,7 @@ public class Find extends javax.swing.JFrame {
     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //String [] EIDList = getEIDList();
-        Students [] eligableList = getEligableWaitingList();
+        Students [] eligableList = getEligibleWaitingList();
         EnrollNew(eligableList);
         for (int i = 0 ; i < Integer.parseInt(seatsAvailTextField.getText()) ; i++){
             
@@ -434,28 +435,28 @@ public class Find extends javax.swing.JFrame {
         }else if (jComboBox1.getSelectedItem() != null ){
             eligableCount = Integer.parseInt(seatsAvailTextField.getText());
             Students [] perioritizeList = perioritize(waitingList);
-            eligableListModel.removeAllElements();
+            eligibleListModel.removeAllElements();
             eligableListCount = 0;
-            int countexistTable = eligableListTableModel.getRowCount();
+            int countexistTable = eligibleListTableModel.getRowCount();
             System.out.println("the eligableListTableModel count : " + countexistTable);
             for (int i = countexistTable ; i > 0  ; i--){
                 System.out.println("Remove : " + i);
-                eligableListTableModel.removeRow(i-1);
+                eligibleListTableModel.removeRow(i-1);
             }
-            jTable2.setModel(eligableListTableModel);
+            jTable2.setModel(eligibleListTableModel);
             for (int i = 0; i < perioritizeList.length; i ++)
             {
                 if (eligableListCount < eligableCount){
                 Students abc = perioritizeList[i];
 //                jList2.setModel(eligableListModel);
-                String [] eligiable = new String[30];
-                eligiable[eligableListCount]= abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
-                eligableListModel.insertElementAt(eligiable[eligableListCount], eligableListCount);
+//                String [] eligiable = new String[30];
+//                eligiable[eligableListCount]= abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
+                eligibleListModel.insertElementAt(abc, eligableListCount);
                 eligableListCount++;
-                eligableListTableModel.addRow(new Object[]{false, abc.getFName(), abc.getLName(), abc.getCwid()});
+                eligibleListTableModel.addRow(new Object[]{false, abc.getFName(), abc.getLName(), abc.getCwid()});
                 }
             }
-            jTable2.setModel(eligableListTableModel);
+            jTable2.setModel(eligibleListTableModel);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Choose one course", 
                     "Inane error", JOptionPane.INFORMATION_MESSAGE);
@@ -608,20 +609,21 @@ public class Find extends javax.swing.JFrame {
     /*
         This method is for get eligable waiting list
     */
-    public Students [] getEligableWaitingList(){
-        Students[] studentsArray = new Students[eligableListModel.getSize()];
-        for ( int i = 0 ; i < eligableListModel.getSize() ; i++){
-            studentsArray[i] = (Students)eligableListModel.getElementAt(i);
+    public Students [] getEligibleWaitingList(){
+        Students[] studentsArray = new Students[eligibleListModel.getSize()];
+        for ( int i = 0 ; i < eligibleListModel.getSize() ; i++){
+            studentsArray[i] = (Students)eligibleListModel.getElementAt(i);
+            System.out.println("eligible students : " + studentsArray[i].toString());
         }
         return studentsArray;
     }
     
-    public String [] getEIDList() { 
+    public String [] getEIDListNoUse() { 
         String info = null ;
         //String [] sList = new String[Model.getSize()];
-        String [] Sids = new String[eligableListModel.getSize()]; 
-        for ( int i = 0 ; i < eligableListModel.getSize() ; i++){
-            info  =  (String)eligableListModel.getElementAt(i) ;
+        String [] Sids = new String[eligibleListModel.getSize()]; 
+        for ( int i = 0 ; i < eligibleListModel.getSize() ; i++){
+            info  =  (String)eligibleListModel.getElementAt(i) ;
             int dash  = info.indexOf("-");
             String temp = info.substring(dash+1);
             Sids[i]= temp ;
@@ -738,7 +740,7 @@ public class Find extends javax.swing.JFrame {
         return null;
     }
     
-    public String [] Enroll (String [] eList) throws ClassNotFoundException, SQLException{
+    public String [] EnrollNoUse (String [] eList) throws ClassNotFoundException, SQLException{
         Object scourse = jComboBox1.getSelectedItem();
         String selectedcourse = scourse.toString();
         
