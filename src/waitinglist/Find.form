@@ -73,8 +73,6 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="javax.swing.JOptionPane" name="jOptionPane2">
-    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>

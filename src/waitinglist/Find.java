@@ -76,7 +76,6 @@ public class Find extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jOptionPane2 = new javax.swing.JOptionPane();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -504,8 +503,7 @@ public class Find extends javax.swing.JFrame {
         else{
             waitingListModel.removeElementAt(index);
             waitingListCount--;
-            String counter = Integer.toString(waitingListCount) ;
-            jLabel1.setText(counter);
+            jLabel1.setText(Integer.toString(waitingListCount));
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -574,7 +572,7 @@ public class Find extends javax.swing.JFrame {
     
     public Students querySidFromDatabase(String aSid) throws SQLException, ClassNotFoundException{
         Students aStudent = null;
-        Class.forName("com.mysql.jdbc.Driver");
+//        Class.forName("com.mysql.jdbc.Driver");
         try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
                 WLConfig.databaseUser, WLConfig.databasePassword)) {
@@ -677,7 +675,7 @@ public class Find extends javax.swing.JFrame {
     public  Classes[] getCoursesFromDatabase() throws ClassNotFoundException, SQLException{
         
         int queryCount = 0;
-        Class.forName("com.mysql.jdbc.Driver");
+//        Class.forName("com.mysql.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
                 WLConfig.databaseUser, WLConfig.databasePassword);
@@ -704,11 +702,6 @@ public class Find extends javax.swing.JFrame {
     public String [] getSections (String sis) throws SQLException{
         
         String siss = sis;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
@@ -756,7 +749,7 @@ public class Find extends javax.swing.JFrame {
         
           //  Sids[i]= temp ;
         String [] EIDList = eList ;
-        Class.forName("com.mysql.jdbc.Driver");
+//        Class.forName("com.mysql.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
                 WLConfig.databaseUser, WLConfig.databasePassword);
@@ -821,6 +814,10 @@ public class Find extends javax.swing.JFrame {
             Vector rowData = (Vector)getDataVector().get(row);
             rowData.set(0, (boolean)aValue);
             fireTableCellUpdated(row, column);
+            
+            Students aStudent = (Students)eligibleListModel.getElementAt(row);
+            aStudent.setSelected((boolean)aValue);
+            System.out.println("Students = " + aStudent.toString() + ", isSelected : " + aStudent.getSelected());
           }
         }
     }
@@ -844,7 +841,6 @@ public class Find extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JList jList3;
     private javax.swing.JOptionPane jOptionPane1;
-    private javax.swing.JOptionPane jOptionPane2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

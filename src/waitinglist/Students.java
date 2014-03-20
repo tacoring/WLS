@@ -20,6 +20,7 @@ public class Students {
     private int visa;
     private int currentUnits;
     private float weight;
+    private boolean isSelected = false;
     
     public Students(int cwid, String fName, String lName, int unitsCompleted, int visa, int currentUnits, float weight) {
         this.cwid = cwid;
@@ -58,6 +59,13 @@ public class Students {
         return currentUnits;
     }
     
+    public boolean getSelected(){
+        return isSelected;
+    }
+    
+    public void setSelected(boolean isSelected){
+        this.isSelected = isSelected;
+    }
     public void setWeight(float weight){
         this.weight = weight;
         
