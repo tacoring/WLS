@@ -611,7 +611,8 @@ public class Find extends javax.swing.JFrame {
         Students[] studentsArray = new Students[eligibleListModel.getSize()];
         for ( int i = 0 ; i < eligibleListModel.getSize() ; i++){
             studentsArray[i] = (Students)eligibleListModel.getElementAt(i);
-            System.out.println("eligible students : " + studentsArray[i].toString());
+            System.out.println("eligible students : " + studentsArray[i].toString() + 
+                    ", selected : " + studentsArray[i].getSelected());
         }
         return studentsArray;
     }
