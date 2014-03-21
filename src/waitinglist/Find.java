@@ -231,14 +231,14 @@ public class Find extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Check", "FName", "LName", "CWID"
+                "Check", "CWID", "FName", "LName", "Unit completed", "Visa Status", "Current units"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true, true
+                true, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -255,6 +255,9 @@ public class Find extends javax.swing.JFrame {
             jTable2.getColumnModel().getColumn(1).setResizable(false);
             jTable2.getColumnModel().getColumn(2).setResizable(false);
             jTable2.getColumnModel().getColumn(3).setResizable(false);
+            jTable2.getColumnModel().getColumn(4).setResizable(false);
+            jTable2.getColumnModel().getColumn(5).setResizable(false);
+            jTable2.getColumnModel().getColumn(6).setResizable(false);
         }
 
         getContentPane().add(jScrollPane4);
@@ -405,22 +408,22 @@ public class Find extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
             
-            String sid = jTextField3.getText();
+            String cwid = jTextField3.getText();
 
             Boolean findSid = false;
-            if (sid.length() <= 0){
+            if (cwid.length() <= 0){
                 JOptionPane.showMessageDialog(rootPane, "please enter the correct value");
             }else{
                 //Check if insert sid exist in waiting list
                 for (int i = 0; i < waitingListModel.getSize(); i++ ){
                     Students aStudent = (Students)waitingListModel.getElementAt(i);
-                    if (aStudent.getCwid() == Integer.parseInt(sid)){
+                    if (aStudent.getCwid() == Integer.parseInt(cwid)){
                         findSid = true;
                         System.out.println("Find something same");
                     }
                 }
                 if (findSid == false){
-                    Students aStudents = querySidFromDatabase(sid);
+                    Students aStudents = queryCwidFromDatabase(cwid);
                     if (aStudents != null){
                         waitingListModel.insertElementAt(aStudents, waitingListCount);
                         waitingListCount++;
@@ -430,11 +433,11 @@ public class Find extends javax.swing.JFrame {
                             aStudents.getCurrentUnits()});
                         jTable3.setModel(waitingListTableModel);
                     }else{
-                        JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " does not exist, "
+                        JOptionPane.showMessageDialog(rootPane, "CWID " + cwid + " does not exist, "
                                 + "please enter the correct value");
                     }
                 }else{
-                    JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " already in list", 
+                    JOptionPane.showMessageDialog(rootPane, "CWID " + cwid + " already in list", 
                         "Inane error", JOptionPane.WARNING_MESSAGE);
                 }
             }
@@ -478,14 +481,13 @@ public class Find extends javax.swing.JFrame {
                 System.out.println("Remove : " + i);
                 eligibleListTableModel.removeRow(i-1);
             }
-//            jTable2.setModel(eligibleListTableModel);
             for (int i = 0; i < perioritizeList.length; i ++)
             {
                 if (eligableListCount < eligableCount){
                 Students aStudent = perioritizeList[i];
                 eligibleListModel.insertElementAt(aStudent, eligableListCount);
                 eligableListCount++;
-                eligibleListTableModel.addRow(new Object[]{false, aStudent.getCwid(),
+                eligibleListTableModel.addRow(new Object[]{aStudent.getSelected(), aStudent.getCwid(),
                     aStudent.getFName(), aStudent.getLName(), aStudent.getUnitsCompleted(),
                     aStudent.getVisa(), aStudent.getUnitsCompleted()});
                 }
@@ -610,14 +612,13 @@ public class Find extends javax.swing.JFrame {
     
     }
     
-    public Students querySidFromDatabase(String aSid) throws SQLException, ClassNotFoundException{
+    public Students queryCwidFromDatabase(String aCwid) throws SQLException, ClassNotFoundException{
         Students aStudent = null;
-//        Class.forName("com.mysql.jdbc.Driver");
         try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
                 WLConfig.databaseUser, WLConfig.databasePassword)) {
             java.sql.Statement st = con.createStatement();
-            String sql = ("SELECT * FROM student WHERE cwid = "+aSid+";");
+            String sql = ("SELECT * FROM student WHERE cwid = "+aCwid+";");
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
                  aStudent = new Students(
@@ -651,8 +652,10 @@ public class Find extends javax.swing.JFrame {
         Students[] studentsArray = new Students[eligibleListModel.getSize()];
         for ( int i = 0 ; i < eligibleListModel.getSize() ; i++){
             studentsArray[i] = (Students)eligibleListModel.getElementAt(i);
-            System.out.println("eligible students : " + studentsArray[i].toString() + 
-                    ", selected : " + studentsArray[i].getSelected());
+            if (studentsArray[i].getSelected()){
+                System.out.println("eligible students : " + studentsArray[i].toString() + 
+                        ", selected : " + studentsArray[i].getSelected());
+            }
         }
         return studentsArray;
     }
@@ -666,8 +669,6 @@ public class Find extends javax.swing.JFrame {
             int dash  = info.indexOf("-");
             String temp = info.substring(dash+1);
             Sids[i]= temp ;
-//            System.out.println("getIDList - " + Model.getElementAt(i));
-//            System.out.println("getIDList - " + Sids[i]);
         }
         return Sids;
     }
@@ -716,7 +717,6 @@ public class Find extends javax.swing.JFrame {
     public  Classes[] getCoursesFromDatabase() throws ClassNotFoundException, SQLException{
         
         int queryCount = 0;
-//        Class.forName("com.mysql.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://" 
                 + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
                 WLConfig.databaseUser, WLConfig.databasePassword);
@@ -740,7 +740,7 @@ public class Find extends javax.swing.JFrame {
         return classArray;
     }
     
-    public String [] getSections (String sis) throws SQLException{
+    public String [] getSectionsNoUse (String sis) throws SQLException{
         
         String siss = sis;
 
@@ -772,55 +772,6 @@ public class Find extends javax.swing.JFrame {
         System.out.println("Enroll - selected course : " + aClass.toString());
         
         return null;
-    }
-    
-    public String [] EnrollNoUse (String [] eList) throws ClassNotFoundException, SQLException{
-        Object scourse = jComboBox1.getSelectedItem();
-        String selectedcourse = scourse.toString();
-        
-        int cci  = selectedcourse.indexOf("-");
-        String cc = selectedcourse.substring(cci+1,cci+6);
-        int sni  = selectedcourse.indexOf("_");
-        String sn = selectedcourse.substring(sni+2);
-        String cn = selectedcourse.substring(0,3);
-             
-        String sclass = cc+cn+sn;
-        System.out.println(sclass);
-//        System.out.println(selectedcourse);
-        
-          //  Sids[i]= temp ;
-        String [] EIDList = eList ;
-//        Class.forName("com.mysql.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://" 
-                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
-                WLConfig.databaseUser, WLConfig.databasePassword);
-        java.sql.Statement st2 = con.createStatement();
-        for ( int i = 0 ; i < EIDList.length ; i ++ ){
-            java.sql.Statement st4 = con.createStatement();
-            String sql4 = ("SELECT * FROM student where cwid ="+EIDList[i]+";");
-            ResultSet rs4 = st4.executeQuery(sql4);
-            rs4.next();
-            int cwid = rs4.getInt("cwid");
-            String fname = rs4.getString("fname");
-            String lname = rs4.getString("lname");
-            String visa = rs4.getString("visa");
-            String uc = rs4.getString("units_completed");
-            String cu = rs4.getString("current_units");
-            String gs = rs4.getString("gradute_status");
-            // ('cwid', 'fname', 'lname', 'visa', 'units_completed', 'current_units', 'gradute_status', 'course_id', 'weight') 
-            java.sql.Statement st8 = con.createStatement();
-            String sql8 = ("INSERT INTO "+sclass+" VALUES ("+cwid+", "+fname+", "+lname+", "+visa+", "+uc+", "+cu+", "+gs+", NULL, NULL);");
-            st8.executeUpdate(sql8);
-           
-           con.close();
-        }
-        return null;
-    }
-    
-    
-    
-    public void Logout (){
-   
     }
 
     public class MyTableModel extends DefaultTableModel {
