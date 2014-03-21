@@ -482,10 +482,12 @@ public class Find extends javax.swing.JFrame {
             for (int i = 0; i < perioritizeList.length; i ++)
             {
                 if (eligableListCount < eligableCount){
-                Students abc = perioritizeList[i];
-                eligibleListModel.insertElementAt(abc, eligableListCount);
+                Students aStudent = perioritizeList[i];
+                eligibleListModel.insertElementAt(aStudent, eligableListCount);
                 eligableListCount++;
-                eligibleListTableModel.addRow(new Object[]{false, abc.getFName(), abc.getLName(), abc.getCwid()});
+                eligibleListTableModel.addRow(new Object[]{false, aStudent.getCwid(),
+                    aStudent.getFName(), aStudent.getLName(), aStudent.getUnitsCompleted(),
+                    aStudent.getVisa(), aStudent.getUnitsCompleted()});
                 }
             }
             jTable2.setModel(eligibleListTableModel);
@@ -594,8 +596,8 @@ public class Find extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new LoginScreen().setVisible(true);
-//                new Find().setVisible(true);
+//                new LoginScreen().setVisible(true);
+                new Find().setVisible(true);
             }
         });
         
@@ -824,14 +826,17 @@ public class Find extends javax.swing.JFrame {
     public class MyTableModel extends DefaultTableModel {
 
         public MyTableModel() {
-          super(new String[]{"Check", "FName", "LName", "CWID"}, 0);
+          super(new String[]{"Check", "CWID", "FName", "LName", "Units completed", "Visa Status", "Current units"}, 0);
         }
 
         @Override
         public Class<?> getColumnClass(int columnIndex) {
           Class clazz = String.class;
           switch (columnIndex) {
-            case 3:
+            case 1:
+            case 4:
+            case 5:
+            case 6:
               clazz = Integer.class;
               break;
             case 0:
@@ -877,9 +882,6 @@ public class Find extends javax.swing.JFrame {
             case 5:
               clazz = Integer.class;
               break;
-//            case 0:
-//              clazz = Boolean.class;
-//              break;
           }
           return clazz;
         }
