@@ -596,8 +596,8 @@ public class Find extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-//                new LoginScreen().setVisible(true);
-                new Find().setVisible(true);
+                new LoginScreen().setVisible(true);
+//                new Find().setVisible(true);
             }
         });
         
