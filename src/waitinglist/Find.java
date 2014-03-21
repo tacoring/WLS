@@ -51,11 +51,12 @@ public class Find extends javax.swing.JFrame {
     */
     int waitingListCount = 0 ;
     int eligableListCount = 0 ;
-    DefaultListModel waitingListModel = new DefaultListModel();
-    DefaultListModel eligibleListModel = new DefaultListModel();
+    static DefaultListModel waitingListModel = new DefaultListModel();
+    static DefaultListModel eligibleListModel = new DefaultListModel();
     
-    MyTableModel eligibleListTableModel = new MyTableModel();
-    MyWaitingTableModel waitingListTableModel = new MyWaitingTableModel();
+    static WLSWaitingTableModel waitingListTableModel = new WLSWaitingTableModel();
+    static WLSEligibleTableModel eligibleListTableModel = new WLSEligibleTableModel();
+    
     /** Creates new form Find */
     public Find() {
         initComponents();
@@ -389,17 +390,12 @@ public class Find extends javax.swing.JFrame {
         THis is Enroll button
     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //String [] EIDList = getEIDList();
+
         Students [] eligableList = getEligibleWaitingList();
         EnrollNew(eligableList);
         for (int i = 0 ; i < Integer.parseInt(seatsAvailTextField.getText()) ; i++){
             
         }
-//        JDialog errorName;
-//        errorName = new JDialog();
-//        errorName.setBounds(132, 132, 300, 200);
-//        errorName.setTitle("Student already in list");
-//        errorName.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /*
@@ -410,7 +406,7 @@ public class Find extends javax.swing.JFrame {
             
             String cwid = jTextField3.getText();
 
-            Boolean findSid = false;
+            Boolean findCwid = false;
             if (cwid.length() <= 0){
                 JOptionPane.showMessageDialog(rootPane, "please enter the correct value");
             }else{
@@ -418,11 +414,11 @@ public class Find extends javax.swing.JFrame {
                 for (int i = 0; i < waitingListModel.getSize(); i++ ){
                     Students aStudent = (Students)waitingListModel.getElementAt(i);
                     if (aStudent.getCwid() == Integer.parseInt(cwid)){
-                        findSid = true;
+                        findCwid = true;
                         System.out.println("Find something same");
                     }
                 }
-                if (findSid == false){
+                if (findCwid == false){
                     Students aStudents = queryCwidFromDatabase(cwid);
                     if (aStudents != null){
                         waitingListModel.insertElementAt(aStudents, waitingListCount);
@@ -532,7 +528,7 @@ public class Find extends javax.swing.JFrame {
         This is delete button
     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-//        int index = jList3.getSelectedIndex();
+
         int indexNew = jTable3.getSelectedRow();
 //        System.out.println("waitingListTableModel focus index: " + jTable3.getSelectedRow());
         if (indexNew < 0){
@@ -740,27 +736,6 @@ public class Find extends javax.swing.JFrame {
         return classArray;
     }
     
-    public String [] getSectionsNoUse (String sis) throws SQLException{
-        
-        String siss = sis;
-
-        Connection con = DriverManager.getConnection("jdbc:mysql://" 
-                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
-                WLConfig.databaseUser, WLConfig.databasePassword);
-
-        java.sql.Statement st3 = con.createStatement();
-        String sql3 = ("SELECT section FROM course WHERE course_number ="+siss+";");
-        ResultSet rs3 = st3.executeQuery(sql3);
-        String [] sections  =  new String[3];
-        for (int i = 0 ; i <= 1 ; i++){
-            rs3.next();
-            sections [i] = rs3.getString("section");
-            System.out.println(sections[i]);
-        }
-        con.close();
-        return sections;
-    }
-    
     /*
         Step1. get list from eliable list
         Step2. retrieve information from db
@@ -774,75 +749,34 @@ public class Find extends javax.swing.JFrame {
         return null;
     }
 
-    public class MyTableModel extends DefaultTableModel {
-
-        public MyTableModel() {
-          super(new String[]{"Check", "CWID", "FName", "LName", "Units completed", "Visa Status", "Current units"}, 0);
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-          Class clazz = String.class;
-          switch (columnIndex) {
-            case 1:
-            case 4:
-            case 5:
-            case 6:
-              clazz = Integer.class;
-              break;
-            case 0:
-              clazz = Boolean.class;
-              break;
-          }
-          return clazz;
-        }
-
-        @Override
-        public boolean isCellEditable(int row, int column) {
-          return column == 0;
-        }
-
-        @Override
-        public void setValueAt(Object aValue, int row, int column) {
-          if (aValue instanceof Boolean && column == 0) {
-            System.out.println("column: " + row + ", value: " + aValue);
-            Vector rowData = (Vector)getDataVector().get(row);
-            rowData.set(0, (boolean)aValue);
-            fireTableCellUpdated(row, column);
-            
-            Students aStudent = (Students)eligibleListModel.getElementAt(row);
-            aStudent.setSelected((boolean)aValue);
-            System.out.println("Students = " + aStudent.toString() + ", isSelected : " + aStudent.getSelected());
-          }
-        }
-    }
-  
-        public class MyWaitingTableModel extends DefaultTableModel {
-
-        public MyWaitingTableModel() {
-          super(new String[]{"CWID", "FName", "LName", "Units completed", "Visa Status", "Current units"}, 0);
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-          Class clazz = String.class;
-          switch (columnIndex) {
-            case 0:
-            case 3:
-            case 4:
-            case 5:
-              clazz = Integer.class;
-              break;
-          }
-          return clazz;
-        }
-
-        @Override
-        public boolean isCellEditable(int row, int column) {
+//    public static class WLSEligibleTableModel extends DefaultTableModel {
+//
+//        public WLSEligibleTableModel() {
+//          super(new String[]{"Check", "CWID", "FName", "LName", "Units completed", "Visa Status", "Current units"}, 0);
+//        }
+//
+//        @Override
+//        public Class<?> getColumnClass(int columnIndex) {
+//          Class clazz = String.class;
+//          switch (columnIndex) {
+//            case 1:
+//            case 4:
+//            case 5:
+//            case 6:
+//              clazz = Integer.class;
+//              break;
+//            case 0:
+//              clazz = Boolean.class;
+//              break;
+//          }
+//          return clazz;
+//        }
+//
+//        @Override
+//        public boolean isCellEditable(int row, int column) {
 //          return column == 0;
-            return false;
-        }
-
+//        }
+//
 //        @Override
 //        public void setValueAt(Object aValue, int row, int column) {
 //          if (aValue instanceof Boolean && column == 0) {
@@ -856,7 +790,47 @@ public class Find extends javax.swing.JFrame {
 //            System.out.println("Students = " + aStudent.toString() + ", isSelected : " + aStudent.getSelected());
 //          }
 //        }
-    }
+//    }
+  
+//    public static class WLSWaitingTableModel extends DefaultTableModel {
+//
+//        public WLSWaitingTableModel() {
+//          super(new String[]{"CWID", "FName", "LName", "Units completed", "Visa Status", "Current units"}, 0);
+//        }
+//
+//        @Override
+//        public Class<?> getColumnClass(int columnIndex) {
+//          Class clazz = String.class;
+//          switch (columnIndex) {
+//            case 0:
+//            case 3:
+//            case 4:
+//            case 5:
+//              clazz = Integer.class;
+//              break;
+//          }
+//          return clazz;
+//        }
+//
+//        @Override
+//        public boolean isCellEditable(int row, int column) {
+//            return false;
+//        }
+//
+////        @Override
+////        public void setValueAt(Object aValue, int row, int column) {
+////          if (aValue instanceof Boolean && column == 0) {
+////            System.out.println("column: " + row + ", value: " + aValue);
+////            Vector rowData = (Vector)getDataVector().get(row);
+////            rowData.set(0, (boolean)aValue);
+////            fireTableCellUpdated(row, column);
+////            
+////            Students aStudent = (Students)eligibleListModel.getElementAt(row);
+////            aStudent.setSelected((boolean)aValue);
+////            System.out.println("Students = " + aStudent.toString() + ", isSelected : " + aStudent.getSelected());
+////          }
+////        }
+//    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CWIDLabel;
