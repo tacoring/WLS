@@ -101,7 +101,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(270, 290, 220, 20);
+        jTextField1.setBounds(270, 290, 220, 28);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -115,7 +115,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jPasswordField1);
-        jPasswordField1.setBounds(270, 330, 220, 20);
+        jPasswordField1.setBounds(270, 330, 220, 28);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -132,7 +132,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5);
-        jButton5.setBounds(400, 370, 90, 23);
+        jButton5.setBounds(400, 370, 90, 29);
 
         jButton7.setBackground(new java.awt.Color(0, 51, 102));
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
@@ -143,7 +143,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton7);
-        jButton7.setBounds(620, 20, 50, 23);
+        jButton7.setBounds(620, 20, 50, 29);
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/WLS-main-background.jpg"))); // NOI18N
         jLabel7.setText("jLabel7");
@@ -172,7 +172,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 public void run() {
                     dispose();
                     Find screen = new Find();
-                    screen.jLabel9.setText(user);
+//                    screen.jLabel9.setText(user);
                     screen.setVisible(true);
                 }
             });

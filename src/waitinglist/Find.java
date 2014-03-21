@@ -31,7 +31,6 @@
 package waitinglist;
 
 
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +55,7 @@ public class Find extends javax.swing.JFrame {
     DefaultListModel eligibleListModel = new DefaultListModel();
     
     MyTableModel eligibleListTableModel = new MyTableModel();
-    
+    MyWaitingTableModel waitingListTableModel = new MyWaitingTableModel();
     /** Creates new form Find */
     public Find() {
         initComponents();
@@ -81,16 +80,15 @@ public class Find extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         CWIDLabel = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList();
-        jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -151,14 +149,15 @@ public class Find extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Waiting List Prioritizing Software");
         setAutoRequestFocus(false);
-        setMinimumSize(new java.awt.Dimension(700, 560));
+        setMinimumSize(new java.awt.Dimension(1024, 700));
         setResizable(false);
+        setSize(new java.awt.Dimension(1024, 700));
         getContentPane().setLayout(null);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("0");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(230, 310, 8, 16);
+        jLabel1.setBounds(180, 240, 8, 16);
 
         jButton1.setBackground(new java.awt.Color(0, 51, 102));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -170,7 +169,7 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(560, 480, 110, 29);
+        jButton1.setBounds(800, 610, 110, 29);
 
         jButton2.setBackground(new java.awt.Color(0, 51, 102));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -181,7 +180,7 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(230, 470, 110, 29);
+        jButton2.setBounds(790, 400, 110, 29);
 
         jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
         jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -200,13 +199,18 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(130, 190, 430, 27);
+        jComboBox1.setBounds(280, 80, 430, 27);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 21)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(238, 238, 255));
         jLabel2.setText("Waiting List Prioritizing Software");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(190, 120, 320, 24);
+        jLabel2.setBounds(350, 20, 320, 24);
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Eligible students");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(90, 440, 105, 16);
 
         jTextField3.setBackground(new java.awt.Color(222, 223, 255));
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
@@ -220,7 +224,7 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField3);
-        jTextField3.setBounds(90, 270, 190, 28);
+        jTextField3.setBounds(150, 180, 190, 28);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -254,12 +258,12 @@ public class Find extends javax.swing.JFrame {
         }
 
         getContentPane().add(jScrollPane4);
-        jScrollPane4.setBounds(370, 330, 300, 130);
+        jScrollPane4.setBounds(90, 470, 820, 130);
 
         CWIDLabel.setForeground(new java.awt.Color(255, 255, 255));
         CWIDLabel.setText("CWID");
         getContentPane().add(CWIDLabel);
-        CWIDLabel.setBounds(50, 270, 34, 16);
+        CWIDLabel.setBounds(110, 180, 34, 16);
 
         jButton3.setBackground(new java.awt.Color(0, 51, 102));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
@@ -270,30 +274,54 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton3);
-        jButton3.setBounds(290, 270, 75, 29);
+        jButton3.setBounds(340, 180, 75, 29);
 
-        jList3.setBackground(new java.awt.Color(222, 223, 255));
-        jScrollPane3.setViewportView(jList3);
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        getContentPane().add(jScrollPane3);
-        jScrollPane3.setBounds(40, 330, 300, 132);
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(655, 122, 0, 0);
+            },
+            new String [] {
+                "CWID", "FName", "LName", "Unit Completed", "Visa Status", "Current units"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable3);
+        if (jTable3.getColumnModel().getColumnCount() > 0) {
+            jTable3.getColumnModel().getColumn(0).setResizable(false);
+            jTable3.getColumnModel().getColumn(0).setPreferredWidth(30);
+            jTable3.getColumnModel().getColumn(1).setResizable(false);
+            jTable3.getColumnModel().getColumn(2).setResizable(false);
+            jTable3.getColumnModel().getColumn(3).setResizable(false);
+            jTable3.getColumnModel().getColumn(4).setResizable(false);
+            jTable3.getColumnModel().getColumn(5).setResizable(false);
+        }
+
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(90, 260, 810, 130);
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Waiting list");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(160, 310, 71, 16);
-
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Eligible students");
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(470, 300, 105, 16);
+        jLabel5.setBounds(90, 240, 71, 16);
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Course");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(130, 170, 60, 16);
+        jLabel7.setBounds(210, 90, 60, 16);
 
         jButton4.setBackground(new java.awt.Color(0, 51, 102));
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
@@ -304,7 +332,7 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton4);
-        jButton4.setBounds(150, 470, 84, 29);
+        jButton4.setBounds(690, 400, 84, 29);
 
         jButton5.setBackground(new java.awt.Color(0, 51, 102));
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
@@ -315,7 +343,7 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5);
-        jButton5.setBounds(590, 10, 96, 29);
+        jButton5.setBounds(910, 10, 96, 29);
 
         jOptionPane1.setMessage("Are you sure you want to delete this students ? ");
         getContentPane().add(jOptionPane1);
@@ -324,7 +352,7 @@ public class Find extends javax.swing.JFrame {
         seatsAvailLabel.setForeground(new java.awt.Color(255, 255, 255));
         seatsAvailLabel.setText("Seats available");
         getContentPane().add(seatsAvailLabel);
-        seatsAvailLabel.setBounds(50, 240, 92, 16);
+        seatsAvailLabel.setBounds(190, 130, 92, 16);
 
         seatsAvailTextField.setBackground(new java.awt.Color(222, 223, 255));
         seatsAvailTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -338,16 +366,19 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(seatsAvailTextField);
-        seatsAvailTextField.setBounds(220, 240, 60, 28);
+        seatsAvailTextField.setBounds(300, 130, 60, 28);
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/csuf-logo-header.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/WLS-Background.jpg"))); // NOI18N
         getContentPane().add(jLabel8);
         jLabel8.setBounds(190, 20, 350, 120);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/WLS-main-background.jpg"))); // NOI18N
-        jLabel3.setText("jLabel3");
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/WLS-Background.jpg"))); // NOI18N
+        jLabel3.setMaximumSize(new java.awt.Dimension(1024, 700));
+        jLabel3.setMinimumSize(new java.awt.Dimension(1024, 700));
+        jLabel3.setPreferredSize(new java.awt.Dimension(1024, 700));
+        jLabel3.setSize(new java.awt.Dimension(1024, 700));
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, 0, 710, 540);
+        jLabel3.setBounds(0, 0, 1024, 700);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -372,8 +403,8 @@ public class Find extends javax.swing.JFrame {
         This one is Add button
      */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try {         
-            jList3.setModel(waitingListModel);
+        try {
+            
             String sid = jTextField3.getText();
 
             Boolean findSid = false;
@@ -393,6 +424,11 @@ public class Find extends javax.swing.JFrame {
                     if (aStudents != null){
                         waitingListModel.insertElementAt(aStudents, waitingListCount);
                         waitingListCount++;
+                        waitingListTableModel.addRow(new Object[]{
+                            aStudents.getCwid(), aStudents.getFName(), aStudents.getLName(), 
+                            aStudents.getUnitsCompleted(), aStudents.getVisa(),
+                            aStudents.getCurrentUnits()});
+                        jTable3.setModel(waitingListTableModel);
                     }else{
                         JOptionPane.showMessageDialog(rootPane, "CWID " + sid + " does not exist, "
                                 + "please enter the correct value");
@@ -442,14 +478,11 @@ public class Find extends javax.swing.JFrame {
                 System.out.println("Remove : " + i);
                 eligibleListTableModel.removeRow(i-1);
             }
-            jTable2.setModel(eligibleListTableModel);
+//            jTable2.setModel(eligibleListTableModel);
             for (int i = 0; i < perioritizeList.length; i ++)
             {
                 if (eligableListCount < eligableCount){
                 Students abc = perioritizeList[i];
-//                jList2.setModel(eligableListModel);
-//                String [] eligiable = new String[30];
-//                eligiable[eligableListCount]= abc.getFName() + " , " + abc.getLName() + " - " +abc.getCwid();
                 eligibleListModel.insertElementAt(abc, eligableListCount);
                 eligableListCount++;
                 eligibleListTableModel.addRow(new Object[]{false, abc.getFName(), abc.getLName(), abc.getCwid()});
@@ -495,15 +528,20 @@ public class Find extends javax.swing.JFrame {
         This is delete button
     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        int index = jList3.getSelectedIndex();
-        if (index < 0){
+//        int index = jList3.getSelectedIndex();
+        int indexNew = jTable3.getSelectedRow();
+//        System.out.println("waitingListTableModel focus index: " + jTable3.getSelectedRow());
+        if (indexNew < 0){
             JOptionPane.showMessageDialog(rootPane, "YOu should choose one item", 
                     "Inane error", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            waitingListModel.removeElementAt(index);
+            waitingListModel.removeElementAt(indexNew);
             waitingListCount--;
             jLabel1.setText(Integer.toString(waitingListCount));
+            
+            waitingListTableModel.removeRow(indexNew);
+            
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -822,7 +860,51 @@ public class Find extends javax.swing.JFrame {
           }
         }
     }
-   
+  
+        public class MyWaitingTableModel extends DefaultTableModel {
+
+        public MyWaitingTableModel() {
+          super(new String[]{"CWID", "FName", "LName", "Units completed", "Visa Status", "Current units"}, 0);
+        }
+
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+          Class clazz = String.class;
+          switch (columnIndex) {
+            case 0:
+            case 3:
+            case 4:
+            case 5:
+              clazz = Integer.class;
+              break;
+//            case 0:
+//              clazz = Boolean.class;
+//              break;
+          }
+          return clazz;
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+//          return column == 0;
+            return false;
+        }
+
+//        @Override
+//        public void setValueAt(Object aValue, int row, int column) {
+//          if (aValue instanceof Boolean && column == 0) {
+//            System.out.println("column: " + row + ", value: " + aValue);
+//            Vector rowData = (Vector)getDataVector().get(row);
+//            rowData.set(0, (boolean)aValue);
+//            fireTableCellUpdated(row, column);
+//            
+//            Students aStudent = (Students)eligibleListModel.getElementAt(row);
+//            aStudent.setSelected((boolean)aValue);
+//            System.out.println("Students = " + aStudent.toString() + ", isSelected : " + aStudent.getSelected());
+//          }
+//        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CWIDLabel;
     private javax.swing.JButton jButton1;
@@ -834,21 +916,20 @@ public class Find extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLayeredPane jLayeredPane1;
-    private javax.swing.JList jList3;
     private javax.swing.JOptionPane jOptionPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JLabel seatsAvailLabel;
