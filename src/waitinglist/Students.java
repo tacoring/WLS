@@ -81,6 +81,10 @@ public class Students {
         return this.fName + ", " + this.lName + " - " + this.cwid;
     }
     
+    public String print(){
+        
+        return this.cwid  + " - " + this.fName + ", " + this.lName + "\n";
+    }
     public String toStringOld() {
         
         return "[id=" + this.cwid + ", unitsCompleted=" + this.unitsCompleted + ", visa=" + this.visa + ", currentUnits=" +

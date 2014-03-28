@@ -31,6 +31,8 @@
 package waitinglist;
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,11 +40,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Vector;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListModel;
 
 public class Find extends javax.swing.JFrame {
     
@@ -53,6 +62,7 @@ public class Find extends javax.swing.JFrame {
     int eligableListCount = 0 ;
     static DefaultListModel waitingListModel = new DefaultListModel();
     static DefaultListModel eligibleListModel = new DefaultListModel();
+    static DefaultListModel finalListModel = new DefaultListModel();
     
     static WLSWaitingTableModel waitingListTableModel = new WLSWaitingTableModel();
     static WLSEligibleTableModel eligibleListTableModel = new WLSEligibleTableModel();
@@ -76,6 +86,7 @@ public class Find extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
+        jDialog1 = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -147,12 +158,22 @@ public class Find extends javax.swing.JFrame {
             .add(0, 100, Short.MAX_VALUE)
         );
 
+        org.jdesktop.layout.GroupLayout jDialog1Layout = new org.jdesktop.layout.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 300, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Waiting List Prioritizing Software");
         setAutoRequestFocus(false);
         setMinimumSize(new java.awt.Dimension(1024, 700));
         setResizable(false);
-        setSize(new java.awt.Dimension(1024, 700));
         getContentPane().setLayout(null);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -393,9 +414,11 @@ public class Find extends javax.swing.JFrame {
 
         Students [] eligableList = getEligibleWaitingList();
         EnrollNew(eligableList);
-        for (int i = 0 ; i < Integer.parseInt(seatsAvailTextField.getText()) ; i++){
-            
-        }
+//        for (int i = 0 ; i < Integer.parseInt(seatsAvailTextField.getText()) ; i++){
+//            
+//        }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /*
@@ -646,14 +669,23 @@ public class Find extends javax.swing.JFrame {
     */
     public Students [] getEligibleWaitingList(){
         Students[] studentsArray = new Students[eligibleListModel.getSize()];
+        int isSelectedCount = 0;
+        finalListModel.removeAllElements();
         for ( int i = 0 ; i < eligibleListModel.getSize() ; i++){
             studentsArray[i] = (Students)eligibleListModel.getElementAt(i);
             if (studentsArray[i].getSelected()){
                 System.out.println("eligible students : " + studentsArray[i].toString() + 
                         ", selected : " + studentsArray[i].getSelected());
+                finalListModel.insertElementAt(studentsArray[i], isSelectedCount);
+                isSelectedCount++;
             }
         }
-        return studentsArray;
+        Students[] studentsFinalArray = new Students[finalListModel.getSize()];
+        for ( int i = 0 ; i < finalListModel.getSize() ; i++){
+            studentsFinalArray[i] = (Students)finalListModel.getElementAt(i);
+        }
+        
+        return studentsFinalArray;
     }
     
     public String [] getEIDListNoUse() { 
@@ -746,91 +778,37 @@ public class Find extends javax.swing.JFrame {
         Classes aClass = (Classes)jComboBox1.getSelectedItem();
         System.out.println("Enroll - selected course : " + aClass.toString());
         
+        JScrollPane scrollpane = new JScrollPane(); 
+        ArrayList<String> categories = new ArrayList<String>();
+        categories.add(aClass.toString());
+        for (int i = 0 ; i < eligableList.length ; i++){
+            categories.add(eligableList[i].print());
+        }
+        JList list = new JList(categories.toArray());
+        scrollpane = new JScrollPane(list);
+        JPanel panel = new JPanel(); 
+        panel.add(scrollpane);
+        scrollpane.getViewport().add(list);
+        
+        Object[] options = {"OK",
+                    "Cancel"};
+        int n = JOptionPane.showOptionDialog(rootPane,//parent container of JOptionPane
+            scrollpane,
+            "Confirm enroll students list",
+            JOptionPane.YES_NO_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE,
+            null,//do not use a custom Icon
+            options,//the titles of buttons
+            options[1]);//default button title
+        System.out.println("you choose : " + n); //Canel --> 1, OK --> 0
+        if (n == 0){
+            //write list to database
+        }else{
+            //do nothing....
+        }
         return null;
     }
 
-//    public static class WLSEligibleTableModel extends DefaultTableModel {
-//
-//        public WLSEligibleTableModel() {
-//          super(new String[]{"Check", "CWID", "FName", "LName", "Units completed", "Visa Status", "Current units"}, 0);
-//        }
-//
-//        @Override
-//        public Class<?> getColumnClass(int columnIndex) {
-//          Class clazz = String.class;
-//          switch (columnIndex) {
-//            case 1:
-//            case 4:
-//            case 5:
-//            case 6:
-//              clazz = Integer.class;
-//              break;
-//            case 0:
-//              clazz = Boolean.class;
-//              break;
-//          }
-//          return clazz;
-//        }
-//
-//        @Override
-//        public boolean isCellEditable(int row, int column) {
-//          return column == 0;
-//        }
-//
-//        @Override
-//        public void setValueAt(Object aValue, int row, int column) {
-//          if (aValue instanceof Boolean && column == 0) {
-//            System.out.println("column: " + row + ", value: " + aValue);
-//            Vector rowData = (Vector)getDataVector().get(row);
-//            rowData.set(0, (boolean)aValue);
-//            fireTableCellUpdated(row, column);
-//            
-//            Students aStudent = (Students)eligibleListModel.getElementAt(row);
-//            aStudent.setSelected((boolean)aValue);
-//            System.out.println("Students = " + aStudent.toString() + ", isSelected : " + aStudent.getSelected());
-//          }
-//        }
-//    }
-  
-//    public static class WLSWaitingTableModel extends DefaultTableModel {
-//
-//        public WLSWaitingTableModel() {
-//          super(new String[]{"CWID", "FName", "LName", "Units completed", "Visa Status", "Current units"}, 0);
-//        }
-//
-//        @Override
-//        public Class<?> getColumnClass(int columnIndex) {
-//          Class clazz = String.class;
-//          switch (columnIndex) {
-//            case 0:
-//            case 3:
-//            case 4:
-//            case 5:
-//              clazz = Integer.class;
-//              break;
-//          }
-//          return clazz;
-//        }
-//
-//        @Override
-//        public boolean isCellEditable(int row, int column) {
-//            return false;
-//        }
-//
-////        @Override
-////        public void setValueAt(Object aValue, int row, int column) {
-////          if (aValue instanceof Boolean && column == 0) {
-////            System.out.println("column: " + row + ", value: " + aValue);
-////            Vector rowData = (Vector)getDataVector().get(row);
-////            rowData.set(0, (boolean)aValue);
-////            fireTableCellUpdated(row, column);
-////            
-////            Students aStudent = (Students)eligibleListModel.getElementAt(row);
-////            aStudent.setSelected((boolean)aValue);
-////            System.out.println("Students = " + aStudent.toString() + ", isSelected : " + aStudent.getSelected());
-////          }
-////        }
-//    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CWIDLabel;
@@ -840,6 +818,7 @@ public class Find extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
