@@ -31,8 +31,6 @@
 package waitinglist;
 
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,15 +41,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 
 public class Find extends javax.swing.JFrame {
     
@@ -413,12 +406,11 @@ public class Find extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         Students [] eligableList = getEligibleWaitingList();
-        EnrollNew(eligableList);
-//        for (int i = 0 ; i < Integer.parseInt(seatsAvailTextField.getText()) ; i++){
-//            
-//        }
-        
-        
+        try {     
+            EnrollNew(eligableList);
+        } catch (SQLException ex) {
+            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /*
@@ -622,19 +614,15 @@ public class Find extends javax.swing.JFrame {
             }
         });
         
-        
     }
 
     public boolean Login (String user , String pass){
-
           return false;
-    
     }
     
     public Students queryCwidFromDatabase(String aCwid) throws SQLException, ClassNotFoundException{
         Students aStudent = null;
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
-                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+        try (Connection con = DriverManager.getConnection(WLConfig.DB_URL, 
                 WLConfig.databaseUser, WLConfig.databasePassword)) {
             java.sql.Statement st = con.createStatement();
             String sql = ("SELECT * FROM student WHERE cwid = "+aCwid+";");
@@ -687,19 +675,6 @@ public class Find extends javax.swing.JFrame {
         
         return studentsFinalArray;
     }
-    
-    public String [] getEIDListNoUse() { 
-        String info = null ;
-        //String [] sList = new String[Model.getSize()];
-        String [] Sids = new String[eligibleListModel.getSize()]; 
-        for ( int i = 0 ; i < eligibleListModel.getSize() ; i++){
-            info  =  (String)eligibleListModel.getElementAt(i) ;
-            int dash  = info.indexOf("-");
-            String temp = info.substring(dash+1);
-            Sids[i]= temp ;
-        }
-        return Sids;
-    }
 
     public Students [] perioritize (Students [] IDList) {
         
@@ -745,8 +720,7 @@ public class Find extends javax.swing.JFrame {
     public  Classes[] getCoursesFromDatabase() throws ClassNotFoundException, SQLException{
         
         int queryCount = 0;
-        Connection con = DriverManager.getConnection("jdbc:mysql://" 
-                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+        Connection con = DriverManager.getConnection(WLConfig.DB_URL, 
                 WLConfig.databaseUser, WLConfig.databasePassword);
         java.sql.Statement st2 = con.createStatement();
         String sql2 = ("SELECT * FROM Courses;");
@@ -774,10 +748,9 @@ public class Find extends javax.swing.JFrame {
         Step3. get selected course
         Step4. insert number of eliable students into selected course(table)
     */
-    public Students [] EnrollNew (Students [] eligableList){
+    public Students [] EnrollNew (Students [] eligableList) throws SQLException{
         Classes aClass = (Classes)jComboBox1.getSelectedItem();
         System.out.println("Enroll - selected course : " + aClass.toString());
-        
         JScrollPane scrollpane = new JScrollPane(); 
         ArrayList<String> categories = new ArrayList<String>();
         categories.add(aClass.toString());
@@ -790,8 +763,7 @@ public class Find extends javax.swing.JFrame {
         panel.add(scrollpane);
         scrollpane.getViewport().add(list);
         
-        Object[] options = {"OK",
-                    "Cancel"};
+        Object[] options = {"OK", "Cancel"};
         int n = JOptionPane.showOptionDialog(rootPane,//parent container of JOptionPane
             scrollpane,
             "Confirm enroll students list",
@@ -802,13 +774,34 @@ public class Find extends javax.swing.JFrame {
             options[1]);//default button title
         System.out.println("you choose : " + n); //Canel --> 1, OK --> 0
         if (n == 0){
-            //write list to database
+            writeDatabase(aClass, eligableList);
         }else{
             //do nothing....
         }
         return null;
     }
 
+    public void writeDatabase (Classes aClass, Students[] eligableList) throws SQLException{
+
+        try (Connection con = DriverManager.getConnection(WLConfig.DB_URL, 
+                WLConfig.databaseUser, WLConfig.databasePassword)) {
+            java.sql.Statement st = con.createStatement();
+            
+            String tableName = aClass.getShortName();
+            String query = "DROP Table IF EXISTS " + tableName;
+            st.executeUpdate(query);
+            
+            String sql = "CREATE TABLE " + tableName +  "(id INTEGER(9)not NULL)";
+            st.executeUpdate(sql);
+            
+            for (int i = 0; i < eligableList.length ; i ++){
+                String insert = "INSERT " + tableName + " VALUES(" + eligableList[i].getCwid() + ")";
+                st.executeUpdate(insert);
+            }
+            con.close();
+        }
+  
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CWIDLabel;

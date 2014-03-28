@@ -59,8 +59,27 @@ public class Classes {
 //    public void setCourseID(int aCourseID){
 //        this.courseId = aCourseID;
 //    }
-    @Override
-    public String toString() {
+    
+    public String toStringOld() {
         return this.courseName + ", " + this.classNumber;
+    }
+    
+    @Override
+    public String toString(){
+        String result = this.courseName.substring(6,9) + " - " + 
+                this.courseName.substring(0,4) + " : " + 
+                this.courseName.substring(12, this.courseName.length()) + " - " +
+                String.format("%02d", this.section) + " - " +
+                this.sectionDetail.substring(7,11);
+        
+        return result;
+                
+    }
+    
+    public String getShortName(){
+        String name = this.courseName.substring(0,4) + 
+                this.courseName.substring(6,9) +
+                String.format("%02d", this.section);
+        return name;
     }
 }

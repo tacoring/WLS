@@ -20,6 +20,11 @@ public interface WLConfig {
     final int visaWeight            = 200;
     final int currentUnitsWeight    = 100;
     
+//    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+    static final String DB_URL = "jdbc:mysql://" 
+            + WLConfig.serverIP +":" 
+            + WLConfig.serverPort + "/" + WLConfig.database;
+//    
     final String serverIP           = "54.186.24.136";
     final String serverPort         = "3306";
     final String database           = "waiting_list";
