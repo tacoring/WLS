@@ -492,15 +492,31 @@ public class Find extends javax.swing.JFrame {
                 System.out.println("Remove : " + i);
                 eligibleListTableModel.removeRow(i-1);
             }
+            float lastWeight = 0;
+            boolean isAdded = false;
             for (int i = 0; i < perioritizeList.length; i ++)
             {
-                if (eligableListCount < eligableCount){
+                isAdded = false;
                 Students aStudent = perioritizeList[i];
-                eligibleListModel.insertElementAt(aStudent, eligableListCount);
-                eligableListCount++;
-                eligibleListTableModel.addRow(new Object[]{aStudent.getSelected(), aStudent.getCwid(),
-                    aStudent.getFName(), aStudent.getLName(), aStudent.getUnitsCompleted(),
-                    aStudent.getVisa(), aStudent.getUnitsCompleted()});
+                if (eligableListCount < eligableCount){
+                    eligibleListModel.insertElementAt(aStudent, eligableListCount);
+                    eligableListCount++;
+                    eligibleListTableModel.addRow(new Object[]{aStudent.getSelected(), aStudent.getCwid(),
+                        aStudent.getFName(), aStudent.getLName(), aStudent.getUnitsCompleted(),
+                        aStudent.getVisa(), aStudent.getUnitsCompleted()});
+                    lastWeight = aStudent.getWeight();
+                    isAdded = true;
+                }
+                //If next one weight == last one ... add to list
+                if (lastWeight == aStudent.getWeight() && isAdded == false ){
+                    System.out.println(" ===== Same weight ======= :  " + i);
+                    eligibleListModel.insertElementAt(aStudent, eligableListCount);
+                    eligableListCount++;
+                    eligibleListTableModel.addRow(new Object[]{aStudent.getSelected(), aStudent.getCwid(),
+                        aStudent.getFName(), aStudent.getLName(), aStudent.getUnitsCompleted(),
+                        aStudent.getVisa(), aStudent.getUnitsCompleted()});
+                    lastWeight = aStudent.getWeight();
+                    isAdded = true;
                 }
             }
             jTable2.setModel(eligibleListTableModel);
@@ -545,9 +561,8 @@ public class Find extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
         int indexNew = jTable3.getSelectedRow();
-//        System.out.println("waitingListTableModel focus index: " + jTable3.getSelectedRow());
         if (indexNew < 0){
-            JOptionPane.showMessageDialog(rootPane, "YOu should choose one item", 
+            JOptionPane.showMessageDialog(rootPane, "You should choose one item", 
                     "Inane error", JOptionPane.WARNING_MESSAGE);
         }
         else{
