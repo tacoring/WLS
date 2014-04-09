@@ -63,6 +63,7 @@ public class Find extends javax.swing.JFrame {
     /** Creates new form Find */
     public Find() {
         initComponents();
+        getCourses();
     }
     
     /** This method is called from within the constructor to
@@ -545,16 +546,7 @@ public class Find extends javax.swing.JFrame {
         This is courses comboBox
     */
     private void jComboBox1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusGained
-        try {
-            jComboBox1.removeAllItems();
-            Classes[] classArray = getCoursesFromDatabase();
-            for ( int i = 0 ; i < classArray.length ; i++){
-//                jComboBox1.addItem(classArray[i].getClassNumber() + ", " + classArray[i].getCourseName());
-                jComboBox1.addItem(classArray[i]);
-            }  
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//            getCourses();
     }//GEN-LAST:event_jComboBox1FocusGained
     
     /*
@@ -734,6 +726,20 @@ public class Find extends javax.swing.JFrame {
         return studentArray;
     }
  
+    /**
+     *
+     */
+    public void getCourses(){
+        try {
+            jComboBox1.removeAllItems();
+            Classes[] classArray = getCoursesFromDatabase();
+            for ( int i = 0 ; i < classArray.length ; i++){
+                jComboBox1.addItem(classArray[i]);
+            }  
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public  Classes[] getCoursesFromDatabase() throws ClassNotFoundException, SQLException{
         
         int queryCount = 0;
