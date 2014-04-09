@@ -530,8 +530,11 @@ public class Find extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
- java.awt.EventQueue.invokeLater(new Runnable() {
-                @Override
+        //Clean all models
+
+        cleanALLModel();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
                 public void run() {
                     dispose();
                     new LoginScreen().setVisible(true);
@@ -627,6 +630,24 @@ public class Find extends javax.swing.JFrame {
 
     public boolean Login (String user , String pass){
           return false;
+    }
+    
+    public void cleanALLModel(){
+        waitingListCount = 0 ;
+        eligableListCount = 0 ;
+        waitingListModel.removeAllElements();
+        eligibleListModel.removeAllElements();
+        finalListModel.removeAllElements();
+        
+        for (int i = waitingListTableModel.getRowCount() ; i > 0  ; i--){
+            System.out.println("Remove : " + i);
+            waitingListTableModel.removeRow(i-1);
+        }
+        
+        for (int i = eligibleListTableModel.getRowCount() ; i > 0  ; i--){
+            System.out.println("Remove : " + i);
+            eligibleListTableModel.removeRow(i-1);
+        }
     }
     
     public Students queryCwidFromDatabase(String aCwid) throws SQLException, ClassNotFoundException{
