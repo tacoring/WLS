@@ -505,7 +505,7 @@ public class Find extends javax.swing.JFrame {
                     eligableListCount++;
                     eligibleListTableModel.addRow(new Object[]{aStudent.getSelected(), aStudent.getCwid(),
                         aStudent.getFName(), aStudent.getLName(), aStudent.getUnitsCompleted(),
-                        aStudent.getVisa(), aStudent.getUnitsCompleted()});
+                        aStudent.getVisa(), aStudent.getCurrentUnits()});
                     lastWeight = aStudent.getWeight();
                     isAdded = true;
                 }
