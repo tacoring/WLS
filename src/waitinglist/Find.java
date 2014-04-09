@@ -443,6 +443,8 @@ public class Find extends javax.swing.JFrame {
                             aStudents.getUnitsCompleted(), aStudents.getVisa(),
                             aStudents.getCurrentUnits()});
                         jTable3.setModel(waitingListTableModel);
+                        //Clean text field
+                        jTextField3.setText("");
                     }else{
                         JOptionPane.showMessageDialog(rootPane, "CWID " + cwid + " does not exist, "
                                 + "please enter the correct value");
