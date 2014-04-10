@@ -53,6 +53,8 @@ public class Find extends javax.swing.JFrame {
     */
     int waitingListCount = 0 ;
     int eligableListCount = 0 ;
+//    static int availSeats = 0;
+//    static int studentSelected = 0;
     static DefaultListModel waitingListModel = new DefaultListModel();
     static DefaultListModel eligibleListModel = new DefaultListModel();
     static DefaultListModel finalListModel = new DefaultListModel();
@@ -173,7 +175,7 @@ public class Find extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("0");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(180, 240, 8, 16);
+        jLabel1.setBounds(180, 240, 50, 16);
 
         jButton1.setBackground(new java.awt.Color(0, 51, 102));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -476,7 +478,7 @@ public class Find extends javax.swing.JFrame {
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        int eligableCount = 0;
+        
         Students [] waitingList = getWaitingList();
         
         Classes abcTest = (Classes)jComboBox1.getSelectedItem();
@@ -485,7 +487,8 @@ public class Find extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Input available seats", 
                     "Inane error", JOptionPane.INFORMATION_MESSAGE);
         }else if (jComboBox1.getSelectedItem() != null ){
-            eligableCount = Integer.parseInt(seatsAvailTextField.getText());
+//            availSeats = Integer.parseInt(seatsAvailTextField.getText());
+            int availSeats = getAvailSeats();
             Students [] perioritizeList = perioritize(waitingList);
             eligibleListModel.removeAllElements();
             eligableListCount = 0;
@@ -501,7 +504,7 @@ public class Find extends javax.swing.JFrame {
             {
                 isAdded = false;
                 Students aStudent = perioritizeList[i];
-                if (eligableListCount < eligableCount){
+                if (eligableListCount < availSeats){
                     eligibleListModel.insertElementAt(aStudent, eligableListCount);
                     eligableListCount++;
                     eligibleListTableModel.addRow(new Object[]{aStudent.getSelected(), aStudent.getCwid(),
@@ -635,17 +638,18 @@ public class Find extends javax.swing.JFrame {
     public void cleanALLModel(){
         waitingListCount = 0 ;
         eligableListCount = 0 ;
+//        availSeats = 0;
         waitingListModel.removeAllElements();
         eligibleListModel.removeAllElements();
         finalListModel.removeAllElements();
         
         for (int i = waitingListTableModel.getRowCount() ; i > 0  ; i--){
-            System.out.println("Remove : " + i);
+//            System.out.println("Remove : " + i);
             waitingListTableModel.removeRow(i-1);
         }
         
         for (int i = eligibleListTableModel.getRowCount() ; i > 0  ; i--){
-            System.out.println("Remove : " + i);
+//            System.out.println("Remove : " + i);
             eligibleListTableModel.removeRow(i-1);
         }
     }
@@ -747,6 +751,23 @@ public class Find extends javax.swing.JFrame {
         return studentArray;
     }
  
+    public static int getAvailSeats (){
+        return Integer.parseInt(seatsAvailTextField.getText());
+    }
+    
+    public static int getStudentsSelected(){
+        Students[] studentsArray = new Students[eligibleListModel.getSize()];
+        int studentSelected = 0;
+        for ( int i = 0 ; i < eligibleListModel.getSize() ; i++){
+            studentsArray[i] = (Students)eligibleListModel.getElementAt(i);
+            if (studentsArray[i].getSelected()){
+//                System.out.println("eligible students : " + studentsArray[i].toString() + 
+//                        ", selected : " + studentsArray[i].getSelected());
+                studentSelected++;
+            }
+        }
+        return studentSelected;
+    }
     /**
      *
      */
@@ -817,7 +838,7 @@ public class Find extends javax.swing.JFrame {
             options,//the titles of buttons
             options[1]);//default button title
         System.out.println("you choose : " + n); //Canel --> 1, OK --> 0
-        if (n == 0){
+        if (n == 0){ //
             writeDatabase(aClass, eligableList);
         }else{
             //do nothing....
@@ -843,6 +864,9 @@ public class Find extends javax.swing.JFrame {
                 st.executeUpdate(insert);
             }
             con.close();
+            //success to write database
+            JOptionPane.showMessageDialog(rootPane, "Update class data success", 
+                    "System Message", JOptionPane.PLAIN_MESSAGE);
         }
   
     }
@@ -876,7 +900,7 @@ public class Find extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JLabel seatsAvailLabel;
-    private javax.swing.JTextField seatsAvailTextField;
+    private static javax.swing.JTextField seatsAvailTextField;
     // End of variables declaration//GEN-END:variables
     
 }
