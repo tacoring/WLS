@@ -53,7 +53,6 @@ public class WLSEligibleTableModel extends DefaultTableModel {
                 if ( ( (Boolean)aValue == true ) && ( availSeats == studentsSelected)){
                     System.out.println("no more selecttion!!!!!!!!!!!!!!!!!!");
                 }
-//                System.out.println("column: " + row + ", value: " + aValue);
                 Vector rowData = (Vector)getDataVector().get(row);
                 rowData.set(0, (boolean)aValue);
                 fireTableCellUpdated(row, column);

@@ -65,7 +65,7 @@ public class LoginScreen extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        signInButton = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
 
@@ -123,16 +123,16 @@ public class LoginScreen extends javax.swing.JFrame {
         getContentPane().add(jLabel3);
         jLabel3.setBounds(180, 330, 70, 17);
 
-        jButton5.setBackground(new java.awt.Color(0, 51, 102));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Sign in");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        signInButton.setBackground(new java.awt.Color(0, 51, 102));
+        signInButton.setForeground(new java.awt.Color(255, 255, 255));
+        signInButton.setText("Sign in");
+        signInButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                signInButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5);
-        jButton5.setBounds(400, 370, 90, 29);
+        getContentPane().add(signInButton);
+        signInButton.setBounds(400, 370, 90, 29);
 
         jButton7.setBackground(new java.awt.Color(0, 51, 102));
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
@@ -153,7 +153,7 @@ public class LoginScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
         
         final String user = jTextField1.getText();
         String pass = new String(jPasswordField1.getPassword());
@@ -163,6 +163,7 @@ public class LoginScreen extends javax.swing.JFrame {
             approved = Login(user,pass);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(LoginScreen.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Cannot connect to database server");
         }
       
         if (approved == WLConfig.LOGIN_SUCCESS)
@@ -183,12 +184,12 @@ public class LoginScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Username does not exist", 
                     "Inane error", JOptionPane.ERROR_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(rootPane, "Something wrong!!!!!", 
+            JOptionPane.showMessageDialog(rootPane, "Check your network status!!", 
                     "Inane error", JOptionPane.ERROR_MESSAGE);
         }
             
 
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_signInButtonActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -246,7 +247,6 @@ public class LoginScreen extends javax.swing.JFrame {
     
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -257,6 +257,7 @@ public class LoginScreen extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JButton signInButton;
     // End of variables declaration//GEN-END:variables
     
 }
