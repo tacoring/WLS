@@ -45,6 +45,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 public class Find extends javax.swing.JFrame {
     
@@ -413,6 +415,10 @@ public class Find extends javax.swing.JFrame {
             System.out.println("No student in eligiable list, please check");
             JOptionPane.showMessageDialog(rootPane, "No student in eligiable list, please check", 
                         "Inane error", JOptionPane.WARNING_MESSAGE);
+        }else if (Find.getAvailSeats() < Find.getStudentsSelected()){
+            JOptionPane.showMessageDialog(rootPane, "You selected too much students than available,"
+                    + "Please unselect some", 
+                        "Inane error", JOptionPane.WARNING_MESSAGE);
         }else{
             try {     
                 EnrollNew(eligableList);
@@ -533,6 +539,15 @@ public class Find extends javax.swing.JFrame {
                 }
             }
             jTable2.setModel(eligibleListTableModel);
+//            jTable2.getModel().addTableModelListener(new TableModelListener() {
+//                @Override
+//                public void tableChanged(TableModelEvent e) {
+//                    System.out.println("Type: " + e.getType()+ ", TableModelListener somthing change !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//                    if (Find.getAvailSeats() <= Find.getStudentsSelected()){
+//                        System.out.println("Do something~~~~~~");
+//                    }
+//                }
+//            });
         }else{
             JOptionPane.showMessageDialog(rootPane, "Choose one course", 
                     "Inane error", JOptionPane.INFORMATION_MESSAGE);
