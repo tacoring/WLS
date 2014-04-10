@@ -409,11 +409,18 @@ public class Find extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         Students [] eligableList = getEligibleWaitingList();
-        try {     
-            EnrollNew(eligableList);
-        } catch (SQLException ex) {
-            Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
+        if ( eligableList.length == 0 ){
+            System.out.println("No student in eligiable list, please check");
+            JOptionPane.showMessageDialog(rootPane, "No student in eligiable list, please check", 
+                        "Inane error", JOptionPane.WARNING_MESSAGE);
+        }else{
+            try {     
+                EnrollNew(eligableList);
+            } catch (SQLException ex) {
+                Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /*
