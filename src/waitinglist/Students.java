@@ -52,6 +52,9 @@ public class Students {
     }  
     
     public int getVisa(){
+        
+                
+              
         return visa;
     }
     
