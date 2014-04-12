@@ -181,7 +181,7 @@ public class Find extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Waiting List Prioritizing Software");
         setAutoRequestFocus(false);
-        setMinimumSize(new java.awt.Dimension(1022, 925));
+        setMinimumSize(new java.awt.Dimension(928, 842));
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -247,7 +247,7 @@ public class Find extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(80, 160, 850, 80);
+        jPanel3.setBounds(30, 120, 850, 80);
 
         jPanel6.setBackground(new Color(102,153,255,20));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 153), new java.awt.Color(204, 204, 255)));
@@ -301,7 +301,7 @@ public class Find extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel6);
-        jPanel6.setBounds(80, 250, 850, 88);
+        jPanel6.setBounds(30, 210, 850, 88);
 
         jPanel4.setBackground(new Color(102,153,255,20));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 153), new java.awt.Color(204, 204, 255)));
@@ -446,7 +446,7 @@ public class Find extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel4);
-        jPanel4.setBounds(80, 340, 850, 270);
+        jPanel4.setBounds(30, 310, 850, 270);
 
         jPanel5.setBackground(new Color(102,153,255,50));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 153), new java.awt.Color(204, 204, 255)));
@@ -537,17 +537,17 @@ public class Find extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel5);
-        jPanel5.setBounds(80, 620, 850, 220);
+        jPanel5.setBounds(30, 590, 850, 210);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 21)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(236, 236, 253));
         jLabel2.setText("Waiting List Prioritizing Software");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(350, 100, 290, 32);
+        jLabel2.setBounds(290, 80, 290, 32);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/csuf-logo-header.png"))); // NOI18N
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(350, 30, 299, 77);
+        jLabel5.setBounds(290, 10, 280, 70);
 
         jButton5.setBackground(new java.awt.Color(0, 51, 102));
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
@@ -558,14 +558,14 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5);
-        jButton5.setBounds(910, 30, 90, 25);
+        jButton5.setBounds(790, 20, 90, 25);
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Majed\\Desktop\\blue-abstract-wallpaper-10.jpg")); // NOI18N
         jLabel3.setMaximumSize(new java.awt.Dimension(1024, 700));
         jLabel3.setMinimumSize(new java.awt.Dimension(1024, 700));
         jLabel3.setPreferredSize(new java.awt.Dimension(1024, 700));
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, -100, 1020, 1030);
+        jLabel3.setBounds(0, -100, 1000, 1030);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
