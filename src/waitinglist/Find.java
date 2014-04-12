@@ -334,7 +334,7 @@ public class Find extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CWID", "FName", "LName", "Unit Completed", "Visa Status", "Current units"
+                "CWID", "First Name", "Last Name", "Unit Completed", "Visa Status", "Current units"
             }
         ) {
             Class[] types = new Class [] {
@@ -469,7 +469,7 @@ public class Find extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Check", "CWID", "FName", "LName", "Unit completed", "Visa Status", "Current units"
+                "Check", "CWID", "First Name", "Last Name", "Unit completed", "Visa Status", "Current units"
             }
         ) {
             Class[] types = new Class [] {
