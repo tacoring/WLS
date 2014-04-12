@@ -252,6 +252,7 @@ public class Find extends javax.swing.JFrame {
         jPanel6.setBackground(new Color(102,153,255,20));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 153), new java.awt.Color(204, 204, 255)));
 
+        seatsAvailTextField.setBackground(new java.awt.Color(204, 204, 255));
         seatsAvailTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 seatsAvailTextFieldActionPerformed(evt);
@@ -317,7 +318,7 @@ public class Find extends javax.swing.JFrame {
             }
         });
 
-        jTextField3.setBackground(new java.awt.Color(222, 223, 255));
+        jTextField3.setBackground(new java.awt.Color(204, 204, 255));
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -617,9 +618,31 @@ public class Find extends javax.swing.JFrame {
                     if (aStudents != null){
                         waitingListModel.insertElementAt(aStudents, waitingListCount);
                         waitingListCount++;
+                        int visatype= aStudents.getVisa();
+                        String visatranslated = "" ;
+                        if (visatype == 1){
+                        
+                        visatranslated = "International";
+                        
+                        }
+                        if (visatype == 2){
+                        
+                        visatranslated = "Dependent";
+                        
+                        }
+                        if (visatype == 3){
+                        
+                        visatranslated = "Green card";
+                        
+                        }
+                        if (visatype == 4){
+                        
+                        visatranslated = "Citizen";
+                        
+                        }
                         waitingListTableModel.addRow(new Object[]{
                             aStudents.getCwid(), aStudents.getFName(), aStudents.getLName(),
-                            aStudents.getUnitsCompleted(), aStudents.getVisa(),
+                            aStudents.getUnitsCompleted(), visatranslated,
                             aStudents.getCurrentUnits()});
                     jTable3.setModel(waitingListTableModel);
                     //Clean text field
@@ -684,9 +707,31 @@ public class Find extends javax.swing.JFrame {
                 if (eligableListCount < availSeats){
                     eligibleListModel.insertElementAt(aStudent, eligableListCount);
                     eligableListCount++;
+                    int visatype= aStudent.getVisa();
+                        String visatranslated = "" ;
+                        if (visatype == 1){
+                        
+                        visatranslated = "International";
+                        
+                        }
+                        if (visatype == 2){
+                        
+                        visatranslated = "Dependent";
+                        
+                        }
+                        if (visatype == 3){
+                        
+                        visatranslated = "Green card";
+                        
+                        }
+                        if (visatype == 4){
+                        
+                        visatranslated = "Citizen";
+                        
+                        }
                     eligibleListTableModel.addRow(new Object[]{aStudent.getSelected(), aStudent.getCwid(),
                         aStudent.getFName(), aStudent.getLName(), aStudent.getUnitsCompleted(),
-                        aStudent.getVisa(), aStudent.getCurrentUnits()});
+                        visatranslated, aStudent.getCurrentUnits()});
                 lastWeight = aStudent.getWeight();
                 isAdded = true;
             }
