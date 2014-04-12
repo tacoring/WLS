@@ -101,13 +101,13 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(270, 290, 220, 22);
+        jTextField1.setBounds(220, 280, 270, 30);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Username ");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(180, 290, 70, 17);
+        jLabel1.setBounds(120, 280, 90, 17);
 
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,13 +115,13 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jPasswordField1);
-        jPasswordField1.setBounds(270, 330, 220, 22);
+        jPasswordField1.setBounds(220, 320, 270, 30);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Password");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(180, 330, 70, 17);
+        jLabel3.setBounds(120, 330, 70, 17);
 
         signInButton.setBackground(new java.awt.Color(0, 51, 102));
         signInButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -132,7 +132,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(signInButton);
-        signInButton.setBounds(400, 370, 90, 25);
+        signInButton.setBounds(400, 360, 90, 25);
 
         jButton7.setBackground(new java.awt.Color(0, 51, 102));
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
