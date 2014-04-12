@@ -29,7 +29,7 @@
  */
 
 package waitinglist;
-
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -75,8 +75,8 @@ public class LoginScreen extends javax.swing.JFrame {
         setTitle("Waiting List Priortizing Software");
         setAlwaysOnTop(true);
         setAutoRequestFocus(false);
-        setBackground(new java.awt.Color(51, 102, 255));
-        setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
+        setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximizedBounds(new java.awt.Rectangle(100, 100, 550, 550));
         setMaximumSize(new java.awt.Dimension(550, 550));
         setMinimumSize(new java.awt.Dimension(700, 541));
@@ -101,7 +101,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(270, 290, 220, 28);
+        jTextField1.setBounds(270, 290, 220, 22);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -115,7 +115,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jPasswordField1);
-        jPasswordField1.setBounds(270, 330, 220, 28);
+        jPasswordField1.setBounds(270, 330, 220, 22);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -132,7 +132,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(signInButton);
-        signInButton.setBounds(400, 370, 90, 29);
+        signInButton.setBounds(400, 370, 90, 25);
 
         jButton7.setBackground(new java.awt.Color(0, 51, 102));
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
@@ -143,10 +143,11 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton7);
-        jButton7.setBounds(620, 20, 50, 29);
+        jButton7.setBounds(620, 20, 50, 25);
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/WLS-main-background.jpg"))); // NOI18N
         jLabel7.setText("jLabel7");
+        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().add(jLabel7);
         jLabel7.setBounds(0, 0, 700, 540);
 
