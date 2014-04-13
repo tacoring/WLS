@@ -550,14 +550,14 @@ public class Find extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5);
-        jButton5.setBounds(790, 20, 90, 25);
+        jButton5.setBounds(790, 20, 90, 29);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Majed\\Desktop\\blue-abstract-wallpaper-10.jpg")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/WLS-Background.jpg"))); // NOI18N
         jLabel3.setMaximumSize(new java.awt.Dimension(918, 702));
         jLabel3.setMinimumSize(new java.awt.Dimension(918, 702));
         jLabel3.setPreferredSize(new java.awt.Dimension(1024, 700));
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, -100, 1000, 1030);
+        jLabel3.setBounds(0, -130, 1000, 1030);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

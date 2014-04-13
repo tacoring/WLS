@@ -727,7 +727,7 @@
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Majed\Desktop\blue-abstract-wallpaper-10.jpg"/>
+          <Image iconType="3" name="/waitinglist/WLS-Background.jpg"/>
         </Property>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[918, 702]"/>
@@ -741,7 +741,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="-100" width="1000" height="1030"/>
+          <AbsoluteConstraints x="0" y="-130" width="1000" height="1030"/>
         </Constraint>
       </Constraints>
     </Component>
