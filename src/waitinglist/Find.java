@@ -181,7 +181,7 @@ public class Find extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Waiting List Prioritizing Software");
         setAutoRequestFocus(false);
-        setMinimumSize(new java.awt.Dimension(928, 842));
+        setMinimumSize(new java.awt.Dimension(918, 718));
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -223,31 +223,27 @@ public class Find extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel3Layout.createSequentialGroup()
-                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel3Layout.createSequentialGroup()
-                        .add(148, 148, 148)
-                        .add(jLabel7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 60, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(28, 28, 28)
-                        .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 430, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(jLabel4)))
-                .addContainerGap(180, Short.MAX_VALUE))
+                .addContainerGap()
+                .add(jLabel4)
+                .add(30, 30, 30)
+                .add(jLabel7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 60, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 430, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jLabel4)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel4)
                     .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel7))
-                .add(41, 41, 41))
+                .add(73, 73, 73))
         );
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(30, 120, 850, 80);
+        jPanel3.setBounds(30, 100, 850, 50);
 
         jPanel6.setBackground(new Color(102,153,255,20));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 153), new java.awt.Color(204, 204, 255)));
@@ -277,31 +273,27 @@ public class Find extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel6Layout.createSequentialGroup()
-                .add(jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel6Layout.createSequentialGroup()
-                        .add(333, 333, 333)
-                        .add(seatsAvailLabel)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(seatsAvailTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(jLabel12)))
-                .addContainerGap(325, Short.MAX_VALUE))
+                .addContainerGap()
+                .add(jLabel12)
+                .add(132, 132, 132)
+                .add(seatsAvailLabel)
+                .add(26, 26, 26)
+                .add(seatsAvailTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(326, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel6Layout.createSequentialGroup()
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jLabel12)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(seatsAvailTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(seatsAvailLabel))
-                .add(27, 27, 27))
+                    .add(jLabel12)
+                    .add(seatsAvailLabel)
+                    .add(seatsAvailTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(53, 53, 53))
         );
 
         getContentPane().add(jPanel6);
-        jPanel6.setBounds(30, 210, 850, 88);
+        jPanel6.setBounds(30, 150, 850, 50);
 
         jPanel4.setBackground(new Color(102,153,255,20));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 153), new java.awt.Color(204, 204, 255)));
@@ -437,7 +429,7 @@ public class Find extends javax.swing.JFrame {
                     .add(jLabel1))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(29, 29, 29)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jButton2)
                     .add(jButton4)
@@ -446,7 +438,7 @@ public class Find extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel4);
-        jPanel4.setBounds(30, 310, 850, 270);
+        jPanel4.setBounds(30, 200, 850, 250);
 
         jPanel5.setBackground(new Color(102,153,255,50));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 153), new java.awt.Color(204, 204, 255)));
@@ -537,13 +529,13 @@ public class Find extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel5);
-        jPanel5.setBounds(30, 590, 850, 210);
+        jPanel5.setBounds(30, 450, 850, 210);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 21)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(236, 236, 253));
         jLabel2.setText("Waiting List Prioritizing Software");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(290, 80, 290, 32);
+        jLabel2.setBounds(290, 70, 290, 32);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/csuf-logo-header.png"))); // NOI18N
         getContentPane().add(jLabel5);
@@ -561,8 +553,8 @@ public class Find extends javax.swing.JFrame {
         jButton5.setBounds(790, 20, 90, 25);
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Majed\\Desktop\\blue-abstract-wallpaper-10.jpg")); // NOI18N
-        jLabel3.setMaximumSize(new java.awt.Dimension(1024, 700));
-        jLabel3.setMinimumSize(new java.awt.Dimension(1024, 700));
+        jLabel3.setMaximumSize(new java.awt.Dimension(918, 702));
+        jLabel3.setMinimumSize(new java.awt.Dimension(918, 702));
         jLabel3.setPreferredSize(new java.awt.Dimension(1024, 700));
         getContentPane().add(jLabel3);
         jLabel3.setBounds(0, -100, 1000, 1030);
