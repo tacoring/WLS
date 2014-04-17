@@ -46,8 +46,6 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 
 public class Find extends javax.swing.JFrame {
     
@@ -56,6 +54,7 @@ public class Find extends javax.swing.JFrame {
     */
     int waitingListCount = 0 ;
     int eligableListCount = 0 ;
+    boolean needPrioritize = true;
 //    static int availSeats = 0;
 //    static int studentSelected = 0;
     static DefaultListModel waitingListModel = new DefaultListModel();
@@ -90,25 +89,25 @@ public class Find extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jCourseComboBox = new javax.swing.JComboBox();
         jPanel6 = new javax.swing.JPanel();
         seatsAvailTextField = new javax.swing.JTextField();
         seatsAvailLabel = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         CWIDLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        jAddStudentButton = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jPrioritizeButton = new javax.swing.JButton();
+        jDeleteStudentButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jEnrollButton = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -116,7 +115,7 @@ public class Find extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        jSignOutButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         jTextField6.setText("jTextField6");
@@ -201,20 +200,20 @@ public class Find extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Course");
 
-        jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jCourseComboBox.setForeground(new java.awt.Color(255, 255, 255));
+        jCourseComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboBox1MouseClicked(evt);
+                jCourseComboBoxMouseClicked(evt);
             }
         });
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jCourseComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jCourseComboBoxActionPerformed(evt);
             }
         });
-        jComboBox1.addFocusListener(new java.awt.event.FocusAdapter() {
+        jCourseComboBox.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jComboBox1FocusGained(evt);
+                jCourseComboBoxFocusGained(evt);
             }
         });
 
@@ -228,7 +227,7 @@ public class Find extends javax.swing.JFrame {
                 .add(30, 30, 30)
                 .add(jLabel7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 60, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 430, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jCourseComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 430, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(135, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -237,7 +236,7 @@ public class Find extends javax.swing.JFrame {
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel4)
-                    .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jCourseComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel7))
                 .add(73, 73, 73))
         );
@@ -303,10 +302,10 @@ public class Find extends javax.swing.JFrame {
         CWIDLabel1.setForeground(new java.awt.Color(255, 255, 255));
         CWIDLabel1.setText("CWID");
 
-        jButton3.setText("Add");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jAddStudentButton.setText("Add");
+        jAddStudentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jAddStudentButtonActionPerformed(evt);
             }
         });
 
@@ -347,21 +346,21 @@ public class Find extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable3);
 
-        jButton2.setBackground(new java.awt.Color(0, 51, 102));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Prioritize");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jPrioritizeButton.setBackground(new java.awt.Color(0, 51, 102));
+        jPrioritizeButton.setForeground(new java.awt.Color(255, 255, 255));
+        jPrioritizeButton.setText("Prioritize");
+        jPrioritizeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jPrioritizeButtonActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(0, 51, 102));
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Delete");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jDeleteStudentButton.setBackground(new java.awt.Color(0, 51, 102));
+        jDeleteStudentButton.setForeground(new java.awt.Color(255, 255, 255));
+        jDeleteStudentButton.setText("Delete");
+        jDeleteStudentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jDeleteStudentButtonActionPerformed(evt);
             }
         });
 
@@ -390,9 +389,9 @@ public class Find extends javax.swing.JFrame {
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
                         .add(jLabel16)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jButton4)
+                        .add(jDeleteStudentButton)
                         .add(18, 18, 18)
-                        .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 110, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(jPrioritizeButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 110, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jScrollPane2)
                     .add(jPanel4Layout.createSequentialGroup()
                         .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -407,7 +406,7 @@ public class Find extends javax.swing.JFrame {
                                 .add(CWIDLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 44, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 190, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                        .add(jButton3)
+                        .add(jAddStudentButton)
                         .add(0, 234, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -422,7 +421,7 @@ public class Find extends javax.swing.JFrame {
                         .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                             .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(CWIDLabel1)
-                            .add(jButton3))))
+                            .add(jAddStudentButton))))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel10)
@@ -431,8 +430,8 @@ public class Find extends javax.swing.JFrame {
                 .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jButton2)
-                    .add(jButton4)
+                    .add(jPrioritizeButton)
+                    .add(jDeleteStudentButton)
                     .add(jLabel16))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -443,13 +442,13 @@ public class Find extends javax.swing.JFrame {
         jPanel5.setBackground(new Color(102,153,255,50));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 153), new java.awt.Color(204, 204, 255)));
 
-        jButton1.setBackground(new java.awt.Color(0, 51, 102));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setActionCommand("Enroll");
-        jButton1.setLabel("Enroll");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jEnrollButton.setBackground(new java.awt.Color(0, 51, 102));
+        jEnrollButton.setForeground(new java.awt.Color(255, 255, 255));
+        jEnrollButton.setActionCommand("Enroll");
+        jEnrollButton.setLabel("Enroll");
+        jEnrollButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jEnrollButtonActionPerformed(evt);
             }
         });
 
@@ -506,7 +505,7 @@ public class Find extends javax.swing.JFrame {
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel5Layout.createSequentialGroup()
                         .add(jLabel17)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 110, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(jEnrollButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 110, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -521,7 +520,7 @@ public class Find extends javax.swing.JFrame {
                 .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel5Layout.createSequentialGroup()
                         .add(18, 18, 18)
-                        .add(jButton1))
+                        .add(jEnrollButton))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel5Layout.createSequentialGroup()
                         .add(28, 28, 28)
                         .add(jLabel17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
@@ -541,16 +540,16 @@ public class Find extends javax.swing.JFrame {
         getContentPane().add(jLabel5);
         jLabel5.setBounds(290, 10, 280, 70);
 
-        jButton5.setBackground(new java.awt.Color(0, 51, 102));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Sign out");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jSignOutButton.setBackground(new java.awt.Color(0, 51, 102));
+        jSignOutButton.setForeground(new java.awt.Color(255, 255, 255));
+        jSignOutButton.setText("Sign out");
+        jSignOutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jSignOutButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5);
-        jButton5.setBounds(790, 20, 90, 29);
+        getContentPane().add(jSignOutButton);
+        jSignOutButton.setBounds(790, 20, 90, 29);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/WLS-Background.jpg"))); // NOI18N
         jLabel3.setMaximumSize(new java.awt.Dimension(918, 702));
@@ -562,17 +561,18 @@ public class Find extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
+    private void jCourseComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCourseComboBoxMouseClicked
 
-    }//GEN-LAST:event_jComboBox1MouseClicked
+    }//GEN-LAST:event_jCourseComboBoxMouseClicked
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jCourseComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCourseComboBoxActionPerformed
 
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jCourseComboBoxActionPerformed
 
-    private void jComboBox1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusGained
+    private void jCourseComboBoxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCourseComboBoxFocusGained
         //            getCourses();
-    }//GEN-LAST:event_jComboBox1FocusGained
+        System.out.println("could change course!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }//GEN-LAST:event_jCourseComboBoxFocusGained
 
     private void seatsAvailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seatsAvailTextFieldActionPerformed
         // TODO add your handling code here:
@@ -588,7 +588,7 @@ public class Find extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_seatsAvailTextFieldKeyTyped
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jAddStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAddStudentButtonActionPerformed
         try {
 
             String cwid = jTextField3.getText();
@@ -639,6 +639,7 @@ public class Find extends javax.swing.JFrame {
                     jTable3.setModel(waitingListTableModel);
                     //Clean text field
                     jTextField3.setText("");
+                    needPrioritize = true;
                 }else{
                     JOptionPane.showMessageDialog(rootPane, "CWID " + cwid + " does not exist, "
                         + "please enter the correct value");
@@ -653,7 +654,7 @@ public class Find extends javax.swing.JFrame {
         }
         String counter = Integer.toString(waitingListCount) ;
         jLabel1.setText(counter);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jAddStudentButtonActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
 
@@ -669,16 +670,16 @@ public class Find extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField3KeyTyped
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jPrioritizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrioritizeButtonActionPerformed
 
         Students [] waitingList = getWaitingList();
 
-        Classes abcTest = (Classes)jComboBox1.getSelectedItem();
+        Classes abcTest = (Classes)jCourseComboBox.getSelectedItem();
         System.out.println("Perioritize - combobox : " + abcTest + ", seatsAvailTextField:");
         if (seatsAvailTextField.getText().length() == 0){
             JOptionPane.showMessageDialog(rootPane, "Input available seats",
                 "Inane error", JOptionPane.INFORMATION_MESSAGE);
-        }else if (jComboBox1.getSelectedItem() != null ){
+        }else if (jCourseComboBox.getSelectedItem() != null ){
             //            availSeats = Integer.parseInt(seatsAvailTextField.getText());
             int availSeats = getAvailSeats();
             Students [] perioritizeList = perioritize(waitingList);
@@ -735,11 +736,13 @@ public class Find extends javax.swing.JFrame {
                 eligibleListTableModel.addRow(new Object[]{aStudent.getSelected(), aStudent.getCwid(),
                     aStudent.getFName(), aStudent.getLName(), aStudent.getUnitsCompleted(),
                     aStudent.getVisa(), aStudent.getUnitsCompleted()});
-            lastWeight = aStudent.getWeight();
-            isAdded = true;
-        }
+                lastWeight = aStudent.getWeight();
+                isAdded = true;
+                
+            }
         }
         jTable2.setModel(eligibleListTableModel);
+        needPrioritize = false;
         //            jTable2.getModel().addTableModelListener(new TableModelListener() {
             //                @Override
             //                public void tableChanged(TableModelEvent e) {
@@ -753,9 +756,9 @@ public class Find extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(rootPane, "Choose one course",
             "Inane error", JOptionPane.INFORMATION_MESSAGE);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jPrioritizeButtonActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jDeleteStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeleteStudentButtonActionPerformed
 
         int indexNew = jTable3.getSelectedRow();
         if (indexNew < 0){
@@ -768,14 +771,21 @@ public class Find extends javax.swing.JFrame {
             jLabel1.setText(Integer.toString(waitingListCount));
 
             waitingListTableModel.removeRow(indexNew);
+            needPrioritize = true;
 
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jDeleteStudentButtonActionPerformed
+    /*
+        Enrolled Button Pressed
+    */
+    private void jEnrollButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEnrollButtonActionPerformed
 
         Students [] eligableList = getEligibleWaitingList();
-        if ( eligableList.length == 0 ){
+        if ( needPrioritize == true){
+            JOptionPane.showMessageDialog(rootPane, "Please Prioritize first",
+                "Inane error", JOptionPane.WARNING_MESSAGE);
+        }else if ( eligableList.length == 0 ){
             System.out.println("No student in eligiable list, please check");
             JOptionPane.showMessageDialog(rootPane, "No student in eligiable list, please check",
                 "Inane error", JOptionPane.WARNING_MESSAGE);
@@ -790,9 +800,9 @@ public class Find extends javax.swing.JFrame {
                 Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jEnrollButtonActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jSignOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSignOutButtonActionPerformed
         //Clean all models
 
         cleanALLModel();
@@ -803,7 +813,7 @@ public class Find extends javax.swing.JFrame {
                 new LoginScreen().setVisible(true);
             }
         });
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_jSignOutButtonActionPerformed
 
 
    
@@ -982,10 +992,10 @@ public class Find extends javax.swing.JFrame {
      */
     public void getCourses(){
         try {
-            jComboBox1.removeAllItems();
+            jCourseComboBox.removeAllItems();
             Classes[] classArray = getCoursesFromDatabase();
             for ( int i = 0 ; i < classArray.length ; i++){
-                jComboBox1.addItem(classArray[i]);
+                jCourseComboBox.addItem(classArray[i]);
             }  
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Find.class.getName()).log(Level.SEVERE, null, ex);
@@ -1023,7 +1033,7 @@ public class Find extends javax.swing.JFrame {
         Step4. insert number of eliable students into selected course(table)
     */
     public Students [] EnrollNew (Students [] eligableList) throws SQLException{
-        Classes aClass = (Classes)jComboBox1.getSelectedItem();
+        Classes aClass = (Classes)jCourseComboBox.getSelectedItem();
         System.out.println("Enroll - selected course : " + aClass.toString());
         JScrollPane scrollpane = new JScrollPane(); 
         ArrayList<String> categories = new ArrayList<String>();
@@ -1082,13 +1092,11 @@ public class Find extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CWIDLabel1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JButton jAddStudentButton;
+    private javax.swing.JComboBox jCourseComboBox;
+    private javax.swing.JButton jDeleteStudentButton;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JButton jEnrollButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -1110,9 +1118,11 @@ public class Find extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JButton jPrioritizeButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JButton jSignOutButton;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
