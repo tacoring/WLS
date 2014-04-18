@@ -610,31 +610,9 @@ public class Find extends javax.swing.JFrame {
                     if (aStudents != null){
                         waitingListModel.insertElementAt(aStudents, waitingListCount);
                         waitingListCount++;
-                        int visatype= aStudents.getVisa();
-                        String visatranslated = "" ;
-                        if (visatype == 1){
-                        
-                        visatranslated = "International";
-                        
-                        }
-                        if (visatype == 2){
-                        
-                        visatranslated = "Dependent";
-                        
-                        }
-                        if (visatype == 3){
-                        
-                        visatranslated = "Green card";
-                        
-                        }
-                        if (visatype == 4){
-                        
-                        visatranslated = "Citizen";
-                        
-                        }
                         waitingListTableModel.addRow(new Object[]{
                             aStudents.getCwid(), aStudents.getFName(), aStudents.getLName(),
-                            aStudents.getUnitsCompleted(), visatranslated,
+                            aStudents.getUnitsCompleted(), aStudents.getVisaType(),
                             aStudents.getCurrentUnits()});
                     jTable3.setModel(waitingListTableModel);
                     //Clean text field
@@ -700,31 +678,9 @@ public class Find extends javax.swing.JFrame {
                 if (eligableListCount < availSeats){
                     eligibleListModel.insertElementAt(aStudent, eligableListCount);
                     eligableListCount++;
-                    int visatype= aStudent.getVisa();
-                        String visatranslated = "" ;
-                        if (visatype == 1){
-                        
-                        visatranslated = "International";
-                        
-                        }
-                        if (visatype == 2){
-                        
-                        visatranslated = "Dependent";
-                        
-                        }
-                        if (visatype == 3){
-                        
-                        visatranslated = "Green card";
-                        
-                        }
-                        if (visatype == 4){
-                        
-                        visatranslated = "Citizen";
-                        
-                        }
                     eligibleListTableModel.addRow(new Object[]{aStudent.getSelected(), aStudent.getCwid(),
                         aStudent.getFName(), aStudent.getLName(), aStudent.getUnitsCompleted(),
-                        visatranslated, aStudent.getCurrentUnits()});
+                        aStudent.getVisaType(), aStudent.getCurrentUnits()});
                 lastWeight = aStudent.getWeight();
                 isAdded = true;
             }
@@ -735,7 +691,7 @@ public class Find extends javax.swing.JFrame {
                 eligableListCount++;
                 eligibleListTableModel.addRow(new Object[]{aStudent.getSelected(), aStudent.getCwid(),
                     aStudent.getFName(), aStudent.getLName(), aStudent.getUnitsCompleted(),
-                    aStudent.getVisa(), aStudent.getUnitsCompleted()});
+                    aStudent.getVisaType(), aStudent.getCurrentUnits()});
                 lastWeight = aStudent.getWeight();
                 isAdded = true;
                 

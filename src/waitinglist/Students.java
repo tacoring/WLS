@@ -51,13 +51,23 @@ public class Students {
         return unitsCompleted;
     }  
     
-    public int getVisa(){
-        
-                
-              
+    public int getVisa(){   
         return visa;
     }
     
+    public String getVisaType(){
+        String visaMean = "";
+        if (visa == 1) {
+            visaMean = "International";
+        }else if (visa == 2){
+            visaMean = "Dependent";
+        }else if (visa == 3){
+            visaMean = "Green card";
+        }else if (visa == 4){
+            visaMean = "Citizen";
+        }
+        return visaMean;
+    }
     public int getCurrentUnits(){
         return currentUnits;
     }
