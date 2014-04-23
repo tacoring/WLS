@@ -29,7 +29,6 @@
  */
 
 package waitinglist;
-import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -37,7 +36,10 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 
 public class LoginScreen extends javax.swing.JFrame {
     
@@ -132,7 +134,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(signInButton);
-        signInButton.setBounds(400, 360, 90, 25);
+        signInButton.setBounds(400, 360, 90, 29);
 
         jButton7.setBackground(new java.awt.Color(0, 51, 102));
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
@@ -143,7 +145,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton7);
-        jButton7.setBounds(620, 20, 50, 25);
+        jButton7.setBounds(620, 20, 50, 29);
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waitinglist/WLS-main-background.jpg"))); // NOI18N
         jLabel7.setText("jLabel7");
@@ -169,15 +171,21 @@ public class LoginScreen extends javax.swing.JFrame {
       
         if (approved == WLConfig.LOGIN_SUCCESS)
         {
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    dispose();
-                    Find screen = new Find();
-//                    screen.jLabel9.setText(user);
-                    screen.setVisible(true);
+            System.out.println("Login success");
+            try {
+                if (isFirstTimeLogin(user)){
+                    //Need Change Password
+                    if (changePasswordDialog(user)){
+                        goMainScreen();
+                    }
+                }else{
+                    goMainScreen();
                 }
-            });
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+
         }else if (approved == WLConfig.LOGIN_PASSWORD_NOTMATCH){ 
             JOptionPane.showMessageDialog(rootPane, "Username-Password mismatch", 
                     "Inane error", JOptionPane.ERROR_MESSAGE);
@@ -240,12 +248,94 @@ public class LoginScreen extends javax.swing.JFrame {
                 approved = WLConfig.LOGIN_NOMATCH_USER ;
             }
         }
-      
-          return approved;
+        return approved;
     
     }
     
+    public boolean changePasswordDialog(String user) throws SQLException{
+        JPanel panel = new JPanel();
+//        JLabel oldPasswordLabel = new JLabel("Enter Old Password:");
+//        JPasswordField oldPass = new JPasswordField(10);
+        JLabel newPasswordLabel = new JLabel("Enter New Password:");
+        JPasswordField newPass = new JPasswordField(10);
+        JLabel confirmPasswordlabel = new JLabel("Confirm New Password:");
+        JPasswordField confirmPass = new JPasswordField(10);
+//        panel.add(oldPasswordLabel);
+//        panel.add(oldPass);
+        panel.add(newPasswordLabel);
+        panel.add(newPass);
+        panel.add(confirmPasswordlabel);
+        panel.add(confirmPass);
+        String[] options = new String[]{"OK", "Cancel"};
+        int option = JOptionPane.showOptionDialog(rootPane, panel, "Change Password",
+                         JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                         null, options, options[1]);
+        if(option == 0) // pressing OK button
+        {
+            char[] getNewPassword = newPass.getPassword();
+            char[] getConfirmPassword = confirmPass.getPassword();
+            String newPassword = new String(getNewPassword);
+            String conformPassword = new String(getConfirmPassword);
+            if (newPassword.equals(conformPassword)){
+                System.out.println("New Password Match");
+                changePasswordDatabase(user, newPassword);
+                return true;
+            }else{
+                System.out.println("New Password no Match");
+                return false;
+            }
+//            System.out.println("Your password is: " + new String(getNewPassword));
+        }
+        return false;
+    }
     
+    public boolean isFirstTimeLogin(String username) throws SQLException{
+
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
+                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword)) {
+            java.sql.Statement st = con.createStatement();
+            String sql = ("SELECT * FROM user WHERE user_id = '" + username + "';");
+            
+            ResultSet rs = st.executeQuery(sql);
+            
+            if (rs.next())
+            {
+                if (rs.getBoolean("isFirstLogin")){
+                    return true;
+                }
+                
+            }else{
+                System.out.println("isFirstTimeLogin No this user");
+            }
+        }
+        return false;
+    }
+
+    
+    public boolean changePasswordDatabase(String user, String newPassword) throws SQLException{
+    
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
+                + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword)) {
+            java.sql.Statement st = con.createStatement();
+            String sql = ("UPDATE user SET isFirstLogin = '" + 0 + "', password = '"+ newPassword + "' where user_id = '" + user + "';");
+            
+            st.executeUpdate(sql);
+        }
+        return false;
+    }
+    
+    public void goMainScreen(){
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+                public void run() {
+                    dispose();
+                    Find screen = new Find();
+                    screen.setVisible(true);
+                }
+            }); 
+    }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton7;
