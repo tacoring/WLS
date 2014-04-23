@@ -16,9 +16,9 @@ public interface WLConfig {
     
     final boolean weightLogSwitchOFF    = true;  
     //For determine weight
-    final int unitCompletedWeight   = 1000;
-    final int visaWeight            = 200;
-    final int currentUnitsWeight    = 100;
+    final int unitCompletedWeight   = 2000;
+    final int visaWeight            = -100;
+    final int currentUnitsWeight    = -2;
     
 //    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
     static final String DB_URL = "jdbc:mysql://" 

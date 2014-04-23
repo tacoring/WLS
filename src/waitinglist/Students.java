@@ -91,7 +91,7 @@ public class Students {
     @Override
     public String toString() {
         
-        return this.fName + ", " + this.lName + " - " + this.cwid;
+        return this.fName + ", " + this.lName + " - " + this.cwid + " - " + this.weight;
     }
     
     public String print(){
