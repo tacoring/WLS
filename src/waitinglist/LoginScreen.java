@@ -187,10 +187,10 @@ public class LoginScreen extends javax.swing.JFrame {
             
 
         }else if (approved == WLConfig.LOGIN_PASSWORD_NOTMATCH){ 
-            JOptionPane.showMessageDialog(rootPane, "Username-Password mismatch", 
+            JOptionPane.showMessageDialog(rootPane, "Invalid Username or Password", 
                     "Inane error", JOptionPane.ERROR_MESSAGE);
         }else if (approved == WLConfig.LOGIN_NOMATCH_USER){
-            JOptionPane.showMessageDialog(rootPane, "Username does not exist", 
+            JOptionPane.showMessageDialog(rootPane, "Invalid Username or Password", 
                     "Inane error", JOptionPane.ERROR_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Check your network status!!", 
