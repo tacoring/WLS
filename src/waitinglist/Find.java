@@ -652,12 +652,13 @@ public class Find extends javax.swing.JFrame {
 
         Students [] waitingList = getWaitingList();
 
-        Classes abcTest = (Classes)jCourseComboBox.getSelectedItem();
-        System.out.println("Perioritize - combobox : " + abcTest + ", seatsAvailTextField:");
+//        Classes abcTest = (Classes)jCourseComboBox.getSelectedItem();
+//        System.out.println("Perioritize - combobox : " + abcTest + ", seatsAvailTextField:");
         if (seatsAvailTextField.getText().length() == 0){
             JOptionPane.showMessageDialog(rootPane, "Input available seats",
                 "Inane error", JOptionPane.INFORMATION_MESSAGE);
-        }else if (jCourseComboBox.getSelectedItem() != null ){
+//        }else if (jCourseComboBox.getSelectedItem() != null ){
+        }else{
             //            availSeats = Integer.parseInt(seatsAvailTextField.getText());
             int availSeats = getAvailSeats();
             Students [] perioritizeList = perioritize(waitingList);
@@ -699,19 +700,11 @@ public class Find extends javax.swing.JFrame {
         }
         jTable2.setModel(eligibleListTableModel);
         needPrioritize = false;
-        //            jTable2.getModel().addTableModelListener(new TableModelListener() {
-            //                @Override
-            //                public void tableChanged(TableModelEvent e) {
-                //                    System.out.println("Type: " + e.getType()+ ", TableModelListener somthing change !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                //                    if (Find.getAvailSeats() <= Find.getStudentsSelected()){
-                    //                        System.out.println("Do something~~~~~~");
-                    //                    }
-                //                }
-            //            });
-    }else{
-        JOptionPane.showMessageDialog(rootPane, "Choose one course",
-            "Inane error", JOptionPane.INFORMATION_MESSAGE);
-        }
+    }
+//        else{
+//        JOptionPane.showMessageDialog(rootPane, "Choose one course",
+//            "Inane error", JOptionPane.INFORMATION_MESSAGE);
+//        }
     }//GEN-LAST:event_jPrioritizeButtonActionPerformed
 
     private void jDeleteStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeleteStudentButtonActionPerformed
@@ -738,6 +731,9 @@ public class Find extends javax.swing.JFrame {
     private void jEnrollButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEnrollButtonActionPerformed
 
         Students [] eligableList = getEligibleWaitingList();
+        String NOT_SELECTABLE_OPTION = "- Select a course -";
+        
+        
         if ( needPrioritize == true){
             JOptionPane.showMessageDialog(rootPane, "Please Prioritize first",
                 "Inane error", JOptionPane.WARNING_MESSAGE);
@@ -749,6 +745,10 @@ public class Find extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "You selected too much students than available,"
                 + "Please unselect some",
                 "Inane error", JOptionPane.WARNING_MESSAGE);
+        }else if (jCourseComboBox.getSelectedItem().equals(NOT_SELECTABLE_OPTION)){
+            JOptionPane.showMessageDialog(rootPane, "Please select a course",
+                "Inane error", JOptionPane.WARNING_MESSAGE);
+            System.out.println("You should choose a course");
         }else{
             try {
                 EnrollNew(eligableList);
@@ -950,6 +950,8 @@ public class Find extends javax.swing.JFrame {
         try {
             jCourseComboBox.removeAllItems();
             Classes[] classArray = getCoursesFromDatabase();
+            String NOT_SELECTABLE_OPTION = "- Select a course -";
+            jCourseComboBox.addItem(NOT_SELECTABLE_OPTION);
             for ( int i = 0 ; i < classArray.length ; i++){
                 jCourseComboBox.addItem(classArray[i]);
             }  
