@@ -1044,10 +1044,18 @@ public class Find extends javax.swing.JFrame {
             //success to write database
             JOptionPane.showMessageDialog(rootPane, "Update class data success", 
                     "System Message", JOptionPane.PLAIN_MESSAGE);
+            resetData();
         }
   
     }
-    
+    public void resetData(){
+        cleanALLModel();
+        seatsAvailTextField.setText("");
+        jCourseComboBox.setSelectedIndex(0);
+        jLabel1.setText(Integer.toString(waitingListCount));
+        needPrioritize = true;
+//        setSelectedItem
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CWIDLabel1;
     private javax.swing.JButton jAddStudentButton;
