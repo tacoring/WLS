@@ -614,13 +614,13 @@ public class Find extends javax.swing.JFrame {
                             aStudents.getCwid(), aStudents.getFName(), aStudents.getLName(),
                             aStudents.getUnitsCompleted(), aStudents.getVisaType(),
                             aStudents.getCurrentUnits()});
-                    jTable3.setModel(waitingListTableModel);
-                    //Clean text field
-                    jTextField3.setText("");
-                    needPrioritize = true;
-                }else{
-                    JOptionPane.showMessageDialog(rootPane, "CWID " + cwid + " does not exist, "
-                        + "please enter the correct value");
+                        jTable3.setModel(waitingListTableModel);
+                        //Clean text field
+                        jTextField3.setText("");
+                        needPrioritize = true;
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "CWID " + cwid + " does not exist, "
+                            + "please enter the correct value");
                 }
             }else{
                 JOptionPane.showMessageDialog(rootPane, "CWID " + cwid + " already in list",
@@ -799,8 +799,8 @@ public class Find extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new LoginScreen().setVisible(true);
-//                new Find().setVisible(true);
+//                new LoginScreen().setVisible(true);
+                new Find().setVisible(true);
             }
         });
         
@@ -1017,6 +1017,8 @@ public class Find extends javax.swing.JFrame {
         System.out.println("you choose : " + n); //Canel --> 1, OK --> 0
         if (n == 0){ //
             writeDatabase(aClass, eligableList);
+            updateStudentCurrentUnit(eligableList);
+            resetData();
         }else{
             //do nothing....
         }
@@ -1041,12 +1043,30 @@ public class Find extends javax.swing.JFrame {
                 st.executeUpdate(insert);
             }
             con.close();
+
             //success to write database
             JOptionPane.showMessageDialog(rootPane, "Update class data success", 
                     "System Message", JOptionPane.PLAIN_MESSAGE);
-            resetData();
+            
         }
   
+    }
+    
+    public void updateStudentCurrentUnit (Students[] eligableList) throws SQLException{
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://" 
+            + WLConfig.serverIP +":" + WLConfig.serverPort + "/" + WLConfig.database, 
+                WLConfig.databaseUser, WLConfig.databasePassword)) {
+            java.sql.Statement st = con.createStatement();
+            
+            for (int i = 0; i < eligableList.length ; i ++){
+                int finalUnits = eligableList[i].getCurrentUnits() + 3;
+                String sql = ("UPDATE student SET current_units = '" + finalUnits + "' where cwid = '" + eligableList[i].getCwid() + "';");
+                System.out.println("Sql string : " + sql);
+                st.executeUpdate(sql);
+            }
+            con.close();
+        }
+        
     }
     public void resetData(){
         cleanALLModel();

@@ -24,6 +24,7 @@ public interface WLConfig {
     static final String DB_URL = "jdbc:mysql://" 
             + WLConfig.serverIP +":" 
             + WLConfig.serverPort + "/" + WLConfig.database;
+    // jdbc:mysql://127.0.0.1:3306/waiting_list
 //    
     final String serverIP           = "54.186.24.136";
     final String serverPort         = "3306";
